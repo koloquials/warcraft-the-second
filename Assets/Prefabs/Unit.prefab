@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 54851101994929554}
   m_Layer: 0
   m_Name: Unit
-  m_TagString: Unit
+  m_TagString: Peon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,8 +210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05698ac5560d9164ea36f97d5881b0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
   chosen: 0
   canMove: 0
+  moveToSpot: {x: 0, y: 0, z: 0}
 --- !u!195 &195047698459441304
 NavMeshAgent:
   m_ObjectHideFlags: 1
