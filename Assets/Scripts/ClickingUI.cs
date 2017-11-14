@@ -72,7 +72,7 @@ public class ClickingUI : MonoBehaviour {
 
                         if (previousObject != null &&( previousObject.tag == "Peon"||  previousObject.tag == "Grunt"))
 
-                        if (previousObject != null && previousObject.tag == "Unit")
+                      
 
                         {
                             SpencersnavAgent unitMove = previousObject.GetComponent<SpencersnavAgent>();

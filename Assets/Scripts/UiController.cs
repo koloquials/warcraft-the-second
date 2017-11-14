@@ -56,7 +56,7 @@ public class UiController : MonoBehaviour {
 
             
             
-        }
+        
 
         if (uiMode == 0.5f)
         {
