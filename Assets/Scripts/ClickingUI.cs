@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ClickingUI : MonoBehaviour {
+	// TODO: comment these variables!!! are all of these assigned in Inspector? which ones aren't?
     public static ClickingUI Instance = new ClickingUI();
     public MeshRenderer mostRecent;
     public MeshRenderer wireframe;
@@ -26,6 +27,8 @@ public class ClickingUI : MonoBehaviour {
     {
 
         // Debug.Log(uiMode);
+	    
+	    // TODO: write comments!!! what is this doing?
 
         Ray placementRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -36,6 +39,7 @@ public class ClickingUI : MonoBehaviour {
 
         RaycastHit placementRayHit = new RaycastHit();
 
+	    // TODO: where is "isClickingButton" assigned? your group members don't know!!! TELL US MORE ABOUT IT
         if (!isClickingButton)
         {
             if (Physics.Raycast(placementRay, out placementRayHit, rayDist))
@@ -57,19 +61,25 @@ public class ClickingUI : MonoBehaviour {
                 Debug.DrawRay(shootRay.origin, shootRay.direction, Color.yellow);
 
 
-
+		// TODO: what is this raycast doing? why? write comments
                 RaycastHit shootRayHit = new RaycastHit();
 
                 if (Physics.Raycast(shootRay, out shootRayHit, maxRayDist))
                 {
+		// TODO: what is this doing? write comments
                     if (shootRayHit.transform.gameObject != previousObject)
                     {
+
+                        if (previousObject != null &&( previousObject.tag == "Peon"||  previousObject.tag == "Grunt"))
+
                         if (previousObject != null && previousObject.tag == "Unit")
+
                         {
                             SpencersnavAgent unitMove = previousObject.GetComponent<SpencersnavAgent>();
                             unitMove.canMove = false;
                         }
                     }
+		// TODO: what is this doing? write comments
                     if (shootRayHit.transform.childCount > 0)
                     {
                         wireframe = shootRayHit.transform.GetChild(0).GetComponentInChildren<MeshRenderer>();
@@ -94,6 +104,7 @@ public class ClickingUI : MonoBehaviour {
                             }
                         }
                     }
+		// TODO: what is this doing? write comments
                     mostRecent = wireframe;
                     previousObject = shootRayHit.transform.gameObject;
                     if (shootRayHit.transform.childCount > 0)
@@ -101,26 +112,26 @@ public class ClickingUI : MonoBehaviour {
                         if (shootRayHit.transform.GetChild(0).name == "Wireframe")
                         {
                             wireframe.enabled = true;
-                            if (shootRayHit.transform.tag == "Building")
+                            if (shootRayHit.transform.tag == "Barracks")
                             {
-
+				// TODO: what is this doing? write comments
                                 if (buildPlace != Vector3.zero)
                                 {
                                     SpencersnavAgent unitMove = builderUnit.GetComponent<SpencersnavAgent>();
                                     unitMove.chosen = true;
                                 }
-
+				// TODO: what is this doing? write comments
                                 BuildingMovement checkIfBuilt = previousObject.GetComponent<BuildingMovement>();
                                 if (checkIfBuilt.canCreate)
                                 {
-                                    UiController.Instance.uiMode = 1;
+                                    UiController.Instance.uiMode = 1; // TODO: what does "uiMode = 1" mean?
                                 }
                                 if (!checkIfBuilt.canCreate)
                                 {
-                                    UiController.Instance.uiMode = 0.5f;
+                                    UiController.Instance.uiMode = 0.5f; // TODO: what does "uiMode = 0.5f" mean?
                                 }
                             }
-                            if (shootRayHit.transform.tag == "Unit")
+                            if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt")
                             {
 
                                 UiController.Instance.uiMode = 2;

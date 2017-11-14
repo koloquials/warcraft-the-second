@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour {
 
+	//it might make sense to make this class static. If the player needs to regularly access its functions/values
+	//otherwise looks good
+	
 	public int gold;
 	public int wood;
 	public int oil;

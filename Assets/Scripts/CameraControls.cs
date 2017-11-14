@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class CameraControls : MonoBehaviour {
 
-  //  public Transform target;
+    //public Transform target;
 	//public GameObject unit; // Used to move Camera with Unit
 	//private Vector3 offset; // Used to move Camera with Unit
 
-	public int arrowCameraSpeed; // Assign in Inspector
-	public int mouseCameraSpeed; // Assign in Inspector
+	public int arrowCameraSpeed = 20; // Adjust in Inspector
+	public int mouseCameraSpeed = 50; // Adjust in Inspector
 
 	private float mousePosX;
 	private float mousePosY;
 
-    Camera cam;
+    //Camera cam;
     //float height = Screen.height;
     //float width = Screen.width;
+
     void Start()
     {
        
