@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingMovement : MonoBehaviour {
+	
+	//could be a good place to use a state machine.
+	//variable names could be clearer. e.g. isBuilding, isPlaced, isPlacing
+	
     bool placing;//Whether it is still being placed
     bool placed;//Whether it has been placed
    public bool canCreate;//Whether it can create units
@@ -21,6 +25,8 @@ public class BuildingMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
+	
+	
     void Update() {
         if (placing) {
             canCreate = false;
@@ -33,6 +39,7 @@ public class BuildingMovement : MonoBehaviour {
             this.transform.position = temp;
         }
        
+	    //shouldn't this be Input.GetMouseButtonDown(0) && placing?
         if (Input.GetMouseButtonDown(0)&&!placed)//When the player clicks, place the building where the mouse is
         {
 
@@ -45,6 +52,8 @@ public class BuildingMovement : MonoBehaviour {
         }
         if (!canCreate&&!placing&&shouldBuild)//If it isnt being placed and should be getting built, increment the opacity
         {
+	//setting your build percentage with colours feels really janky. Should be other way around.
+		
             percentageBuilt = (buildColor.color.a - 0.2f) / 0.8f;
             if (buildColor.color.a < 1.0)
             {
