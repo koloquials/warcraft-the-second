@@ -210,10 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05698ac5560d9164ea36f97d5881b0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  chosen: 0
-  canMove: 0
-  moveToSpot: {x: 0, y: 0, z: 0}
+  chosen: 1
+  canMove: 1
 --- !u!195 &195047698459441304
 NavMeshAgent:
   m_ObjectHideFlags: 1
