@@ -9,7 +9,14 @@ public class UiController : MonoBehaviour {
     public Canvas spawnUnit;
     public Canvas spawnBuilding;
     public Canvas buildStuff;
+    public Canvas creatingUnit;
+    public Canvas winScreen;
+    public Canvas pauseMenu;
+    public Canvas pauseButton;
+    public Text names;
+    public Text pauseText;
     public Text buildingProgress;
+    public Text unitProgress;
     public float uiMode; //0=none, 0.5=building being built, 1=buildings, 2=units
                          // Use this for initialization
     void Start()
@@ -22,6 +29,8 @@ public class UiController : MonoBehaviour {
     void Update () {
         if (uiMode == 0)
         {
+            names.text = "";
+        }
             if (spawnUnit.enabled == true)
             {
                 spawnUnit.enabled = false;
@@ -36,9 +45,10 @@ public class UiController : MonoBehaviour {
             }
 
 
-        }
+        
         if (uiMode == 0.5f)
         {
+            names.text = "";
             if (buildStuff.enabled == false)
             {
                 buildStuff.enabled = true;
@@ -61,11 +71,17 @@ public class UiController : MonoBehaviour {
         }
         if (uiMode == 1)
         {
-
-
+            if (ClickingUI.Instance.previousObject != null)
+            {
+                names.text = "" + ClickingUI.Instance.previousObject.tag;
+            }
+            creatingUnit.enabled = false;
             buildStuff.enabled = false;
             spawnBuilding.enabled = false;
             spawnUnit.enabled = true;
+            BuildingMovement isMakingUnit = ClickingUI.Instance.previousObject.GetComponent<BuildingMovement>();
+            
+           
 
 
             if (Input.GetKeyDown(KeyCode.U))
@@ -76,11 +92,24 @@ public class UiController : MonoBehaviour {
 
             }
         }
+        if (uiMode== 1.5f){
+          names.text="";
+                spawnUnit.enabled = false;
+                creatingUnit.enabled = true;
+          
+        }
         if (uiMode == 2)
         {
-            if (spawnBuilding.enabled == false)
+            if (ClickingUI.Instance.previousObject.tag == "Peon")
             {
-                spawnBuilding.enabled = true;
+                if (spawnBuilding.enabled == false)
+                {
+                    spawnBuilding.enabled = true;
+                }
+            }
+            if (ClickingUI.Instance.previousObject != null)
+            {
+                names.text = "" + ClickingUI.Instance.previousObject.tag;
             }
             buildStuff.enabled = false;
             spawnUnit.enabled = false;
@@ -95,16 +124,36 @@ public class UiController : MonoBehaviour {
     }
     public void CreateUnit(GameObject currentlySelected)
     {
-        Vector2 unitPlacement2D = Random.insideUnitCircle.normalized;
-        Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 3f;
-        GameObject madeUnit = Instantiate(ClickingUI.Instance.unit, currentlySelected.transform.position + unitPlacement3D, Quaternion.identity);
-        Vector3 temp = madeUnit.transform.position;
-        temp.y = 0.5f;
-        madeUnit.transform.position = temp;
+        BuildingMovement shouldBuild = currentlySelected.GetComponent<BuildingMovement>();
+        shouldBuild.CreateUnit();
     }
     public void CreateBuilding()
     {
         Instantiate(ClickingUI.Instance.building, ClickingUI.Instance.placement, Quaternion.Euler(0, -90, 0));
+    }
+    public void AllOff()
+    {
+        uiMode = 4;
+        creatingUnit.enabled = false;
+        buildStuff.enabled = false;
+        spawnBuilding.enabled = false;
+        spawnUnit.enabled = false;
+        names.text = "";
+    }
+    public void Pause()
+    {
+        pauseText.text = "GAME PAUSED";
+        Time.timeScale = 0f;
+        pauseMenu.enabled = true;
+        pauseButton.enabled = false;
+    }
+    public void UnPause()
+    {
+        pauseMenu.enabled = false;
+        pauseButton.enabled = true;
+        pauseText.text = "";
+        Time.timeScale = 1.0f;
+        pauseButton.enabled = true;
     }
 
 }

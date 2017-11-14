@@ -64,7 +64,7 @@ public class ClickingUI : MonoBehaviour {
                 {
                     if (shootRayHit.transform.gameObject != previousObject)
                     {
-                        if (previousObject != null && previousObject.tag == "Unit")
+                        if (previousObject != null &&( previousObject.tag == "Peon"||  previousObject.tag == "Grunt"))
                         {
                             SpencersnavAgent unitMove = previousObject.GetComponent<SpencersnavAgent>();
                             unitMove.canMove = false;
@@ -101,7 +101,7 @@ public class ClickingUI : MonoBehaviour {
                         if (shootRayHit.transform.GetChild(0).name == "Wireframe")
                         {
                             wireframe.enabled = true;
-                            if (shootRayHit.transform.tag == "Building")
+                            if (shootRayHit.transform.tag == "Barracks")
                             {
 
                                 if (buildPlace != Vector3.zero)
@@ -120,7 +120,7 @@ public class ClickingUI : MonoBehaviour {
                                     UiController.Instance.uiMode = 0.5f;
                                 }
                             }
-                            if (shootRayHit.transform.tag == "Unit")
+                            if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt")
                             {
 
                                 UiController.Instance.uiMode = 2;

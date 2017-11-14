@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingMovement : MonoBehaviour {
-    bool placing;//Whether it is still being placed
-    bool placed;//Whether it has been placed
+    public bool placing;//Whether it is still being placed
+    public bool placed;//Whether it has been placed
    public bool canCreate;//Whether it can create units
+   public bool creating;
    public bool shouldBuild;//Whether it should be getting built
     Color transparentRed =new Color (0, 0, 0, 0.8f);//Starting opacity for the building should be 20%
-    Color addRed = new Color(0, 0, 0, 0.001f);//Incrementation of opacity
+    Color addRed = new Color(0, 0, 0, 0.01f);//Incrementation of opacity
     Material buildColor;
     public float percentageBuilt;
+    public GameObject[] unitList;
+    public bool shouldMakeUnit;
+    bool isCoroutineRunning = false;
     // Use this for initialization
     void Start () {
         
@@ -22,6 +26,7 @@ public class BuildingMovement : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        shouldMakeUnit = false;
         if (placing) {
             canCreate = false;
             placed = false;
@@ -57,4 +62,44 @@ public class BuildingMovement : MonoBehaviour {
             
         }
 	}
+    public void CreateUnit()
+    {
+        Debug.Log("here");
+        // bool unitCreated = false;
+        shouldMakeUnit = true;
+        UiController.Instance.uiMode = 1.5f;
+        StartCoroutine(WaitTime());
+       
+           
+        }
+    
+    IEnumerator WaitTime()
+    {
+        if (isCoroutineRunning)
+        {
+            Debug.Log("Broke");
+            yield break;
+            
+        }
+        isCoroutineRunning = true;
+        for (float buildTime=0; buildTime < 2f; buildTime += Time.deltaTime)
+        {
+            UiController.Instance.unitProgress.text = "% Completed: " + ((buildTime/2f)*100).ToString("F0");
+            yield return 0;
+           
+        }
+        shouldMakeUnit = true;
+        if (shouldMakeUnit)
+            Debug.Log("Made Unit");
+        {
+            Vector2 unitPlacement2D = Random.insideUnitCircle.normalized;
+            Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 4f;
+            VictoryController.Instance.gruntCount++;
+            GameObject madeUnit = (GameObject)Instantiate(unitList[0], this.transform.position + unitPlacement3D, Quaternion.identity);
+
+        }
+        shouldMakeUnit = false;
+        isCoroutineRunning = false ;
+        UiController.Instance.uiMode = 1f;
+    }
 }
