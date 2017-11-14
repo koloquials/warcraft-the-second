@@ -44,7 +44,7 @@ public class ClickingUI : MonoBehaviour {
         {
             if (Physics.Raycast(placementRay, out placementRayHit, rayDist))
             {
-                if (placementRayHit.transform.name == "Ground")
+                if (placementRayHit.transform.tag == "Ground"|| placementRayHit.transform.tag == "Tree")
                 {
                     placement = placementRayHit.point;
                 }
