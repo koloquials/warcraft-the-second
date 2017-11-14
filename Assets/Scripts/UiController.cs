@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UiController : MonoBehaviour {
+    
+    //please capitalise the 'i' in UI. It would make me so so happy. 
+    
     public static UiController Instance = new UiController();
 
     public Canvas spawnUnit;
@@ -27,6 +30,9 @@ public class UiController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        
+        //add comments please. 
+        
         if (uiMode == 0)
         {
             names.text = "";
@@ -45,7 +51,13 @@ public class UiController : MonoBehaviour {
             }
 
 
+
         
+
+            
+            
+        }
+
         if (uiMode == 0.5f)
         {
             names.text = "";
