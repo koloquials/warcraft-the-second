@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 65257082349609728}
   m_Layer: 0
   m_Name: Building
-  m_TagString: Building
+  m_TagString: Barracks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,6 +193,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 348c10cda1b397f4dac65572945ab581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placing: 0
+  placed: 0
   canCreate: 0
+  creating: 0
   shouldBuild: 0
   percentageBuilt: 0
+  unitList:
+  - {fileID: 1064245678795688, guid: 0329216ffd431a64eb622572a77981e1, type: 2}
+  shouldMakeUnit: 0

@@ -69,8 +69,11 @@ public class ClickingUI : MonoBehaviour {
 		// TODO: what is this doing? write comments
                     if (shootRayHit.transform.gameObject != previousObject)
                     {
-			// TODO: what is this doing? write comments
+
+                        if (previousObject != null &&( previousObject.tag == "Peon"||  previousObject.tag == "Grunt"))
+
                         if (previousObject != null && previousObject.tag == "Unit")
+
                         {
                             SpencersnavAgent unitMove = previousObject.GetComponent<SpencersnavAgent>();
                             unitMove.canMove = false;
@@ -109,7 +112,7 @@ public class ClickingUI : MonoBehaviour {
                         if (shootRayHit.transform.GetChild(0).name == "Wireframe")
                         {
                             wireframe.enabled = true;
-                            if (shootRayHit.transform.tag == "Building")
+                            if (shootRayHit.transform.tag == "Barracks")
                             {
 				// TODO: what is this doing? write comments
                                 if (buildPlace != Vector3.zero)
@@ -128,7 +131,7 @@ public class ClickingUI : MonoBehaviour {
                                     UiController.Instance.uiMode = 0.5f; // TODO: what does "uiMode = 0.5f" mean?
                                 }
                             }
-                            if (shootRayHit.transform.tag == "Unit")
+                            if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt")
                             {
 
                                 UiController.Instance.uiMode = 2;
