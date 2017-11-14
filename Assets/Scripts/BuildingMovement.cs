@@ -8,15 +8,12 @@ public class BuildingMovement : MonoBehaviour {
     public bool placed;//Whether it has been placed
 
 
-	
-    bool placing;//Whether it is still being placed
-    bool placed;//Whether it has been placed
 
    public bool canCreate;//Whether it can create units
    public bool creating;
    public bool shouldBuild;//Whether it should be getting built
     Color transparentRed =new Color (0, 0, 0, 0.8f);//Starting opacity for the building should be 20%
-    Color addRed = new Color(0, 0, 0, 0.01f);//Incrementation of opacity
+    Color addRed = new Color(0, 0, 0, 0.001f);//Incrementation of opacity
     Material buildColor;
     public float percentageBuilt;
     public GameObject[] unitList;
@@ -94,9 +91,9 @@ public class BuildingMovement : MonoBehaviour {
             
         }
         isCoroutineRunning = true;
-        for (float buildTime=0; buildTime < 2f; buildTime += Time.deltaTime)
+        for (float buildTime=0; buildTime < 5f; buildTime += Time.deltaTime)
         {
-            UiController.Instance.unitProgress.text = "% Completed: " + ((buildTime/2f)*100).ToString("F0");
+            UiController.Instance.unitProgress.text = "% Completed: " + ((buildTime/5f)*100).ToString("F0");
             yield return 0;
            
         }

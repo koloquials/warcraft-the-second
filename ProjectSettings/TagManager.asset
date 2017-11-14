@@ -10,6 +10,8 @@ TagManager:
   - Peon
   - Barracks
   - Victory Circle
+  - Ground
+  - Tree
   layers:
   - Default
   - TransparentFX
