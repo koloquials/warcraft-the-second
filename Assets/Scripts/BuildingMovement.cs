@@ -7,11 +7,6 @@ public class BuildingMovement : MonoBehaviour {
     public bool placing;//Whether it is still being placed
     public bool placed;//Whether it has been placed
 
-
-	
-    bool placing;//Whether it is still being placed
-    bool placed;//Whether it has been placed
-
    public bool canCreate;//Whether it can create units
    public bool creating;
    public bool shouldBuild;//Whether it should be getting built

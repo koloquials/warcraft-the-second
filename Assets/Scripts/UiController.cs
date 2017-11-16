@@ -49,14 +49,7 @@ public class UiController : MonoBehaviour {
             {
                 buildStuff.enabled = false;
             }
-
-
-
-        
-
-            
-            
-        }
+			
 
         if (uiMode == 0.5f)
         {
