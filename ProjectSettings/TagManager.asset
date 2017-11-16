@@ -12,6 +12,8 @@ TagManager:
   - Victory Circle
   - Ground
   - Tree
+  - Gold Mine
+  - Great Hall
   layers:
   - Default
   - TransparentFX

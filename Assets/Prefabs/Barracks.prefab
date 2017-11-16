@@ -40,9 +40,9 @@ GameObject:
   - component: {fileID: 33693153745815602}
   - component: {fileID: 23948734881637686}
   - component: {fileID: 114405820943539644}
-  - component: {fileID: 65257082349609728}
+  - component: {fileID: 65944228720788570}
   m_Layer: 0
-  m_Name: Building
+  m_Name: Barracks
   m_TagString: Barracks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153,7 +153,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1284657188160358}
   m_Mesh: {fileID: 4300000, guid: f5f6e814e53eab54fb084de920b56049, type: 3}
---- !u!65 &65257082349609728
+--- !u!65 &65944228720788570
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -202,3 +202,4 @@ MonoBehaviour:
   unitList:
   - {fileID: 1064245678795688, guid: 0329216ffd431a64eb622572a77981e1, type: 2}
   shouldMakeUnit: 0
+  makingUnit: 0
