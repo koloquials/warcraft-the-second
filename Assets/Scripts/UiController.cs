@@ -20,7 +20,7 @@ public class UiController : MonoBehaviour {
     public Text pauseText;
     public Text buildingProgress;
     public Text unitProgress;
-    public float uiMode; //0=none, 0.5=building being built, 1=buildings, 2=units
+    public float uiMode; //0=none, 0.5=building being built, 1=buildings, 1.5=building unit, 2=units
                          // Use this for initialization
     void Start()
     {
@@ -30,13 +30,13 @@ public class UiController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        
-        //add comments please. 
-        
-        if (uiMode == 0)
-        {
-            names.text = "";
-        }
+
+
+        if (uiMode == 0)//uiMode 0 is the mode when you have nothing selected, or clicked on the ground/trees
+        {//It turns off basically all the uiElements
+            
+                names.text = "";
+            
             if (spawnUnit.enabled == true)
             {
                 spawnUnit.enabled = false;
@@ -49,16 +49,13 @@ public class UiController : MonoBehaviour {
             {
                 buildStuff.enabled = false;
             }
+            if (creatingUnit.enabled == true)
+            {
+                creatingUnit.enabled = false;
+            }
+        }
 
-
-
-        
-
-            
-            
-        
-
-        if (uiMode == 0.5f)
+        if (uiMode == 0.5f)//For when a building is being built, it shows the building progress
         {
             names.text = "";
             if (buildStuff.enabled == false)
@@ -75,13 +72,13 @@ public class UiController : MonoBehaviour {
             }
 
             BuildingMovement checkIfBuilt = ClickingUI.Instance.previousObject.GetComponent<BuildingMovement>();
-            buildingProgress.text = ("Progress: " + (checkIfBuilt.percentageBuilt * 100).ToString("F0") + "%");
-            if (checkIfBuilt.canCreate)
+            buildingProgress.text = ("Progress: " + (checkIfBuilt.percentageBuilt * 100).ToString("F0") + "%");//Gets the building progress
+            if (checkIfBuilt.canCreate)//If it can make units, go to the standard building ui
             {
                 uiMode = 1;
             }
         }
-        if (uiMode == 1)
+        if (uiMode == 1)//Standard building ui
         {
             if (ClickingUI.Instance.previousObject != null)
             {
@@ -91,10 +88,6 @@ public class UiController : MonoBehaviour {
             buildStuff.enabled = false;
             spawnBuilding.enabled = false;
             spawnUnit.enabled = true;
-            BuildingMovement isMakingUnit = ClickingUI.Instance.previousObject.GetComponent<BuildingMovement>();
-            
-           
-
 
             if (Input.GetKeyDown(KeyCode.U))
             {
@@ -104,15 +97,15 @@ public class UiController : MonoBehaviour {
 
             }
         }
-        if (uiMode== 1.5f){
+        if (uiMode== 1.5f){//Creating a unit, show the progress and hide the button to make a new one
           names.text="";
                 spawnUnit.enabled = false;
                 creatingUnit.enabled = true;
           
         }
-        if (uiMode == 2)
+        if (uiMode == 2)//Unit movement ui
         {
-            if (ClickingUI.Instance.previousObject.tag == "Peon")
+            if (ClickingUI.Instance.previousObject.tag == "Peon")//If the unit is a peon, allow the option to make a barracks
             {
                 if (spawnBuilding.enabled == false)
                 {
@@ -123,7 +116,7 @@ public class UiController : MonoBehaviour {
             {
                 names.text = "" + ClickingUI.Instance.previousObject.tag;
             }
-            buildStuff.enabled = false;
+            buildStuff.enabled = false;//Allow the unit to move
             spawnUnit.enabled = false;
             SpencersnavAgent unitMove = ClickingUI.Instance.previousObject.GetComponent<SpencersnavAgent>();
             unitMove.canMove = true;
@@ -134,32 +127,32 @@ public class UiController : MonoBehaviour {
             }
         }
     }
-    public void CreateUnit(GameObject currentlySelected)
+    public void CreateUnit(GameObject currentlySelected)//Creates a unit around the currently selected building
     {
         BuildingMovement shouldBuild = currentlySelected.GetComponent<BuildingMovement>();
         shouldBuild.CreateUnit();
     }
-    public void CreateBuilding()
+    public void CreateBuilding()//Creates a building
     {
         Instantiate(ClickingUI.Instance.building, ClickingUI.Instance.placement, Quaternion.Euler(0, -90, 0));
     }
-    public void AllOff()
+    public void AllOff()//Turns all the ui off
     {
-        uiMode = 4;
+        uiMode = 4;//Sets the ui to 4 so it doesnt immediatly turn some ui elements back on. uiMode 4 is not an actual ui State
         creatingUnit.enabled = false;
         buildStuff.enabled = false;
         spawnBuilding.enabled = false;
         spawnUnit.enabled = false;
         names.text = "";
     }
-    public void Pause()
+    public void Pause()//Pauses the game
     {
         pauseText.text = "GAME PAUSED";
         Time.timeScale = 0f;
         pauseMenu.enabled = true;
         pauseButton.enabled = false;
     }
-    public void UnPause()
+    public void UnPause()//Resumes the game
     {
         pauseMenu.enabled = false;
         pauseButton.enabled = true;

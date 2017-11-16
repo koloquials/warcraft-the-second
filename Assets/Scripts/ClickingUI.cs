@@ -54,6 +54,11 @@ public class ClickingUI : MonoBehaviour {
             }
             if (Input.GetMouseButtonDown(0))
             {
+               // for(int i=0; i < previousObject.Length; i++)
+               // {
+              //      previousObject[i] = null;
+               // }
+                
                 Ray shootRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 float maxRayDist = 10000f;
@@ -61,33 +66,33 @@ public class ClickingUI : MonoBehaviour {
                 Debug.DrawRay(shootRay.origin, shootRay.direction, Color.yellow);
 
 
-		// TODO: what is this raycast doing? why? write comments
+		// This raycast checks what the player is clicking on
                 RaycastHit shootRayHit = new RaycastHit();
 
                 if (Physics.Raycast(shootRay, out shootRayHit, maxRayDist))
                 {
-		// TODO: what is this doing? write comments
+		// If the last thing you clicked on was a unit, and its not what you are currently clicking on, disallow that previous unit from movement
                     if (shootRayHit.transform.gameObject != previousObject)
                     {
-
                         if (previousObject != null &&( previousObject.tag == "Peon"||  previousObject.tag == "Grunt"))
-
-                      
-
                         {
                             SpencersnavAgent unitMove = previousObject.GetComponent<SpencersnavAgent>();
                             unitMove.canMove = false;
                         }
                     }
-		// TODO: what is this doing? write comments
+		// IF the thing has children, set the child of the thing to the wireframe object so it can be turned on
                     if (shootRayHit.transform.childCount > 0)
                     {
                         wireframe = shootRayHit.transform.GetChild(0).GetComponentInChildren<MeshRenderer>();
                     }
+                    //If it has no children, set the wireframe object to the thing itself so as to not have any null object errors
                     if (shootRayHit.transform.childCount == 0)
                     {
                         wireframe = shootRayHit.transform.GetComponent<MeshRenderer>();
                     }
+                    
+
+                    //Allows the player to deselect the currently selected object
                     if (previousObject != null)
                     {
                         if (previousObject.transform.childCount > 0)
@@ -104,7 +109,10 @@ public class ClickingUI : MonoBehaviour {
                             }
                         }
                     }
-		// TODO: what is this doing? write comments
+
+
+
+		// If the thing you are clicking on is a barracks, turn on the wireframe
                     mostRecent = wireframe;
                     previousObject = shootRayHit.transform.gameObject;
                     if (shootRayHit.transform.childCount > 0)
@@ -112,29 +120,34 @@ public class ClickingUI : MonoBehaviour {
                         if (shootRayHit.transform.GetChild(0).name == "Wireframe")
                         {
                             wireframe.enabled = true;
-                            if (shootRayHit.transform.tag == "Barracks")
+                            if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall")
                             {
-				// TODO: what is this doing? write comments
+                                Debug.Log("Hitting a building");
+// If the barracks is being built, send the worker to build the barracks and allow it to move (chosen means it is the builder peon, so it has to move to the building while other can move other places)
                                 if (buildPlace != Vector3.zero)
                                 {
                                     SpencersnavAgent unitMove = builderUnit.GetComponent<SpencersnavAgent>();
                                     unitMove.chosen = true;
                                 }
-				// TODO: what is this doing? write comments
+				// Checks the status of the builidng, if it is being built or creating units, it needs special UI
                                 BuildingMovement checkIfBuilt = previousObject.GetComponent<BuildingMovement>();
                                 if (checkIfBuilt.canCreate)
                                 {
-                                    UiController.Instance.uiMode = 1; // TODO: what does "uiMode = 1" mean?
+                                    UiController.Instance.uiMode = 1; // uiMode 1 is the regular building ui mode
                                 }
                                 if (!checkIfBuilt.canCreate)
                                 {
-                                    UiController.Instance.uiMode = 0.5f; // TODO: what does "uiMode = 0.5f" mean?
+                                    UiController.Instance.uiMode = 0.5f; //uiMode 0.5 is the "building being built" uiMode
+                                }
+                                if (checkIfBuilt.makingUnit)
+                                {
+                                    UiController.Instance.uiMode = 1.5f; //uiMode 1.5 is the "creating unit" uiMode
                                 }
                             }
-                            if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt")
+                            if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt")//If you are clicking on a peon or a grunt, go into uiMode 2
                             {
 
-                                UiController.Instance.uiMode = 2;
+                                UiController.Instance.uiMode = 2;//uiMode 2 is the moveable unit mode
                             }
                         }
                     }
