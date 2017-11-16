@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraControls : MonoBehaviour {
+	// Camera restraints : X -75.2 - 68.3
+	//					 : Z -105.3 - 18.7
+
 
     //public Transform target;
 	//public GameObject unit; // Used to move Camera with Unit
@@ -36,16 +39,16 @@ public class CameraControls : MonoBehaviour {
 		//transform.position = unit.transform.position + offset; 
 
 		//Move Camera with Arrow Keys (Direct Movement) [instead of inverse]
-		if (Input.GetKey (KeyCode.UpArrow)) {
+		if (Input.GetKey (KeyCode.UpArrow) && transform.position.z < 18.7f) {
 			transform.position += Vector3.back * arrowCameraSpeed * Time.deltaTime;
 		}
-		if (Input.GetKey (KeyCode.DownArrow)) {
+		if (Input.GetKey (KeyCode.DownArrow) && transform.position.z > -105.0f) {
 			transform.position += Vector3.forward * arrowCameraSpeed * Time.deltaTime;
 		}
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+		if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -75.0f) {
 			transform.position += Vector3.right * arrowCameraSpeed * Time.deltaTime;
 		}
-		if (Input.GetKey (KeyCode.RightArrow)) {
+		if (Input.GetKey (KeyCode.RightArrow) && transform.position.x < 68.3f) {
 			transform.position += Vector3.left * arrowCameraSpeed * Time.deltaTime;
 		}
 
@@ -55,19 +58,19 @@ public class CameraControls : MonoBehaviour {
 		mousePosY = Input.mousePosition.y / Screen.height;
 		//Debug.Log("MousePosY =" + mousePosY);
 
-		if (mousePosY < 0.01f) {
+		if (mousePosY < 0.01f && transform.position.z > -105.0f) {
 			transform.position += Vector3.forward * mouseCameraSpeed * Time.deltaTime;
 			Debug.Log("Move Camera Down");
 		}
-		if (mousePosY > 0.99f) {
+		if (mousePosY > 0.99f && transform.position.z < 18.7f) {
 			transform.position += Vector3.back * mouseCameraSpeed * Time.deltaTime;
 			Debug.Log("Move Camera Up");
 		}
-		if (mousePosX < 0.01f) {
+		if (mousePosX < 0.01f && transform.position.x > -75.0f) {
 			transform.position += Vector3.right * mouseCameraSpeed * Time.deltaTime;
 			Debug.Log("Move Camera Left");
 		}
-		if (mousePosX > 0.99f) {
+		if (mousePosX > 0.99f && transform.position.x < 68.3f) {
 			transform.position += Vector3.left * mouseCameraSpeed * Time.deltaTime;
 			Debug.Log("Move Camera Right");
 		}

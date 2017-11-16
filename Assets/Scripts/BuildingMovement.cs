@@ -7,16 +7,19 @@ public class BuildingMovement : MonoBehaviour {
     public bool placing;//Whether it is still being placed
     public bool placed;//Whether it has been placed
 
+
+
    public bool canCreate;//Whether it can create units
    public bool creating;
    public bool shouldBuild;//Whether it should be getting built
     Color transparentRed =new Color (0, 0, 0, 0.8f);//Starting opacity for the building should be 20%
-    Color addRed = new Color(0, 0, 0, 0.01f);//Incrementation of opacity
+    Color addRed = new Color(0, 0, 0, 0.001f);//Incrementation of opacity
     Material buildColor;
     public float percentageBuilt;
     public GameObject[] unitList;
     public bool shouldMakeUnit;
     bool isCoroutineRunning = false;
+    public bool makingUnit = false;
     // Use this for initialization
     void Start () {
         
@@ -53,6 +56,10 @@ public class BuildingMovement : MonoBehaviour {
             placed = true;
             
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Destroy(this.gameObject);
+        }
         if (!canCreate&&!placing&&shouldBuild)//If it isnt being placed and should be getting built, increment the opacity
         {
 	//setting your build percentage with colours feels really janky. Should be other way around.
@@ -71,7 +78,8 @@ public class BuildingMovement : MonoBehaviour {
 	}
     public void CreateUnit()
     {
-        Debug.Log("here");
+        makingUnit = true;
+       // Debug.Log("here");
         // bool unitCreated = false;
         shouldMakeUnit = true;
         UiController.Instance.uiMode = 1.5f;
@@ -82,6 +90,7 @@ public class BuildingMovement : MonoBehaviour {
     
     IEnumerator WaitTime()
     {
+        shouldMakeUnit = true;
         if (isCoroutineRunning)
         {
             Debug.Log("Broke");
@@ -89,9 +98,9 @@ public class BuildingMovement : MonoBehaviour {
             
         }
         isCoroutineRunning = true;
-        for (float buildTime=0; buildTime < 2f; buildTime += Time.deltaTime)
+        for (float buildTime=0; buildTime < 5f; buildTime += Time.deltaTime)
         {
-            UiController.Instance.unitProgress.text = "% Completed: " + ((buildTime/2f)*100).ToString("F0");
+            UiController.Instance.unitProgress.text = "% Completed: " + ((buildTime/5f)*100).ToString("F0");
             yield return 0;
            
         }
@@ -105,8 +114,9 @@ public class BuildingMovement : MonoBehaviour {
             GameObject madeUnit = (GameObject)Instantiate(unitList[0], this.transform.position + unitPlacement3D, Quaternion.identity);
 
         }
-        shouldMakeUnit = false;
+        //shouldMakeUnit = false;
         isCoroutineRunning = false ;
         UiController.Instance.uiMode = 1f;
+        makingUnit = false;
     }
 }
