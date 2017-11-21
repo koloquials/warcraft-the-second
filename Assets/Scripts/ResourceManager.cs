@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour {
-
+    public static ResourceManager Instance = new ResourceManager();
 	//it might make sense to make this class static. If the player needs to regularly access its functions/values
 	//otherwise looks good
 	
@@ -19,7 +19,7 @@ public class ResourceManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        Instance = this;
 		gold = 800;
 		wood = 400;
 		oil = 0;
@@ -38,7 +38,7 @@ public class ResourceManager : MonoBehaviour {
 
 	public void AddGold (){
 
-		gold += 25;
+		gold += 100;
 
 	}
 

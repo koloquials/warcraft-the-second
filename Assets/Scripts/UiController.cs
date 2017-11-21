@@ -16,6 +16,7 @@ public class UiController : MonoBehaviour {
     public Canvas winScreen;
     public Canvas pauseMenu;
     public Canvas pauseButton;
+    public Text goldText, woodText, oilText;
     public Text names;
     public Text pauseText;
     public Text buildingProgress;
@@ -30,7 +31,9 @@ public class UiController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
+        goldText.text = "Gold: "+ResourceManager.Instance.gold;
+       woodText.text = "Wood: " + ResourceManager.Instance.wood;
+        oilText.text = "Oil: " + ResourceManager.Instance.oil;
 
         if (uiMode == 0)//uiMode 0 is the mode when you have nothing selected, or clicked on the ground/trees
         {//It turns off basically all the uiElements
