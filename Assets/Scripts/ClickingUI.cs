@@ -120,28 +120,35 @@ public class ClickingUI : MonoBehaviour {
                         if (shootRayHit.transform.GetChild(0).name == "Wireframe")
                         {
                             wireframe.enabled = true;
-                            if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall")
+                            if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall"|| shootRayHit.transform.tag == "Gold Mine")
                             {
                                 Debug.Log("Hitting a building");
-// If the barracks is being built, send the worker to build the barracks and allow it to move (chosen means it is the builder peon, so it has to move to the building while other can move other places)
-                                if (buildPlace != Vector3.zero)
+                                if (shootRayHit.transform.tag != "Barracks")
                                 {
-                                    SpencersnavAgent unitMove = builderUnit.GetComponent<SpencersnavAgent>();
-                                    unitMove.chosen = true;
+                                    UiController.Instance.uiMode = 1;
                                 }
-				// Checks the status of the builidng, if it is being built or creating units, it needs special UI
-                                BuildingMovement checkIfBuilt = previousObject.GetComponent<BuildingMovement>();
-                                if (checkIfBuilt.canCreate)
+                                else if (shootRayHit.transform.tag == "Barracks")
                                 {
-                                    UiController.Instance.uiMode = 1; // uiMode 1 is the regular building ui mode
-                                }
-                                if (!checkIfBuilt.canCreate)
-                                {
-                                    UiController.Instance.uiMode = 0.5f; //uiMode 0.5 is the "building being built" uiMode
-                                }
-                                if (checkIfBuilt.makingUnit)
-                                {
-                                    UiController.Instance.uiMode = 1.5f; //uiMode 1.5 is the "creating unit" uiMode
+                                    // If the barracks is being built, send the worker to build the barracks and allow it to move (chosen means it is the builder peon, so it has to move to the building while other can move other places)
+                                    if (buildPlace != Vector3.zero)
+                                    {
+                                        SpencersnavAgent unitMove = builderUnit.GetComponent<SpencersnavAgent>();
+                                        unitMove.chosen = true;
+                                    }
+                                    // Checks the status of the builidng, if it is being built or creating units, it needs special UI
+                                    BuildingMovement checkIfBuilt = previousObject.GetComponent<BuildingMovement>();
+                                    if (checkIfBuilt.canCreate)
+                                    {
+                                        UiController.Instance.uiMode = 1; // uiMode 1 is the regular building ui mode
+                                    }
+                                    if (!checkIfBuilt.canCreate)
+                                    {
+                                        UiController.Instance.uiMode = 0.5f; //uiMode 0.5 is the "building being built" uiMode
+                                    }
+                                    if (checkIfBuilt.makingUnit)
+                                    {
+                                        UiController.Instance.uiMode = 1.5f; //uiMode 1.5 is the "creating unit" uiMode
+                                    }
                                 }
                             }
                             if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt")//If you are clicking on a peon or a grunt, go into uiMode 2
