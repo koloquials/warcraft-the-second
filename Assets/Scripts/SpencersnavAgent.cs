@@ -250,6 +250,7 @@ public class SpencersnavAgent : MonoBehaviour
                 moveOverride = false;
                 if (resource == "Wood")
                 {
+                    Debug.Log("Destroying Tree");
                     Destroy(treeChopping.gameObject);
                 }
                 yield break;

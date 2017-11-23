@@ -21,7 +21,7 @@ public class ResourceManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Instance = this;
-		gold = 800;
+		gold = 300;
 		wood = 400;
 		oil = 0;
 		food = 5;
