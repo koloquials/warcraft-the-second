@@ -112,7 +112,7 @@ MonoBehaviour:
   level: 1
   healthCurrent: 60
   healthTotal: 60
-  armor: 2
+  armor: 1
   damageMin: 2
   damageMax: 9
   pierceDamage: 3
