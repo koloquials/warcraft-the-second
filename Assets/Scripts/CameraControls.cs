@@ -39,10 +39,10 @@ public class CameraControls : MonoBehaviour {
 		//transform.position = unit.transform.position + offset; 
 
 		//Move Camera with Arrow Keys (Direct Movement) [instead of inverse]
-		if (Input.GetKey (KeyCode.UpArrow) && transform.position.z < -92.5f) {
+		if (Input.GetKey (KeyCode.UpArrow) && transform.position.z < 13f) {
 			transform.position += Vector3.back * arrowCameraSpeed * Time.deltaTime;
 		}
-		if (Input.GetKey (KeyCode.DownArrow) && transform.position.z > 13f) {
+		if (Input.GetKey (KeyCode.DownArrow) && transform.position.z > -92.5f) {
 			transform.position += Vector3.forward * arrowCameraSpeed * Time.deltaTime;
 		}
 		if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -52.1f) {

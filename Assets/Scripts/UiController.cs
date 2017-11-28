@@ -87,7 +87,9 @@ public class UiController : MonoBehaviour {
         {
             if (ClickingUI.Instance.previousObject != null)
             {
+                if (ClickingUI.Instance.previousObject.tag != "Ground"){
                 names.text = "" + ClickingUI.Instance.previousObject.tag;
+            }
             }
             creatingUnit.enabled = false;
             buildStuff.enabled = false;
