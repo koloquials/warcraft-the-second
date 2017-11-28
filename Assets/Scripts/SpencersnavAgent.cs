@@ -172,7 +172,7 @@ public class SpencersnavAgent : MonoBehaviour
     {
         if(other.tag=="Gold Mine")
         {
-            UiController.Instance.uiMode = 0;
+           // UiController.Instance.uiMode = 0;
         }
     }
     public void GoldLoop()
