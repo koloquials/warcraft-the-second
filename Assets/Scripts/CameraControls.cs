@@ -58,19 +58,19 @@ public class CameraControls : MonoBehaviour {
 		mousePosY = Input.mousePosition.y / Screen.height;
 		//Debug.Log("MousePosY =" + mousePosY);
 
-		if (mousePosY < 0.01f && transform.position.z > -92.5f) {
+		if (mousePosY < 0.08f && transform.position.z > -92.5f) {
 			transform.position += Vector3.forward * mouseCameraSpeed * Time.deltaTime;
 			Debug.Log("Move Camera Down");
 		}
-		if (mousePosY > 0.99f && transform.position.z < 13f) {
+		if (mousePosY > 0.92f && transform.position.z < 13f) {
 			transform.position += Vector3.back * mouseCameraSpeed * Time.deltaTime;
 			Debug.Log("Move Camera Up");
 		}
-		if (mousePosX < 0.01f && transform.position.x > -52.1f) {
+		if (mousePosX < 0.29f && mousePosX > 0.21f && transform.position.x > -52.1f) {
 			transform.position += Vector3.right * mouseCameraSpeed * Time.deltaTime;
 			Debug.Log("Move Camera Left");
 		}
-		if (mousePosX > 0.99f && transform.position.x < 31f) {
+		if (mousePosX > 0.92f && transform.position.x < 31f) {
 			transform.position += Vector3.left * mouseCameraSpeed * Time.deltaTime;
 			Debug.Log("Move Camera Right");
 		}
