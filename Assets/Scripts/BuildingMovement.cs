@@ -20,6 +20,7 @@ public class BuildingMovement : MonoBehaviour {
     public bool shouldMakeUnit;
     bool isCoroutineRunning = false;
     public bool makingUnit = false;
+    public bool isStartingGreatHall = false;
     // Use this for initialization
     void Start () {
         
@@ -33,58 +34,63 @@ public class BuildingMovement : MonoBehaviour {
 	
 	
     void Update() {
-        shouldMakeUnit = false;
-        if (placing) {
-            canCreate = false;
-            placed = false;
-            UiController.Instance.spawnBuilding.enabled = false;//While it is being selected, the building follows the mouse so it can be placed
-        Vector3 temp = this.transform.position;
-        temp.x = ClickingUI.Instance.placement.x;
-        temp.z = ClickingUI.Instance.placement.z;
-        temp.y = 0.5f;
-            this.transform.position = temp;
-        }
-       
-	    //shouldn't this be Input.GetMouseButtonDown(0) && placing?
-        if (Input.GetMouseButtonDown(0)&&!placed)//When the player clicks, place the building where the mouse is
+        if (!isStartingGreatHall)
         {
+            shouldMakeUnit = false;
+            if (placing)
+            {
+                canCreate = false;
+                placed = false;
+                UiController.Instance.spawnBuilding.enabled = false;//While it is being selected, the building follows the mouse so it can be placed
+                Vector3 temp = this.transform.position;
+                temp.x = ClickingUI.Instance.placement.x;
+                temp.z = ClickingUI.Instance.placement.z;
+                temp.y = 0.5f;
+                this.transform.position = temp;
+            }
 
-            placing = false;
-            UiController.Instance.spawnBuilding.enabled = true;
-            ClickingUI.Instance.buildPlace = this.transform.position;//Set the build place for teh worker to move to so he can build the building
-            ClickingUI.Instance.buildBuilding = this.gameObject;
-            placed = true;
-            
-        }
-        if (Input.GetMouseButtonDown(1)&&!placed)
-        {
-            Destroy(this.gameObject);
-        }
-        if (!canCreate&&!placing&&shouldBuild)//If it isnt being placed and should be getting built, increment the opacity
-        {
-            //setting your build percentage with colours feels really janky. Should be other way around.
-            if (this.tag == "Barracks"&&!paidFor)
+            //shouldn't this be Input.GetMouseButtonDown(0) && placing?
+            if (Input.GetMouseButtonDown(0) && !placed)//When the player clicks, place the building where the mouse is
             {
-                ResourceManager.Instance.gold -= 700;
-                ResourceManager.Instance.wood -= 450;
-                paidFor = true;
+
+                placing = false;
+                UiController.Instance.spawnBuilding.enabled = true;
+                ClickingUI.Instance.buildPlace = this.transform.position;//Set the build place for teh worker to move to so he can build the building
+                ClickingUI.Instance.buildBuilding = this.gameObject;
+                placed = true;
+
             }
-            percentageBuilt = (buildColor.color.a - 0.2f) / 0.8f;
-            if (buildColor.color.a < 1.0)
+            if (Input.GetMouseButtonDown(1) && !placed)
             {
-                buildColor.color += addRed;
+                Destroy(this.gameObject);
             }
-            else
+            if (!canCreate && !placing && shouldBuild)//If it isnt being placed and should be getting built, increment the opacity
             {
-                canCreate = true;//Passes into the unit script, allowing it to move again, and allow for it to build units
+                //setting your build percentage with colours feels really janky. Should be other way around.
+                if (this.tag == "Barracks" && !paidFor)
+                {
+                    ResourceManager.Instance.gold -= 700;
+                    ResourceManager.Instance.wood -= 450;
+                    paidFor = true;
+                }
+                percentageBuilt = (buildColor.color.a - 0.2f) / 0.8f;
+                if (buildColor.color.a < 1.0)
+                {
+                    buildColor.color += addRed;
+                }
+                else
+                {
+                    canCreate = true;//Passes into the unit script, allowing it to move again, and allow for it to build units
+                }
+
             }
-            
+
         }
 	}
-    public void CreateUnit()
+    public void CreateUnit (int goldCost)
     {
         makingUnit = true;
-        ResourceManager.Instance.gold -= 600;
+        ResourceManager.Instance.gold -= goldCost;
        // Debug.Log("here");
         // bool unitCreated = false;
         shouldMakeUnit = true;
