@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 135190308903841252}
   - component: {fileID: 114061802544425050}
   - component: {fileID: 114966226637815622}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EnemyFootman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
