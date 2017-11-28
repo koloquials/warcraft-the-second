@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CombatScript : MonoBehaviour { // Combat for player units.
 
+	UnityEngine.AI.NavMeshAgent agent;
 
 	private float damageDealt;
 
@@ -33,13 +34,13 @@ public class CombatScript : MonoBehaviour { // Combat for player units.
 		UnitStatManager statManager = GetComponent<UnitStatManager>();
 		UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();
 
-		// Outside of your range? Move within your range!
+//		 //Outside of your range? Move within your range!
 //		if ( (Mathf.Abs (other.transform.position.x - transform.position.x)) > statManager.range
 //			|| (Mathf.Abs (other.transform.position.y - transform.position.y)) > statManager.range
 //			|| (Mathf.Abs (other.transform.position.z - transform.position.z)) > statManager.range) { 
 //
 //			//Debug.Log ("Enemy incoming!");
-//			//agent.SetDestination (other.transform.position);
+//			agent.SetDestination (other.transform.position);
 //
 //		} else { // Stop once within your range.
 //
