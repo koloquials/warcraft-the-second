@@ -8,7 +8,7 @@ public class BuildingMovement : MonoBehaviour {
     public bool placed;//Whether it has been placed
 
 
-
+    bool paidFor = false;
    public bool canCreate;//Whether it can create units
    public bool creating;
    public bool shouldBuild;//Whether it should be getting built
@@ -56,14 +56,19 @@ public class BuildingMovement : MonoBehaviour {
             placed = true;
             
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)&&!placed)
         {
             Destroy(this.gameObject);
         }
         if (!canCreate&&!placing&&shouldBuild)//If it isnt being placed and should be getting built, increment the opacity
         {
-	//setting your build percentage with colours feels really janky. Should be other way around.
-		
+            //setting your build percentage with colours feels really janky. Should be other way around.
+            if (this.tag == "Barracks"&&!paidFor)
+            {
+                ResourceManager.Instance.gold -= 700;
+                ResourceManager.Instance.wood -= 450;
+                paidFor = true;
+            }
             percentageBuilt = (buildColor.color.a - 0.2f) / 0.8f;
             if (buildColor.color.a < 1.0)
             {
@@ -79,6 +84,7 @@ public class BuildingMovement : MonoBehaviour {
     public void CreateUnit()
     {
         makingUnit = true;
+        ResourceManager.Instance.gold -= 600;
        // Debug.Log("here");
         // bool unitCreated = false;
         shouldMakeUnit = true;
