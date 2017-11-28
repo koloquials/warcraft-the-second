@@ -25,6 +25,8 @@ GameObject:
   - component: {fileID: 54888765838388918}
   - component: {fileID: 65019653641696888}
   - component: {fileID: 195990899473996140}
+  - component: {fileID: 114433089866103540}
+  - component: {fileID: 114983495208943140}
   m_Layer: 0
   m_Name: Grunt
   m_TagString: Grunt
@@ -213,7 +215,50 @@ MonoBehaviour:
   agent: {fileID: 0}
   chosen: 0
   canMove: 0
+  moveOverride: 0
   moveToSpot: {x: 0, y: 0, z: 0}
+  currentlyCarrying: 0
+  carryingCapacity: 0
+  inResourceLoop: 0
+  resource: 
+  inCoroutine: 0
+  treeChopping: {fileID: 0}
+  goldMine: {fileID: 0}
+  closestHall: {fileID: 0}
+--- !u!114 &114433089866103540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1064245678795688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e08a2d4cae971489cbc034997ce46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canAttack: 1
+--- !u!114 &114983495208943140
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1064245678795688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495aa87e878a0490ba378e2cb86f319b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: PlayerGrunt
+  level: 1
+  healthCurrent: 60
+  healthTotal: 60
+  armor: 2
+  damageMin: 2
+  damageMax: 9
+  pierceDamage: 3
+  range: 1
+  sight: 4
+  speed: 10
 --- !u!195 &195990899473996140
 NavMeshAgent:
   m_ObjectHideFlags: 1
