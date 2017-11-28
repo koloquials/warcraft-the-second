@@ -26,6 +26,7 @@ public class UiController : MonoBehaviour {
                          // Use this for initialization
     void Start()
     {
+        UnPause();
         Instance = this;
         uiMode = 0;
     }
@@ -38,7 +39,7 @@ public class UiController : MonoBehaviour {
 
         if (uiMode == 0)//uiMode 0 is the mode when you have nothing selected, or clicked on the ground/trees
         {//It turns off basically all the uiElements
-
+            badResources.text = "";
             names.text = "";
 
             if (spawnUnit.enabled == true)
@@ -97,7 +98,7 @@ public class UiController : MonoBehaviour {
             {
 
                 //spawnUnit.interactable = true;
-                CreateUnit(ClickingUI.Instance.previousObject);
+                CreateUnit(ClickingUI.Instance.previousObject, "Grunt");
 
             }
         }
@@ -131,13 +132,16 @@ public class UiController : MonoBehaviour {
             }
         }
     }
-    public void CreateUnit(GameObject currentlySelected)//Creates a unit around the currently selected building
+    public void CreateUnit(GameObject currentlySelected, string unitToMake)//Creates a unit around the currently selected building
     {
         BuildingMovement shouldBuild = currentlySelected.GetComponent<BuildingMovement>();
         bool canMakeUnit = true;
+        int goldCost=0;
+        if (unitToMake == "Grunt") { goldCost = 600; }
+        if (unitToMake == "Peon") { goldCost = 400; }
         if (!shouldBuild.makingUnit)
         {
-            if (ResourceManager.Instance.gold < 600)
+            if (ResourceManager.Instance.gold < goldCost)
             {
                 StartCoroutine(NotEnoughResources("Gold"));
                 badResources.text = "";
@@ -147,7 +151,7 @@ public class UiController : MonoBehaviour {
             {
                 //  badResources="Not Enough Gold"
 
-                shouldBuild.CreateUnit();
+                shouldBuild.CreateUnit(goldCost);
             }
         }
     }
