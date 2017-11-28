@@ -31,8 +31,20 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
    public void CreateUnit()
     {
-        UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject);
-    
+        if (ClickingUI.Instance.previousObject.tag == "Barracks")
+        {
+            UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Grunt");
+        }
+        if (ClickingUI.Instance.previousObject.tag == "Great Hall")
+        {
+            UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Peon");
+        }
+
+    }
+    public void CreatePeon()
+    {
+        UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Peon");
+
     }
 
     public void CreateBuilding()

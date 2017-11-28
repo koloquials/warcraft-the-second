@@ -10,7 +10,7 @@ public class SpencersnavAgent : MonoBehaviour
 	public UnityEngine.AI.NavMeshAgent agent;
     public bool chosen;//If they are chosen to build a building
     public bool canMove;//If they can move
-    bool moveOverride;//Overrides thier ability to move, because the clickingUI script can get a unit to move when it shouldnt be able to
+    public bool moveOverride;//Overrides thier ability to move, because the clickingUI script can get a unit to move when it shouldnt be able to
     Rigidbody unitRigidbody;
     Renderer unitRenderer;
     MeshRenderer wireframe;
@@ -59,23 +59,23 @@ public class SpencersnavAgent : MonoBehaviour
                         {
                             carryingCapacity = 250;
                             resource = "Gold";
-                            UiController.Instance.uiMode = 0;
+                            
                             inResourceLoop = true;
-                            Debug.Log("Going to Get Gold");
+                         //   Debug.Log("Going to Get Gold");
                             GoldLoop();
                         }
                         if (hit.transform.gameObject.tag == "Tree")//34 seconds to chop down a tree
                         {
                             carryingCapacity = 2000;
                             resource = "Wood";
-                            UiController.Instance.uiMode = 0;
+                      
                             Debug.Log("Going to Get trees");
                             inResourceLoop = true;
                             GoldLoop();
                         }
                         if(hit.transform.gameObject.tag != "Tree"&& hit.transform.gameObject.tag != "Gold Mine")
                         {
-                            Debug.Log("Get Away from resource");
+                         //   Debug.Log("Get Away from resource");
                             inResourceLoop = false;
                             agent.SetDestination(hit.point);//Move to where the player clicks, pathfinding around obstacles
                         }
@@ -128,7 +128,7 @@ public class SpencersnavAgent : MonoBehaviour
                 VictoryController.Instance.inLocation = true;
             }
         }
-        if(other.tag=="Gold Mine")
+        if(other.tag=="Gold Mine"&&resource=="Gold")
         {
             if (inResourceLoop)
             {
@@ -138,13 +138,18 @@ public class SpencersnavAgent : MonoBehaviour
                 StartCoroutine(GetResources());
             }
         }
-        if (other.tag == "Tree")
+        if (other.tag == "Tree" && resource == "Wood")
         {
             if (inResourceLoop)
             {
+                // Debug.Log("In Resource Loop");
+                if (currentlyCarrying == 0)
+                {
+                    this.agent.SetDestination(this.transform.position);
+                }
                 treeChopping = other.gameObject;
                 carryingCapacity = 2000;
-                canMove = false;
+               // canMove = false;
                 //  moveOverride = true;
 
                 StartCoroutine(GetResources());
@@ -161,6 +166,13 @@ public class SpencersnavAgent : MonoBehaviour
     
                 StartCoroutine(DroppingResources());
             }
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag=="Gold Mine")
+        {
+            UiController.Instance.uiMode = 0;
         }
     }
     public void GoldLoop()
@@ -191,7 +203,7 @@ public class SpencersnavAgent : MonoBehaviour
             {
                 if (resource == "Wood")
                 {
-                    Debug.Log("Searching for trees");
+                  //  Debug.Log("Searching for trees");
                     GameObject[] forest;
                     GameObject closestTree = null;
                     forest = GameObject.FindGameObjectsWithTag("Tree");
@@ -220,6 +232,7 @@ public class SpencersnavAgent : MonoBehaviour
             }
             if (currentlyCarrying >= carryingCapacity)
             {
+                Debug.Log("Going home");
                 unitRenderer.enabled = true;
                 canMove = true;
                 moveOverride = false;
@@ -237,12 +250,26 @@ public class SpencersnavAgent : MonoBehaviour
             yield break;
         }
         inCoroutine = true;
- 
+       // Debug.Log("Getting Resources");
         for (int collectTime = 0; collectTime < carryingCapacity; collectTime++)
         {
-            moveOverride = true;
-            unitRenderer.enabled = false;
-            wireframe.enabled = false;
+            if (!inResourceLoop)
+            {
+                if (currentlyCarrying != carryingCapacity)
+                {
+                   // Debug.Log("Resetting");
+                    currentlyCarrying = 0;
+                }
+                inCoroutine = false;
+                yield break;
+            }
+            if (this.resource == "Gold")
+            {
+                
+                moveOverride = true;
+                unitRenderer.enabled = false;
+                wireframe.enabled = false;
+            }
             if (currentlyCarrying >= carryingCapacity)
             {
                 unitRenderer.enabled = true;
