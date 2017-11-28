@@ -34,6 +34,11 @@ public class EnemyMeleeAI : MonoBehaviour { // Once player units move within rad
 		// Size of detection collider based on sight stat. (Tweak based on feel?)
 		visionRadius.radius = statManager.sight * 1.5f;
 
+		// Die if killed.
+		if (statManager.healthCurrent < 0) {
+			Destroy (this.gameObject);
+		}
+
 	}
 
 	void OnTriggerStay (Collider other){ // Detect unit within radius, navigate to unit, if close enough do damage.
