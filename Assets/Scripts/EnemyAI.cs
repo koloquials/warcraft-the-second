@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMeleeAI : MonoBehaviour { // Once player units move within radius, move to unit. 
+public class EnemyAI : MonoBehaviour { // Once player units move within radius, move to unit. 
 											// Once close do damage in timed intervals.
 											// Only follow for a certain amount of time
 
