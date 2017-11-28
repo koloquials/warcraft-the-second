@@ -13,19 +13,25 @@ public class SpencersnavAgent : MonoBehaviour
     bool moveOverride;//Overrides thier ability to move, because the clickingUI script can get a unit to move when it shouldnt be able to
     Rigidbody unitRigidbody;
     Renderer unitRenderer;
+    MeshRenderer wireframe;
     bool placedOutside = false;
     public Vector3 moveToSpot;
     public int currentlyCarrying=0;
-    public int carryingCapacity=100;
+    public int carryingCapacity;
     public bool inResourceLoop;
+    public string resource;
     public bool inCoroutine;
     public RaycastHit hit;
+    public GameObject treeChopping,goldMine,closestHall ;
+    GameObject[] townHalls;
     private void Awake()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
     void Start ()
 	{
+        carryingCapacity = 250;
+        wireframe = this.gameObject.transform.GetChild(0).GetComponent<MeshRenderer>();
         unitRenderer = GetComponent<MeshRenderer>();
         unitRigidbody = this.GetComponent<Rigidbody>();
         
@@ -34,6 +40,7 @@ public class SpencersnavAgent : MonoBehaviour
 
 	void Update () 
 	{
+       // Debug.Log(carryingCapacity);
         unitRigidbody.velocity = Vector3.zero;
         unitRigidbody.angularVelocity = Vector3.zero;
 
@@ -48,15 +55,27 @@ public class SpencersnavAgent : MonoBehaviour
 
                     if (Physics.Raycast(ray, out hit, 100))
                     {
-                        if(hit.transform.gameObject.tag == "Gold Mine")
+                        if(hit.transform.gameObject.tag == "Gold Mine")//4 seconds
                         {
+                            carryingCapacity = 250;
+                            resource = "Gold";
+                            UiController.Instance.uiMode = 0;
+                            inResourceLoop = true;
                             Debug.Log("Going to Get Gold");
+                            GoldLoop();
+                        }
+                        if (hit.transform.gameObject.tag == "Tree")//34 seconds to chop down a tree
+                        {
+                            carryingCapacity = 2000;
+                            resource = "Wood";
+                            UiController.Instance.uiMode = 0;
+                            Debug.Log("Going to Get trees");
                             inResourceLoop = true;
                             GoldLoop();
                         }
-                        else
+                        if(hit.transform.gameObject.tag != "Tree"&& hit.transform.gameObject.tag != "Gold Mine")
                         {
-                            Debug.Log("Get Away from gold");
+                            Debug.Log("Get Away from resource");
                             inResourceLoop = false;
                             agent.SetDestination(hit.point);//Move to where the player clicks, pathfinding around obstacles
                         }
@@ -111,41 +130,58 @@ public class SpencersnavAgent : MonoBehaviour
         }
         if(other.tag=="Gold Mine")
         {
-          
-            canMove = false;
-          //  moveOverride = true;
-           
-            StartCoroutine(GetResources());
+            if (inResourceLoop)
+            {
+                canMove = false;
+                //  moveOverride = true;
+
+                StartCoroutine(GetResources());
+            }
+        }
+        if (other.tag == "Tree")
+        {
+            if (inResourceLoop)
+            {
+                treeChopping = other.gameObject;
+                carryingCapacity = 2000;
+                canMove = false;
+                //  moveOverride = true;
+
+                StartCoroutine(GetResources());
+            }
         }
         if(other.tag=="Great Hall")
         {
             if (currentlyCarrying > 0)
             {
+                wireframe.enabled = false;
                 unitRenderer.enabled = false;
                 canMove = false;
                 //moveOverride = true;
-
+    
                 StartCoroutine(DroppingResources());
             }
         }
     }
     public void GoldLoop()
     {
-        GameObject goldMine = hit.transform.gameObject;
-        GameObject[] townHalls;
-        GameObject closestHall=null;
-        townHalls=GameObject.FindGameObjectsWithTag("Great Hall");
-        foreach(GameObject hall in townHalls)
+        if ( hit.collider != null && hit.collider.gameObject != null)
         {
-            if (hall != null)
+             goldMine = hit.transform.gameObject;
+             closestHall = null;
+            townHalls = GameObject.FindGameObjectsWithTag("Great Hall");
+            foreach (GameObject hall in townHalls)
             {
-                if (closestHall == null)
+                if (hall != null)
                 {
-                    closestHall = hall;
-                }
-                if((goldMine.transform.position-hall.transform.position).magnitude<( goldMine.transform.position - closestHall.transform.position).magnitude)
-                {
-                    closestHall = hall;
+                    if (closestHall == null)
+                    {
+                        closestHall = hall;
+                    }
+                    if ((goldMine.transform.position - hall.transform.position).magnitude < (goldMine.transform.position - closestHall.transform.position).magnitude)
+                    {
+                        closestHall = hall;
+                    }
                 }
             }
         }
@@ -153,7 +189,34 @@ public class SpencersnavAgent : MonoBehaviour
         {
             if (currentlyCarrying == 0)
             {
-                agent.SetDestination(goldMine.transform.position);
+                if (resource == "Wood")
+                {
+                    Debug.Log("Searching for trees");
+                    GameObject[] forest;
+                    GameObject closestTree = null;
+                    forest = GameObject.FindGameObjectsWithTag("Tree");
+                    foreach (GameObject tree in forest)
+                    {
+                        if (tree != null)
+                        {
+                            if (closestTree == null)
+                            {
+                                closestTree = tree;
+                            }
+                            if ((closestHall.transform.position - tree.transform.position).magnitude < (closestHall.transform.position - closestTree.transform.position).magnitude)
+                            {
+                                closestTree = tree;
+                            }
+                        }
+                    }
+                    treeChopping = closestTree;
+                    agent.SetDestination(closestTree.transform.position);
+                }
+                else
+                {
+                    agent.SetDestination(goldMine.transform.position);
+                }
+
             }
             if (currentlyCarrying >= carryingCapacity)
             {
@@ -169,7 +232,6 @@ public class SpencersnavAgent : MonoBehaviour
     }
      IEnumerator GetResources()
     {
-
         if (inCoroutine)
         {
             yield break;
@@ -180,11 +242,17 @@ public class SpencersnavAgent : MonoBehaviour
         {
             moveOverride = true;
             unitRenderer.enabled = false;
+            wireframe.enabled = false;
             if (currentlyCarrying >= carryingCapacity)
             {
                 unitRenderer.enabled = true;
                 inCoroutine = false;
                 moveOverride = false;
+                if (resource == "Wood")
+                {
+                    Debug.Log("Destroying Tree");
+                    Destroy(treeChopping.gameObject);
+                }
                 yield break;
             }
             currentlyCarrying++;
@@ -197,14 +265,16 @@ public class SpencersnavAgent : MonoBehaviour
     }
     IEnumerator DroppingResources()
     {
-        Debug.Log("Dropping it Off");
+       // Debug.Log("Dropping it Off");
         if (inCoroutine)
         {
           //  Debug.Log("BREAK");
             yield break;
         }
-        Debug.Log("Dropping it Off");
+       // Debug.Log("Dropping it Off");
         inCoroutine = true;
+        currentlyCarrying = 250;
+        carryingCapacity = 250;
         for (int dropTime = currentlyCarrying; dropTime > 0; dropTime-=1)
         {
             moveOverride = true;
@@ -214,7 +284,14 @@ public class SpencersnavAgent : MonoBehaviour
                
             {
                 moveOverride = false;
-                ResourceManager.Instance.AddGold();
+                if (resource == "Gold")
+                {
+                    ResourceManager.Instance.AddGold();
+                }
+                if (resource == "Wood")
+                {
+                    ResourceManager.Instance.AddWood();
+                }
             }
         }
        

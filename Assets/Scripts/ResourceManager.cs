@@ -11,7 +11,8 @@ public class ResourceManager : MonoBehaviour {
 	public int wood;
 	public int oil;
 	public int food;
-
+    public int goldPerDrop = 100;
+    public int woodPerDrop = 100;
 	public int foodRate = 1;
 	public int totalMen = 5;
 
@@ -20,7 +21,7 @@ public class ResourceManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Instance = this;
-		gold = 800;
+		gold = 300;
 		wood = 400;
 		oil = 0;
 		food = 5;
@@ -38,13 +39,13 @@ public class ResourceManager : MonoBehaviour {
 
 	public void AddGold (){
 
-		gold += 100;
+		gold += goldPerDrop;
 
 	}
 
 	public void AddWood (){
 
-		wood += 25;
+		wood += woodPerDrop;
 
 	}
 
