@@ -60,19 +60,19 @@ public class CameraControls : MonoBehaviour {
 
 		if (mousePosY < 0.01f && transform.position.z > -92.5f) {
 			transform.position += Vector3.forward * mouseCameraSpeed * Time.deltaTime;
-			Debug.Log("Move Camera Down");
+			//Debug.Log("Move Camera Down");
 		}
 		if (mousePosY > 0.99f && transform.position.z < 13f) {
 			transform.position += Vector3.back * mouseCameraSpeed * Time.deltaTime;
-			Debug.Log("Move Camera Up");
+			//Debug.Log("Move Camera Up");
 		}
 		if (mousePosX < 0.01f && transform.position.x > -52.1f) {
 			transform.position += Vector3.right * mouseCameraSpeed * Time.deltaTime;
-			Debug.Log("Move Camera Left");
+			//Debug.Log("Move Camera Left");
 		}
 		if (mousePosX > 0.99f && transform.position.x < 31f) {
 			transform.position += Vector3.left * mouseCameraSpeed * Time.deltaTime;
-			Debug.Log("Move Camera Right");
+			//Debug.Log("Move Camera Right");
 		}
     } 
 }

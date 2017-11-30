@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 195421690031061070}
   - component: {fileID: 114949256695891492}
   - component: {fileID: 114964170266881858}
+  - component: {fileID: 135361714064695820}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Peon
@@ -59,7 +60,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1658961943506370}
   m_LocalRotation: {x: -0.067666985, y: 0, z: 0, w: 0.99770796}
-  m_LocalPosition: {x: 20.1, y: -0.008, z: -66.404}
+  m_LocalPosition: {x: 20.47, y: -0.008, z: -66.404}
   m_LocalScale: {x: 34.60927, y: 34.36569, z: 48.47194}
   m_Children:
   - {fileID: 4495445782383712}
@@ -222,6 +223,8 @@ MonoBehaviour:
   inResourceLoop: 0
   resource: 
   inCoroutine: 0
+  unitCollider: {fileID: 0}
+  returningToResource: 0
   treeChopping: {fileID: 0}
   goldMine: {fileID: 0}
   closestHall: {fileID: 0}
@@ -259,6 +262,18 @@ MonoBehaviour:
   range: 1
   sight: 4
   speed: 10
+--- !u!135 &135361714064695820
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658961943506370}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.026976328
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &195421690031061070
 NavMeshAgent:
   m_ObjectHideFlags: 1
@@ -268,7 +283,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.016
-  m_Speed: 8
+  m_Speed: 7
   m_Acceleration: 5000
   avoidancePriority: 50
   m_AngularSpeed: 5000
