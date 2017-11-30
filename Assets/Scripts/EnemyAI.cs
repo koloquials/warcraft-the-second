@@ -32,12 +32,7 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 		SphereCollider visionRadius = GetComponent<SphereCollider>();
 
 		// Size of detection collider based on sight stat. (Tweak based on feel?)
-		visionRadius.radius = statManager.sight * 1.5f;
-
-		// Die if killed.
-		if (statManager.healthCurrent < 0) {
-			Destroy (this.gameObject);
-		}
+		visionRadius.radius = statManager.sight * 3f;
 
 	}
 
@@ -49,9 +44,9 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 		UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();
 
 		// Outside of your range? Move within your range!
-		if ( (Mathf.Abs (other.transform.position.x - transform.position.x)) > statManager.range
-			|| (Mathf.Abs (other.transform.position.y - transform.position.y)) > statManager.range
-			|| (Mathf.Abs (other.transform.position.z - transform.position.z)) > statManager.range) { 
+		if ( (Mathf.Abs (other.transform.position.x - transform.position.x)) > (statManager.range * 2f)
+			|| (Mathf.Abs (other.transform.position.y - transform.position.y)) > (statManager.range * 2f)
+			|| (Mathf.Abs (other.transform.position.z - transform.position.z)) > (statManager.range * 2f)) { 
 
 			//Debug.Log ("Enemy incoming!");
 			agent.SetDestination (other.transform.position);
@@ -64,9 +59,9 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 		}
 
 		// Do damage when within range.
-		if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < statManager.range
-			&& (Mathf.Abs (other.transform.position.y - transform.position.y)) < statManager.range
-			&& (Mathf.Abs (other.transform.position.z - transform.position.z)) < statManager.range) {
+		if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < (statManager.range * 2f)
+			&& (Mathf.Abs (other.transform.position.y - transform.position.y)) < (statManager.range * 2f)
+			&& (Mathf.Abs (other.transform.position.z - transform.position.z)) < (statManager.range * 2f) ) {
 
 			if (canAttack) {
 

@@ -22,6 +22,12 @@ public class UnitStatManager : MonoBehaviour { // ALL STATS MUST BE ASSIGNED IN 
 		if (Input.GetKeyDown (KeyCode.Tab)) {
 			Debug.Log ("[UNIT STATS]\n" + name + "\nLevel: " + level + "\n" + healthCurrent + "/" + healthTotal + " HP\nArmor: " + armor + "\nDamage: " + damageMin + "-" + damageMax + "\nRange: " + range + "\nSight: " + sight + "\nSpeed: " + speed);
 		}
+
+		// Die if killed.
+		if (healthCurrent < 0) {
+			Destroy (this.gameObject);
+			Debug.Log (this.gameObject + "died!");
+		}
 		
 	}
 }

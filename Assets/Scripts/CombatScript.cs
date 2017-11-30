@@ -18,12 +18,6 @@ public class CombatScript : MonoBehaviour { // Combat for player units.
 	
 	// Update is called once per frame
 	void Update () {
-		UnitStatManager statManager = GetComponent<UnitStatManager>();
-
-		// Die if killed.
-		if (statManager.healthCurrent < 0) {
-			Destroy (this.gameObject);
-		}
 
 	}
 
@@ -50,9 +44,9 @@ public class CombatScript : MonoBehaviour { // Combat for player units.
 //		}
 
 		// Do damage when within range.
-		if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < statManager.range
-			&& (Mathf.Abs (other.transform.position.y - transform.position.y)) < statManager.range
-			&& (Mathf.Abs (other.transform.position.z - transform.position.z)) < statManager.range) {
+		if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < (statManager.range * 2f)
+			&& (Mathf.Abs (other.transform.position.y - transform.position.y)) < (statManager.range * 2f)
+			&& (Mathf.Abs (other.transform.position.z - transform.position.z)) < (statManager.range * 2f) ) {
 
 			if (canAttack) {
 
