@@ -1969,6 +1969,36 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114433089866103540, guid: 0329216ffd431a64eb622572a77981e1,
+        type: 2}
+      propertyPath: canAttack
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65019653641696888, guid: 0329216ffd431a64eb622572a77981e1,
+        type: 2}
+      propertyPath: m_Size.z
+      value: 0.018530196
+      objectReference: {fileID: 0}
+    - target: {fileID: 65019653641696888, guid: 0329216ffd431a64eb622572a77981e1,
+        type: 2}
+      propertyPath: m_Center.z
+      value: -0.00093143655
+      objectReference: {fileID: 0}
+    - target: {fileID: 65019653641696888, guid: 0329216ffd431a64eb622572a77981e1,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.038322862
+      objectReference: {fileID: 0}
+    - target: {fileID: 65019653641696888, guid: 0329216ffd431a64eb622572a77981e1,
+        type: 2}
+      propertyPath: m_Center.x
+      value: 0.0000675713
+      objectReference: {fileID: 0}
+    - target: {fileID: 195990899473996140, guid: 0329216ffd431a64eb622572a77981e1,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0329216ffd431a64eb622572a77981e1, type: 2}
   m_IsPrefabParent: 0
@@ -23813,6 +23843,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114061802544425050, guid: cb2df18c5458a2e4bb5770bdf0153386,
+        type: 2}
+      propertyPath: canAttack
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb2df18c5458a2e4bb5770bdf0153386, type: 2}
   m_IsPrefabParent: 0
@@ -26982,6 +27017,11 @@ Prefab:
         type: 2}
       propertyPath: m_Speed
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114949256695891492, guid: f0935524f74e4ab4db535d07f2a4a4eb,
+        type: 2}
+      propertyPath: canAttack
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f0935524f74e4ab4db535d07f2a4a4eb, type: 2}
