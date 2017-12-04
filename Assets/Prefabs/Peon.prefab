@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 114949256695891492}
   - component: {fileID: 114964170266881858}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: Peon
   m_TagString: Peon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
