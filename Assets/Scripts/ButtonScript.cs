@@ -32,6 +32,10 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             Debug.Log("Cost: 800 Gold, 450 Lumber");
         }
+		if (buttonText.text == "Create Troll Axethrower")
+		{
+			Debug.Log("Cost: 500 Gold, 50 Lumber");
+		}
     }
     public void OnPointerExit(PointerEventData eventData)//Checks whether the mouse is no longer hovering over the button
     {
@@ -44,25 +48,26 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
    public void CreateUnit()
     {
+		Debug.Log (this.transform.childCount);
 		Transform hoveredButton = this.transform.GetChild(0);
 		Text buttonText = hoveredButton.GetComponent<Text>();
 		if (buttonText.text=="Create Grunt")
         {
-            UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Grunt");
+			UiController.Instance.CreateGenericUnit(ClickingUI.Instance.previousObject, "Grunt");
         }
 		if (buttonText.text=="Create Peon")
         {
-            UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Peon");
+            UiController.Instance.CreateGenericUnit(ClickingUI.Instance.previousObject, "Peon");
         }
 		if (buttonText.text=="Create Troll Axethrower")
 		{
-			UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Troll");
+			UiController.Instance.CreateGenericUnit(ClickingUI.Instance.previousObject, "Troll");
 		}
 
     }
     public void CreatePeon()
     {
-        UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Peon");
+        UiController.Instance.CreateGenericUnit(ClickingUI.Instance.previousObject, "Peon");
 
     }
 
