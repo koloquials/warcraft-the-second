@@ -149,8 +149,10 @@ public class UiController : MonoBehaviour {
         BuildingMovement shouldBuild = currentlySelected.GetComponent<BuildingMovement>();
         bool canMakeUnit = true;
         int goldCost=0;
+		int unitToMakeInt=0;
         if (unitToMake == "Grunt") { goldCost = 600; }
         if (unitToMake == "Peon") { goldCost = 400; }
+		if(unitToMake=="Troll"){goldCost =500; unitToMakeInt=1;}
         if (!shouldBuild.makingUnit)
         {
             if (ResourceManager.Instance.gold < goldCost)
@@ -163,7 +165,7 @@ public class UiController : MonoBehaviour {
             {
                 //  badResources="Not Enough Gold"
 
-                shouldBuild.CreateUnit(goldCost);
+                shouldBuild.CreateUnit(goldCost, unitToMakeInt);
             }
         }
     }

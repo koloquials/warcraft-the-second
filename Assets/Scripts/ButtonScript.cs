@@ -44,14 +44,20 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
    public void CreateUnit()
     {
-        if (ClickingUI.Instance.previousObject.tag == "Barracks")
+		Transform hoveredButton = this.transform.GetChild(0);
+		Text buttonText = hoveredButton.GetComponent<Text>();
+		if (buttonText.text=="Create Grunt")
         {
             UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Grunt");
         }
-        if (ClickingUI.Instance.previousObject.tag == "Great Hall")
+		if (buttonText.text=="Create Peon")
         {
             UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Peon");
         }
+		if (buttonText.text=="Create Troll Axethrower")
+		{
+			UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Troll");
+		}
 
     }
     public void CreatePeon()

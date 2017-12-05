@@ -87,7 +87,7 @@ public class BuildingMovement : MonoBehaviour {
 
         }
 	}
-    public void CreateUnit (int goldCost)
+	public void CreateUnit (int goldCost, int unitToMake)
     {
         makingUnit = true;
         ResourceManager.Instance.gold -= goldCost;
@@ -95,12 +95,12 @@ public class BuildingMovement : MonoBehaviour {
         // bool unitCreated = false;
         shouldMakeUnit = true;
         UiController.Instance.uiMode = 1.5f;
-        StartCoroutine(WaitTime());
+        StartCoroutine(WaitTime(unitToMake));
        
            
         }
     
-    IEnumerator WaitTime()
+	IEnumerator WaitTime(int unitToMake)
     {
         shouldMakeUnit = true;
         if (isCoroutineRunning)
@@ -123,7 +123,7 @@ public class BuildingMovement : MonoBehaviour {
             Vector2 unitPlacement2D = Random.insideUnitCircle.normalized;
             Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 4f;
             VictoryController.Instance.gruntCount++;
-            GameObject madeUnit = (GameObject)Instantiate(unitList[0], this.transform.position + unitPlacement3D, Quaternion.identity);
+            GameObject madeUnit = (GameObject)Instantiate(unitList[unitToMake], this.transform.position + unitPlacement3D, Quaternion.identity);
 
         }
         //shouldMakeUnit = false;
