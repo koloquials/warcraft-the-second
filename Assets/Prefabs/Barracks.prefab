@@ -219,6 +219,7 @@ MonoBehaviour:
   percentageBuilt: 0
   unitList:
   - {fileID: 1064245678795688, guid: 0329216ffd431a64eb622572a77981e1, type: 2}
+  - {fileID: 1838827940074534, guid: 563463e395f8d854199bf28b4b9c1780, type: 2}
   shouldMakeUnit: 0
   makingUnit: 0
   isStartingGreatHall: 0
