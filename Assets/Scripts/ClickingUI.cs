@@ -123,11 +123,11 @@ public class ClickingUI : MonoBehaviour {
                             if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall"|| shootRayHit.transform.tag == "Gold Mine")
                             {
                                 Debug.Log("Hitting a building");
-                                if (shootRayHit.transform.tag != "Barracks")
+                                if (shootRayHit.transform.tag == "Gold Mine")
                                 {
                                     UiController.Instance.uiMode = 1;
                                 }
-                                else if (shootRayHit.transform.tag == "Barracks")
+                                else if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall")
                                 {
                                     // If the barracks is being built, send the worker to build the barracks and allow it to move (chosen means it is the builder peon, so it has to move to the building while other can move other places)
                                     if (buildPlace != Vector3.zero)

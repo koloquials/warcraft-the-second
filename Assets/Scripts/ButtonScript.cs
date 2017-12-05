@@ -17,8 +17,21 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)//Checks whether the mouse is hovering over the button
     {
-        
+        Transform hoveredButton = this.transform.GetChild(0);
+        Text buttonText = hoveredButton.GetComponent<Text>();
         ClickingUI.Instance.isClickingButton = true;//If they are hovering over it, the ui is not allowed to switch and they can click through the button
+       if(buttonText.text=="Create Grunt")
+        {
+            Debug.Log("Cost: 800 Gold");
+        }
+        if (buttonText.text == "Create Peon")
+        {
+            Debug.Log("Cost: 400 Gold");
+        }
+        if (buttonText.text == "Build Barracks")
+        {
+            Debug.Log("Cost: 800 Gold, 450 Lumber");
+        }
     }
     public void OnPointerExit(PointerEventData eventData)//Checks whether the mouse is no longer hovering over the button
     {

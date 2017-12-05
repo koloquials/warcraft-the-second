@@ -18,6 +18,7 @@ public class UiController : MonoBehaviour {
     public Canvas pauseButton;
     public Text goldText, woodText, oilText;
     public Text names;
+    public Text buttonText;
     public Text pauseText;
     public Text buildingProgress;
     public Text unitProgress;
@@ -87,9 +88,20 @@ public class UiController : MonoBehaviour {
         {
             if (ClickingUI.Instance.previousObject != null)
             {
+                if (ClickingUI.Instance.previousObject.tag != "Ground"){
                 names.text = "" + ClickingUI.Instance.previousObject.tag;
             }
-            creatingUnit.enabled = false;
+            }
+            if (ClickingUI.Instance.previousObject.tag =="Great Hall")
+            {
+                buttonText.text = "Create Peon";
+            }
+            if (ClickingUI.Instance.previousObject.tag == "Barracks")
+            {
+                buttonText.text = "Create Grunt";
+            }
+            
+                creatingUnit.enabled = false;
             buildStuff.enabled = false;
             spawnBuilding.enabled = false;
             spawnUnit.enabled = true;
