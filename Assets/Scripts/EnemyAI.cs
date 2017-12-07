@@ -66,8 +66,8 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 			if (canAttack) {
 
 				// Combat equation.
-				damageDealt = ( Random.Range(statManager.damageMin, statManager.damageMax) - otherStatManager.armor ) 
-					+ statManager.pierceDamage;
+				//damageDealt = ( Random.Range(statManager.damageMin, statManager.damageMax) - otherStatManager.armor ) 
+					//+ statManager.pierceDamage;
 
 				// Rounds to smallest integer greater or equal to damageDealt. (Tweak base on feel?)
 				damageDealt = Mathf.Ceil( damageDealt * Random.Range (.5f, 1f) );

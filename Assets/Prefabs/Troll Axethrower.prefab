@@ -9,43 +9,35 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1658961943506370}
+  m_RootGameObject: {fileID: 1838827940074534}
   m_IsPrefabParent: 1
---- !u!1 &1658961943506370
+--- !u!1 &1051314158036596
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4392321542597870}
-  - component: {fileID: 33307691621447290}
-  - component: {fileID: 23919045132950132}
-  - component: {fileID: 114814710783371974}
-  - component: {fileID: 54851101994929554}
-  - component: {fileID: 65504917261440402}
-  - component: {fileID: 195421690031061070}
-  - component: {fileID: 114949256695891492}
-  - component: {fileID: 114964170266881858}
-  - component: {fileID: 135361714064695820}
-  m_Layer: 0
-  m_Name: Peon
-  m_TagString: Peon
+  - component: {fileID: 4092078553688696}
+  - component: {fileID: 135441906140508230}
+  m_Layer: 2
+  m_Name: RevealMapSphere
+  m_TagString: Fog Killer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1989932347279690
+--- !u!1 &1562636466261584
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4495445782383712}
-  - component: {fileID: 33110998737021462}
-  - component: {fileID: 23786961294377758}
-  - component: {fileID: 95868843024935624}
+  - component: {fileID: 4394580041372964}
+  - component: {fileID: 33486758513659772}
+  - component: {fileID: 23542657515949104}
+  - component: {fileID: 95477126738417006}
   m_Layer: 0
   m_Name: Wireframe
   m_TagString: Untagged
@@ -53,39 +45,76 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4392321542597870
+--- !u!1 &1838827940074534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4994840093781588}
+  - component: {fileID: 33351548768460106}
+  - component: {fileID: 23796168974548252}
+  - component: {fileID: 95999873866483168}
+  - component: {fileID: 195669949168020226}
+  - component: {fileID: 114542708683797240}
+  - component: {fileID: 65552313062949222}
+  - component: {fileID: 54609869666867544}
+  - component: {fileID: 114062523690038392}
+  m_Layer: 0
+  m_Name: Troll Axethrower
+  m_TagString: Grunt
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4092078553688696
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
-  m_LocalRotation: {x: -0.067666985, y: 0, z: 0, w: 0.99770796}
-  m_LocalPosition: {x: 20.47, y: -0.008, z: -66.404}
-  m_LocalScale: {x: 34.60927, y: 34.36569, z: 48.47194}
-  m_Children:
-  - {fileID: 4495445782383712}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -7.76, y: 0, z: 0}
---- !u!4 &4495445782383712
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1989932347279690}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000000019106, y: 0.0011, z: -0.0002}
-  m_LocalScale: {x: 0.0040911473, y: 0.0043833144, z: 0.0025285017}
+  m_GameObject: {fileID: 1051314158036596}
+  m_LocalRotation: {x: -0.067666985, y: -0, z: -0, w: 0.99770796}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.87859446, y: 0.87241066, z: 1.2305138}
   m_Children: []
-  m_Father: {fileID: 4392321542597870}
+  m_Father: {fileID: 4994840093781588}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4394580041372964
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1562636466261584}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0002, y: 0.0012, z: 0.0047}
+  m_LocalScale: {x: 0.004052362, y: 0.005233929, z: 0.0040474692}
+  m_Children: []
+  m_Father: {fileID: 4994840093781588}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23786961294377758
+--- !u!4 &4994840093781588
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1838827940074534}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 32.151672, y: 0.19301605, z: -67.26906}
+  m_LocalScale: {x: 39.391632, y: 39.39163, z: 39.39163}
+  m_Children:
+  - {fileID: 4394580041372964}
+  - {fileID: 4092078553688696}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23542657515949104
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1989932347279690}
+  m_GameObject: {fileID: 1562636466261584}
   m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -112,12 +141,12 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!23 &23919045132950132
+--- !u!23 &23796168974548252
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
+  m_GameObject: {fileID: 1838827940074534}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -125,7 +154,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 2f7ae87429406423aa44017e96c159a5, type: 2}
+  - {fileID: 2100000, guid: e207f2ee0e48a413bb02d877ac37603f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,7 +162,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_SelectedEditorRenderState: 3
@@ -144,56 +173,56 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33110998737021462
+--- !u!33 &33351548768460106
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1989932347279690}
+  m_GameObject: {fileID: 1838827940074534}
+  m_Mesh: {fileID: 4300000, guid: c1a18f16cf260494fa497f5c3e573cc4, type: 3}
+--- !u!33 &33486758513659772
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1562636466261584}
   m_Mesh: {fileID: 4300000, guid: f5f6e814e53eab54fb084de920b56049, type: 3}
---- !u!33 &33307691621447290
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
-  m_Mesh: {fileID: 4300000, guid: d63c339f7aaef477e9cb465b856ed78c, type: 3}
---- !u!54 &54851101994929554
+--- !u!54 &54609869666867544
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
+  m_GameObject: {fileID: 1838827940074534}
   serializedVersion: 2
   m_Mass: 0.0000001
   m_Drag: 0
-  m_AngularDrag: 50
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65504917261440402
+--- !u!65 &65552313062949222
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
+  m_GameObject: {fileID: 1838827940074534}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.045007218, y: 0.053952657, z: 0.02455489}
+  m_Size: {x: 0.041976176, y: 0.06995162, z: 0.024555836}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &95868843024935624
+--- !u!95 &95477126738417006
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1989932347279690}
+  m_GameObject: {fileID: 1562636466261584}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b0f7dfa9a83c7df44b8e5ad0d01fa41d, type: 3}
+  m_Avatar: {fileID: 9000000, guid: f5f6e814e53eab54fb084de920b56049, type: 3}
   m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -202,20 +231,59 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114814710783371974
+--- !u!95 &95999873866483168
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1838827940074534}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: c1a18f16cf260494fa497f5c3e573cc4, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114062523690038392
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
+  m_GameObject: {fileID: 1838827940074534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495aa87e878a0490ba378e2cb86f319b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: TrollAxethrower
+  level: 1
+  healthCurrent: 60
+  healthTotal: 60
+  armor: 2
+  damageMin: 2
+  damageMax: 9
+  pierceDamage: 3
+  range: 1
+  sight: 4
+  speed: 10
+--- !u!114 &114542708683797240
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1838827940074534}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05698ac5560d9164ea36f97d5881b0f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  chosen: 1
-  canMove: 1
+  chosen: 0
+  canMove: 0
   moveOverride: 0
   moveToSpot: {x: 0, y: 0, z: 0}
   currentlyCarrying: 0
@@ -228,62 +296,28 @@ MonoBehaviour:
   treeChopping: {fileID: 0}
   goldMine: {fileID: 0}
   closestHall: {fileID: 0}
---- !u!114 &114949256695891492
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2e08a2d4cae971489cbc034997ce46a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canAttack: 1
---- !u!114 &114964170266881858
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 495aa87e878a0490ba378e2cb86f319b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  name: PlayerPeon
-  level: 1
-  healthCurrent: 30
-  healthTotal: 30
-  armor: 0
-  damageMin: 1
-  damageMax: 5
-  pierceDamage: 2
-  range: 1
-  sight: 4
-  speed: 10
---- !u!135 &135361714064695820
+--- !u!135 &135441906140508230
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
+  m_GameObject: {fileID: 1051314158036596}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.026976328
+  m_Radius: 0.14
   m_Center: {x: 0, y: 0, z: 0}
---- !u!195 &195421690031061070
+--- !u!195 &195669949168020226
 NavMeshAgent:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
+  m_GameObject: {fileID: 1838827940074534}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.016
-  m_Speed: 7
+  m_Radius: 0.020988088
+  m_Speed: 8
   m_Acceleration: 5000
   avoidancePriority: 50
   m_AngularSpeed: 5000
@@ -291,7 +325,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.053952657
-  m_BaseOffset: 0.026976328
+  m_Height: 0.06995162
+  m_BaseOffset: 0.03497581
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

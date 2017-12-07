@@ -22,6 +22,8 @@ public class SpencersnavAgent : MonoBehaviour
     public string resource;
     public bool inCoroutine;
     public RaycastHit hit;
+    public Collider unitCollider;
+    public bool returningToResource=false;
     public GameObject treeChopping,goldMine,closestHall ;
     GameObject[] townHalls;
     private void Awake()
@@ -30,6 +32,15 @@ public class SpencersnavAgent : MonoBehaviour
     }
     void Start ()
 	{
+        UnitStatManager statManager = GetComponent<UnitStatManager>();
+        Transform visionCircle =this.transform.GetChild(1);
+        SphereCollider sightRadius = visionCircle.GetComponent<SphereCollider>();
+
+        // Size of detection collider based on sight stat. (Tweak based on feel?)
+        sightRadius.radius = statManager.sight * 0.05f;
+
+
+        unitCollider = this.gameObject.GetComponent<BoxCollider>();
         carryingCapacity = 250;
         wireframe = this.gameObject.transform.GetChild(0).GetComponent<MeshRenderer>();
         unitRenderer = GetComponent<MeshRenderer>();
@@ -55,28 +66,32 @@ public class SpencersnavAgent : MonoBehaviour
 
                     if (Physics.Raycast(ray, out hit, 100))
                     {
-                        if(hit.transform.gameObject.tag == "Gold Mine")//4 seconds
+                        if (this.tag == "Peon")
                         {
-                            carryingCapacity = 250;
-                            resource = "Gold";
-                            
-                            inResourceLoop = true;
-                         //   Debug.Log("Going to Get Gold");
-                            GoldLoop();
-                        }
-                        if (hit.transform.gameObject.tag == "Tree")//34 seconds to chop down a tree
-                        {
-                            carryingCapacity = 2000;
-                            resource = "Wood";
-                      
-                            Debug.Log("Going to Get trees");
-                            inResourceLoop = true;
-                            GoldLoop();
+                            if (hit.transform.gameObject.tag == "Gold Mine")//4 seconds
+                            {
+                                carryingCapacity = 250;
+                                resource = "Gold";
+
+                                inResourceLoop = true;
+                                //   Debug.Log("Going to Get Gold");
+                                GoldLoop();
+                            }
+                            if (hit.transform.gameObject.tag == "Tree")//34 seconds to chop down a tree
+                            {
+                                carryingCapacity = 2000;
+                                resource = "Wood";
+
+                                Debug.Log("Going to Get trees");
+                                inResourceLoop = true;
+                                GoldLoop();
+                            }
                         }
                         if(hit.transform.gameObject.tag != "Tree"&& hit.transform.gameObject.tag != "Gold Mine")
                         {
                          //   Debug.Log("Get Away from resource");
                             inResourceLoop = false;
+                            returningToResource = false;
                             agent.SetDestination(hit.point);//Move to where the player clicks, pathfinding around obstacles
                         }
                     }
@@ -159,6 +174,7 @@ public class SpencersnavAgent : MonoBehaviour
         {
             if (currentlyCarrying > 0)
             {
+                unitCollider.enabled = false;
                 wireframe.enabled = false;
                 unitRenderer.enabled = false;
                 canMove = false;
@@ -203,27 +219,30 @@ public class SpencersnavAgent : MonoBehaviour
             {
                 if (resource == "Wood")
                 {
-                  //  Debug.Log("Searching for trees");
-                    GameObject[] forest;
-                    GameObject closestTree = null;
-                    forest = GameObject.FindGameObjectsWithTag("Tree");
-                    foreach (GameObject tree in forest)
-                    {
-                        if (tree != null)
+                 //   if (returningToResource)
+                   // {
+                        //  Debug.Log("Searching for trees");
+                        GameObject[] forest;
+                        GameObject closestTree = null;
+                        forest = GameObject.FindGameObjectsWithTag("Tree");
+                        foreach (GameObject tree in forest)
                         {
-                            if (closestTree == null)
+                            if (tree != null)
                             {
-                                closestTree = tree;
-                            }
-                            if ((closestHall.transform.position - tree.transform.position).magnitude < (closestHall.transform.position - closestTree.transform.position).magnitude)
-                            {
-                                closestTree = tree;
+                                if (closestTree == null)
+                                {
+                                    closestTree = tree;
+                                }
+                                if ((closestHall.transform.position - tree.transform.position).magnitude < (closestHall.transform.position - closestTree.transform.position).magnitude)
+                                {
+                                    closestTree = tree;
+                                }
                             }
                         }
+                        treeChopping = closestTree;
+                        agent.SetDestination(closestTree.transform.position);
                     }
-                    treeChopping = closestTree;
-                    agent.SetDestination(closestTree.transform.position);
-                }
+                //}
                 else
                 {
                     agent.SetDestination(goldMine.transform.position);
@@ -250,6 +269,7 @@ public class SpencersnavAgent : MonoBehaviour
             yield break;
         }
         inCoroutine = true;
+       // returningToResource = false;
        // Debug.Log("Getting Resources");
         for (int collectTime = 0; collectTime < carryingCapacity; collectTime++)
         {
@@ -265,13 +285,14 @@ public class SpencersnavAgent : MonoBehaviour
             }
             if (this.resource == "Gold")
             {
-                
+                unitCollider.enabled = false;
                 moveOverride = true;
                 unitRenderer.enabled = false;
                 wireframe.enabled = false;
             }
             if (currentlyCarrying >= carryingCapacity)
             {
+                unitCollider.enabled = false;
                 unitRenderer.enabled = true;
                 inCoroutine = false;
                 moveOverride = false;
@@ -321,8 +342,8 @@ public class SpencersnavAgent : MonoBehaviour
                 }
             }
         }
-       
-
+        returningToResource = true;
+        unitCollider.enabled = false;
         unitRenderer.enabled = true;
         GoldLoop();
         inCoroutine = false;

@@ -17,8 +17,25 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)//Checks whether the mouse is hovering over the button
     {
-        
+        Transform hoveredButton = this.transform.GetChild(0);
+        Text buttonText = hoveredButton.GetComponent<Text>();
         ClickingUI.Instance.isClickingButton = true;//If they are hovering over it, the ui is not allowed to switch and they can click through the button
+       if(buttonText.text=="Create Grunt")
+        {
+            Debug.Log("Cost: 800 Gold");
+        }
+        if (buttonText.text == "Create Peon")
+        {
+            Debug.Log("Cost: 400 Gold");
+        }
+        if (buttonText.text == "Build Barracks")
+        {
+            Debug.Log("Cost: 800 Gold, 450 Lumber");
+        }
+		if (buttonText.text == "Create Troll Axethrower")
+		{
+			Debug.Log("Cost: 500 Gold, 50 Lumber");
+		}
     }
     public void OnPointerExit(PointerEventData eventData)//Checks whether the mouse is no longer hovering over the button
     {
@@ -31,19 +48,26 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
    public void CreateUnit()
     {
-        if (ClickingUI.Instance.previousObject.tag == "Barracks")
+		Debug.Log (this.transform.childCount);
+		Transform hoveredButton = this.transform.GetChild(0);
+		Text buttonText = hoveredButton.GetComponent<Text>();
+		if (buttonText.text=="Create Grunt")
         {
-            UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Grunt");
+			UiController.Instance.CreateGenericUnit(ClickingUI.Instance.previousObject, "Grunt");
         }
-        if (ClickingUI.Instance.previousObject.tag == "Great Hall")
+		if (buttonText.text=="Create Peon")
         {
-            UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Peon");
+            UiController.Instance.CreateGenericUnit(ClickingUI.Instance.previousObject, "Peon");
         }
+		if (buttonText.text=="Create Troll Axethrower")
+		{
+			UiController.Instance.CreateGenericUnit(ClickingUI.Instance.previousObject, "Troll");
+		}
 
     }
     public void CreatePeon()
     {
-        UiController.Instance.CreateUnit(ClickingUI.Instance.previousObject, "Peon");
+        UiController.Instance.CreateGenericUnit(ClickingUI.Instance.previousObject, "Peon");
 
     }
 

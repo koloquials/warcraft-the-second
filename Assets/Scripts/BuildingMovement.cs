@@ -13,7 +13,7 @@ public class BuildingMovement : MonoBehaviour {
    public bool creating;
    public bool shouldBuild;//Whether it should be getting built
     Color transparentRed =new Color (0, 0, 0, 0.8f);//Starting opacity for the building should be 20%
-    Color addRed = new Color(0, 0, 0, 0.001f);//Incrementation of opacity
+    Color addRed = new Color(0, 0, 0, 0.01f);//Incrementation of opacity
     Material buildColor;
     public float percentageBuilt;
     public GameObject[] unitList;
@@ -87,20 +87,21 @@ public class BuildingMovement : MonoBehaviour {
 
         }
 	}
-    public void CreateUnit (int goldCost)
+	public void CreateUnit (int goldCost, int lumberCost, int unitToMake)
     {
         makingUnit = true;
         ResourceManager.Instance.gold -= goldCost;
+		ResourceManager.Instance.wood -= lumberCost;
        // Debug.Log("here");
         // bool unitCreated = false;
         shouldMakeUnit = true;
         UiController.Instance.uiMode = 1.5f;
-        StartCoroutine(WaitTime());
+        StartCoroutine(WaitTime(unitToMake));
        
            
         }
     
-    IEnumerator WaitTime()
+	IEnumerator WaitTime(int unitToMake)
     {
         shouldMakeUnit = true;
         if (isCoroutineRunning)
@@ -121,9 +122,9 @@ public class BuildingMovement : MonoBehaviour {
             Debug.Log("Made Unit");
         {
             Vector2 unitPlacement2D = Random.insideUnitCircle.normalized;
-            Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 4f;
+            Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 5f;
             VictoryController.Instance.gruntCount++;
-            GameObject madeUnit = (GameObject)Instantiate(unitList[0], this.transform.position + unitPlacement3D, Quaternion.identity);
+            GameObject madeUnit = (GameObject)Instantiate(unitList[unitToMake], this.transform.position + unitPlacement3D, Quaternion.identity);
 
         }
         //shouldMakeUnit = false;

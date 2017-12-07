@@ -16,8 +16,10 @@ public class UiController : MonoBehaviour {
     public Canvas winScreen;
     public Canvas pauseMenu;
     public Canvas pauseButton;
+	public Button trollButton;
     public Text goldText, woodText, oilText;
     public Text names;
+    public Text buttonText;
     public Text pauseText;
     public Text buildingProgress;
     public Text unitProgress;
@@ -91,7 +93,19 @@ public class UiController : MonoBehaviour {
                 names.text = "" + ClickingUI.Instance.previousObject.tag;
             }
             }
-            creatingUnit.enabled = false;
+            if (ClickingUI.Instance.previousObject.tag =="Great Hall")
+            {
+                buttonText.text = "Create Peon";
+				trollButton.gameObject.SetActive (false);
+            }
+            if (ClickingUI.Instance.previousObject.tag == "Barracks")
+            {
+                buttonText.text = "Create Grunt";
+
+				trollButton.gameObject.SetActive (true);
+            }
+            
+                creatingUnit.enabled = false;
             buildStuff.enabled = false;
             spawnBuilding.enabled = false;
             spawnUnit.enabled = true;
@@ -100,7 +114,7 @@ public class UiController : MonoBehaviour {
             {
 
                 //spawnUnit.interactable = true;
-                CreateUnit(ClickingUI.Instance.previousObject, "Grunt");
+                CreateGenericUnit(ClickingUI.Instance.previousObject, "Grunt");
 
             }
         }
@@ -134,13 +148,16 @@ public class UiController : MonoBehaviour {
             }
         }
     }
-    public void CreateUnit(GameObject currentlySelected, string unitToMake)//Creates a unit around the currently selected building
+    public void CreateGenericUnit(GameObject currentlySelected, string unitToMake)//Creates a unit around the currently selected building
     {
         BuildingMovement shouldBuild = currentlySelected.GetComponent<BuildingMovement>();
         bool canMakeUnit = true;
         int goldCost=0;
+		int lumberCost = 0;
+		int unitToMakeInt=0;
         if (unitToMake == "Grunt") { goldCost = 600; }
         if (unitToMake == "Peon") { goldCost = 400; }
+		if(unitToMake=="Troll"){goldCost =500; lumberCost = 50; unitToMakeInt=1;}
         if (!shouldBuild.makingUnit)
         {
             if (ResourceManager.Instance.gold < goldCost)
@@ -153,7 +170,7 @@ public class UiController : MonoBehaviour {
             {
                 //  badResources="Not Enough Gold"
 
-                shouldBuild.CreateUnit(goldCost);
+				shouldBuild.CreateUnit(goldCost, lumberCost, unitToMakeInt);
             }
         }
     }
