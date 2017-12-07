@@ -23,10 +23,11 @@ public class CombatScript : MonoBehaviour { // Combat for player units.
 
 	void OnTriggerStay (Collider other){ // Detect unit within radius, navigate to unit, if close enough do damage.
 
-		//Debug.Log("Spotted by enemy!");
+		if (other.gameObject.tag == "Enemy") {
+			//Debug.Log("Spotted by enemy!");
 
-		UnitStatManager statManager = GetComponent<UnitStatManager>();
-		UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();
+			UnitStatManager statManager = GetComponent<UnitStatManager> ();
+			UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();
 
 //		 //Outside of your range? Move within your range!
 //		if ( (Mathf.Abs (other.transform.position.x - transform.position.x)) > statManager.range
@@ -43,32 +44,34 @@ public class CombatScript : MonoBehaviour { // Combat for player units.
 //
 //		}
 
-		// Do damage when within range.
-		if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < (statManager.range * 2f)
-			&& (Mathf.Abs (other.transform.position.y - transform.position.y)) < (statManager.range * 2f)
-			&& (Mathf.Abs (other.transform.position.z - transform.position.z)) < (statManager.range * 2f) ) {
+			// Do damage when within range.
+			if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < (statManager.range * 2f)
+			   && (Mathf.Abs (other.transform.position.y - transform.position.y)) < (statManager.range * 2f)
+			   && (Mathf.Abs (other.transform.position.z - transform.position.z)) < (statManager.range * 2f)) {
 
-			if (canAttack) {
+				if (canAttack) {
 
-				// Combat equation.
-				//damageDealt = ( Random.Range(statManager.damageMin, statManager.damageMax) - otherStatManager.armor ) 
-				//	+ statManager.pierceDamage;
+					// Combat equation.
+					damageDealt = ( Random.Range(statManager.damageMin, statManager.damageMax) - otherStatManager.armor ) 
+					+ statManager.pierceDamage;
 
-				// Rounds to smallest integer greater or equal to damageDealt. (Tweak base on feel?)
-				damageDealt = Mathf.Ceil( damageDealt * Random.Range (.5f, 1f) );
+					// Rounds to smallest integer greater or equal to damageDealt. (Tweak base on feel?)
+					damageDealt = Mathf.Ceil (damageDealt * Random.Range (.5f, 1f));
 
-				// Deal damage.
-				if (damageDealt > 0) {
-					otherStatManager.healthCurrent = otherStatManager.healthCurrent - damageDealt;
+					// Deal damage.
+					if (damageDealt > 0) {
+						otherStatManager.healthCurrent = otherStatManager.healthCurrent - damageDealt;
+						otherStatManager.gotHurt = true;
+					}
+
+					Debug.Log (this.gameObject + " dealt " + damageDealt + " damage to " + other);
 				}
 
-				//Debug.Log (this.gameObject + " dealt " + damageDealt + " damage to " + other);
+				// Sets attack rate.
+				StartCoroutine (CombatRefractory ());
+
+
 			}
-
-			// Sets attack rate.
-			StartCoroutine (CombatRefractory ());
-
-
 		}
 
 
@@ -92,5 +95,6 @@ public class CombatScript : MonoBehaviour { // Combat for player units.
 		isCombatCoroutineRunning = false;
 		//Debug.Log ("Ending coroutine");
 	}
+		
 
 }
