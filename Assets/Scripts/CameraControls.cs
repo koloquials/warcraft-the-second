@@ -17,6 +17,8 @@ public class CameraControls : MonoBehaviour {
 	private float mousePosX;
 	private float mousePosY;
 
+	public float fps; // Frames per second
+
     //Camera cam;
     //float height = Screen.height;
     //float width = Screen.width;
@@ -28,6 +30,12 @@ public class CameraControls : MonoBehaviour {
 
 		//offset = transform.position - unit.transform.position;
     }
+
+	void Update() {
+
+		fps = 1.0f / Time.deltaTime;
+		//Debug.Log ("Current FPS is " + fps );
+	}
 
     void LateUpdate() //LateUpdate is called after all Update functions have been called
     {
