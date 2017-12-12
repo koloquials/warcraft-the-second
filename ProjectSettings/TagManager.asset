@@ -16,6 +16,7 @@ TagManager:
   - Gold Mine
   - Great Hall
   - Fog Killer
+  - Enemy
   layers:
   - Default
   - TransparentFX

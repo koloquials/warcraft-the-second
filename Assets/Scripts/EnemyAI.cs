@@ -37,53 +37,57 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 	}
 
 	void OnTriggerStay (Collider other){ // Detect unit within radius, navigate to unit, if close enough do damage.
-		
-		//Debug.Log("Spotted by enemy!");
 
-		UnitStatManager statManager = GetComponent<UnitStatManager>();
-		UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();
+		if (other.gameObject.tag == "Grunt" || other.gameObject.tag == "Peon") {
+			//Debug.Log("Spotted by enemy!");
 
-		// Outside of your range? Move within your range!
-		if ( (Mathf.Abs (other.transform.position.x - transform.position.x)) > (statManager.range * 2f)
-			|| (Mathf.Abs (other.transform.position.y - transform.position.y)) > (statManager.range * 2f)
-			|| (Mathf.Abs (other.transform.position.z - transform.position.z)) > (statManager.range * 2f)) { 
+			UnitStatManager statManager = GetComponent<UnitStatManager> ();
+			UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();
 
-			//Debug.Log ("Enemy incoming!");
-			agent.SetDestination (other.transform.position);
+			// Outside of your range? Move within your range!
+			if ((Mathf.Abs (other.transform.position.x - transform.position.x)) > (statManager.range * 2f)
+			   || (Mathf.Abs (other.transform.position.y - transform.position.y)) > (statManager.range * 2f)
+			   || (Mathf.Abs (other.transform.position.z - transform.position.z)) > (statManager.range * 2f)) { 
 
-		} else { // Stop once within your range.
+				//Debug.Log ("Enemy incoming!");
+				agent.SetDestination (other.transform.position);
+
+			} else { // Stop once within your range.
 			
-			//Debug.Log ("Enemy halted!");
-			agent.SetDestination (transform.position);
+				//Debug.Log ("Enemy halted!");
+				agent.SetDestination (transform.position);
 
-		}
-
-		// Do damage when within range.
-		if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < (statManager.range * 2f)
-			&& (Mathf.Abs (other.transform.position.y - transform.position.y)) < (statManager.range * 2f)
-			&& (Mathf.Abs (other.transform.position.z - transform.position.z)) < (statManager.range * 2f) ) {
-
-			if (canAttack) {
-
-				// Combat equation.
-				//damageDealt = ( Random.Range(statManager.damageMin, statManager.damageMax) - otherStatManager.armor ) 
-					//+ statManager.pierceDamage;
-
-				// Rounds to smallest integer greater or equal to damageDealt. (Tweak base on feel?)
-				damageDealt = Mathf.Ceil( damageDealt * Random.Range (.5f, 1f) );
-
-				// Deal damage.
-				if (damageDealt > 0) {
-					otherStatManager.healthCurrent = otherStatManager.healthCurrent - damageDealt;
-				}
-
-				Debug.Log (this.gameObject + " dealt " + damageDealt + " damage to " + other);
 			}
 
-			// Sets attack rate.
-			StartCoroutine (CombatRefractory ());
+			// Do damage when within range.
+			if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < (statManager.range * 2f)
+			   && (Mathf.Abs (other.transform.position.y - transform.position.y)) < (statManager.range * 2f)
+			   && (Mathf.Abs (other.transform.position.z - transform.position.z)) < (statManager.range * 2f)) {
+
+				if (canAttack) {
+
+					// Combat equation.
+					damageDealt = ( Random.Range(statManager.damageMin, statManager.damageMax) - otherStatManager.armor ) 
+					+ statManager.pierceDamage;
+
+					// Rounds to smallest integer greater or equal to damageDealt. (Tweak base on feel?)
+					damageDealt = Mathf.Ceil (damageDealt * Random.Range (.5f, 1f));
+
+					// Deal damage.
+					if (damageDealt > 0) {
+						otherStatManager.healthCurrent = otherStatManager.healthCurrent - damageDealt;
+						otherStatManager.gotHurt = true;
+					}
+
+					Debug.Log (this.gameObject + " dealt " + damageDealt + " damage to " + other);
+				}
+
+				// Sets attack rate.
+				StartCoroutine (CombatRefractory ());
 
 				
+			}
+
 		}
 			
 
