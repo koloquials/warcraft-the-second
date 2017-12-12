@@ -49,8 +49,6 @@ public class ClickingUI : MonoBehaviour {
                     placement = placementRayHit.point;
                 }
 
-
-
             }
             if (Input.GetMouseButtonDown(0))
             {
@@ -74,10 +72,11 @@ public class ClickingUI : MonoBehaviour {
 		// If the last thing you clicked on was a unit, and its not what you are currently clicking on, disallow that previous unit from movement
                     if (shootRayHit.transform.gameObject != previousObject)
                     {
-                        if (previousObject != null &&( previousObject.tag == "Peon"||  previousObject.tag == "Grunt"))
+						if (previousObject != null &&( previousObject.tag == "Peon"||  previousObject.tag == "Grunt"||  previousObject.tag == "Troll"))
                         {
                             SpencersnavAgent unitMove = previousObject.GetComponent<SpencersnavAgent>();
                             unitMove.canMove = false;
+							unitMove.chosen = false;
                         }
                     }
 		// IF the thing has children, set the child of the thing to the wireframe object so it can be turned on
@@ -151,7 +150,7 @@ public class ClickingUI : MonoBehaviour {
                                     }
                                 }
                             }
-                            if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt")//If you are clicking on a peon or a grunt, go into uiMode 2
+							if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt"||  previousObject.tag == "Troll")//If you are clicking on a peon or a grunt, go into uiMode 2
                             {
 
                                 UiController.Instance.uiMode = 2;//uiMode 2 is the moveable unit mode
