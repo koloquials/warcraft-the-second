@@ -70,11 +70,11 @@ public class CameraControls : MonoBehaviour {
 				transform.position += Vector3.forward * mouseCameraSpeed * Time.deltaTime;
 				//Debug.Log("Move Camera Down");
 			}
-			if (mousePosY > 0.99f && transform.position.z < 13f) {
+			if (mousePosY > 0.99f && transform.position.z < 12.9f) {
 				transform.position += Vector3.back * mouseCameraSpeed * Time.deltaTime;
 				//Debug.Log("Move Camera Up");
 			}
-			if (mousePosX < 0.01f && transform.position.x > -52.1f) {
+			if (mousePosX < 0.01f && transform.position.x > -52.0f) {
 				transform.position += Vector3.right * mouseCameraSpeed * Time.deltaTime;
 				//Debug.Log("Move Camera Left");
 			}

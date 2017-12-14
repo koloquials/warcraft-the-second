@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 23397959953061730}
   - component: {fileID: 195607353135511222}
   - component: {fileID: 135190308903841252}
-  - component: {fileID: 114061802544425050}
   - component: {fileID: 114966226637815622}
+  - component: {fileID: 114753802092878538}
   m_Layer: 2
   m_Name: EnemyFootman
   m_TagString: Enemy
@@ -85,7 +85,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1235036856110924}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114061802544425050
+--- !u!114 &114753802092878538
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

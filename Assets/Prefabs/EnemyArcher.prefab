@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 23286268518883886}
   - component: {fileID: 195233135371280412}
   - component: {fileID: 135576531628478718}
-  - component: {fileID: 114890052149557726}
   - component: {fileID: 114975070193621880}
+  - component: {fileID: 114986535502717584}
   m_Layer: 2
   m_Name: EnemyArcher
   m_TagString: Enemy
@@ -85,18 +85,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1424835341032384}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114890052149557726
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1424835341032384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4ae497165964b9428091fcd537e3691, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canAttack: 1
 --- !u!114 &114975070193621880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,6 +110,18 @@ MonoBehaviour:
   gotHurt: 0
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   hurtColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &114986535502717584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1424835341032384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f253cc69ea493e40b361a2b254a70f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canAttack: 1
 --- !u!135 &135576531628478718
 SphereCollider:
   m_ObjectHideFlags: 1
