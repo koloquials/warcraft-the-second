@@ -53,10 +53,10 @@ public class CameraControls : MonoBehaviour {
 		if (Input.GetKey (KeyCode.DownArrow) && transform.position.z > -92.5f) {
 			transform.position += Vector3.forward * arrowCameraSpeed * Time.deltaTime;
 		}
-		if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -52.1f) {
+		if (Input.GetKey (KeyCode.LeftArrow) && transform.position.x > -78f) {
 			transform.position += Vector3.right * arrowCameraSpeed * Time.deltaTime;
 		}
-		if (Input.GetKey (KeyCode.RightArrow) && transform.position.x < 31f) {
+		if (Input.GetKey (KeyCode.RightArrow) && transform.position.x < 37f) {
 			transform.position += Vector3.left * arrowCameraSpeed * Time.deltaTime;
 		}
 		if (moveWithMouse) {
@@ -74,11 +74,11 @@ public class CameraControls : MonoBehaviour {
 				transform.position += Vector3.back * mouseCameraSpeed * Time.deltaTime;
 				//Debug.Log("Move Camera Up");
 			}
-			if (mousePosX < 0.29f  && transform.position.x > -52.1f) {
+			if (mousePosX < 0.29f && mousePosX > 0.24f && transform.position.x > -78f) {
 				transform.position += Vector3.right * mouseCameraSpeed * Time.deltaTime;
 				//Debug.Log("Move Camera Left");
 			}
-			if (mousePosX > 0.92f && transform.position.x < 31f) {
+			if (mousePosX > 0.92f && transform.position.x < 37f) {
 				transform.position += Vector3.left * mouseCameraSpeed * Time.deltaTime;
 				//Debug.Log("Move Camera Right");
 			}
