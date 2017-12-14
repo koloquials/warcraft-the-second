@@ -16,6 +16,7 @@ TagManager:
   - Gold Mine
   - Great Hall
   - Fog Killer
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - RevealSphere
+  - FogOfWar
   - 
   - 
   - 

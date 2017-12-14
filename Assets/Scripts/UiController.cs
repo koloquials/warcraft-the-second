@@ -108,15 +108,11 @@ public class UiController : MonoBehaviour {
                 creatingUnit.enabled = false;
             buildStuff.enabled = false;
             spawnBuilding.enabled = false;
-            spawnUnit.enabled = true;
+			if (ClickingUI.Instance.previousObject.tag != "Gold Mine") {
+				spawnUnit.enabled = true;
+			}
 
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-
-                //spawnUnit.interactable = true;
-                CreateGenericUnit(ClickingUI.Instance.previousObject, "Grunt");
-
-            }
+          
         }
         if (uiMode == 1.5f) {//Creating a unit, show the progress and hide the button to make a new one
             names.text = "";

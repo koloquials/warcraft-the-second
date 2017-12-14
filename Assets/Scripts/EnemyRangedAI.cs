@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour { // Once player units move within radius, move to unit. 
-											// Once close do damage in timed intervals.
-											// Only follow for a certain amount of time
+public class EnemyRangedAI : MonoBehaviour { // Once player units move within radius, move to unit. 
+	// Once close do damage in timed intervals.
+	// Only follow for a certain amount of time
 
 	// combat: ( range[min damage, max damage] - opponent armor) + piercing damage = maxPosDamage done
 	// maxPosDamage * range(.5 , 1) = DAMAGE DONE
@@ -20,14 +20,14 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 
 	// Use this for initialization
 	void Start () {
-		
+
 		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
+
 		UnitStatManager statManager = GetComponent<UnitStatManager>();
 		SphereCollider visionRadius = GetComponent<SphereCollider>();
 
@@ -46,14 +46,14 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 
 			// Outside of your range? Move within your range!
 			if ((Mathf.Abs (other.transform.position.x - transform.position.x)) > (statManager.range * 2f)
-			   || (Mathf.Abs (other.transform.position.y - transform.position.y)) > (statManager.range * 2f)
-			   || (Mathf.Abs (other.transform.position.z - transform.position.z)) > (statManager.range * 2f)) { 
+				|| (Mathf.Abs (other.transform.position.y - transform.position.y)) > (statManager.range * 2f)
+				|| (Mathf.Abs (other.transform.position.z - transform.position.z)) > (statManager.range * 2f)) { 
 
 				//Debug.Log ("Enemy incoming!");
 				agent.SetDestination (other.transform.position);
 
 			} else { // Stop once within your range.
-			
+
 				//Debug.Log ("Enemy halted!");
 				agent.SetDestination (transform.position);
 
@@ -61,14 +61,14 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 
 			// Do damage when within range.
 			if ((Mathf.Abs (other.transform.position.x - transform.position.x)) < (statManager.range * 2f)
-			   && (Mathf.Abs (other.transform.position.y - transform.position.y)) < (statManager.range * 2f)
-			   && (Mathf.Abs (other.transform.position.z - transform.position.z)) < (statManager.range * 2f)) {
+				&& (Mathf.Abs (other.transform.position.y - transform.position.y)) < (statManager.range * 2f)
+				&& (Mathf.Abs (other.transform.position.z - transform.position.z)) < (statManager.range * 2f)) {
 
 				if (canAttack) {
 
 					// Combat equation.
 					damageDealt = ( Random.Range(statManager.damageMin, statManager.damageMax) - otherStatManager.armor ) 
-					+ statManager.pierceDamage;
+						+ statManager.pierceDamage;
 
 					// Rounds to smallest integer greater or equal to damageDealt. (Tweak base on feel?)
 					damageDealt = Mathf.Ceil (damageDealt * Random.Range (.5f, 1f));
@@ -85,11 +85,11 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 				// Sets attack rate.
 				StartCoroutine (CombatRefractory ());
 
-				
+
 			}
 
 		}
-			
+
 
 	}
 
@@ -105,12 +105,12 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 		isCombatCoroutineRunning = true;
 
 		canAttack = false;
-		yield return new WaitForSeconds (.5f); // Define attack rate. (Tweak base on feel?)
+		yield return new WaitForSeconds (1f); // Define attack rate. (Tweak base on feel?)
 		canAttack = true;
 
 		isCombatCoroutineRunning = false;
 		//Debug.Log ("Ending coroutine");
 	}
-		
+
 
 }
