@@ -8,7 +8,7 @@ public class SpencersnavAgent : MonoBehaviour
 	//Player controlled unit moves to where mouse is clicked
 	
 	public UnityEngine.AI.NavMeshAgent agent;
-    public bool chosen;//If they are chosen to build a building
+    public bool chosen=false;//If they are chosen to build a building
     public bool canMove;//If they can move
     public bool moveOverride;//Overrides thier ability to move, because the clickingUI script can get a unit to move when it shouldnt be able to
     Rigidbody unitRigidbody;
@@ -23,30 +23,36 @@ public class SpencersnavAgent : MonoBehaviour
     public bool inCoroutine;
     public RaycastHit hit;
     public Collider unitCollider;
+	public bool sentRecently;
     public bool returningToResource=false;
-    public GameObject treeChopping,goldMine,closestHall ;
+    public GameObject treeChopping,goldMine,closestHall;
+	public GameObject soundGuy;
+	 AudioSource thisThingAudio;
+	public AudioClip[] clickingSound;
     GameObject[] townHalls;
     private void Awake()
     {
+		thisThingAudio = soundGuy.GetComponent<AudioSource> ();
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+		UnitStatManager statManager = GetComponent<UnitStatManager>();
+		Transform visionCircle =this.transform.GetChild(1);
+		SphereCollider sightRadius = visionCircle.GetComponent<SphereCollider>();
+
+		// Size of detection collider based on sight stat. (Tweak based on feel?)
+		sightRadius.radius = statManager.sight * 0.05f;
+
+
+		unitCollider = this.gameObject.GetComponent<BoxCollider>();
+		carryingCapacity = 2;
+		wireframe = this.gameObject.transform.GetChild(0).GetComponent<MeshRenderer>();
+		unitRenderer = GetComponent<MeshRenderer>();
+		unitRigidbody = this.GetComponent<Rigidbody>();
+
+		canMove = false;
     }
     void Start ()
 	{
-        UnitStatManager statManager = GetComponent<UnitStatManager>();
-        Transform visionCircle =this.transform.GetChild(1);
-        SphereCollider sightRadius = visionCircle.GetComponent<SphereCollider>();
-
-        // Size of detection collider based on sight stat. (Tweak based on feel?)
-        sightRadius.radius = statManager.sight * 0.05f;
-
-
-        unitCollider = this.gameObject.GetComponent<BoxCollider>();
-        carryingCapacity = 250;
-        wireframe = this.gameObject.transform.GetChild(0).GetComponent<MeshRenderer>();
-        unitRenderer = GetComponent<MeshRenderer>();
-        unitRigidbody = this.GetComponent<Rigidbody>();
-        
-        canMove = false;
+       
 	}
 
 	void Update () 
@@ -66,11 +72,21 @@ public class SpencersnavAgent : MonoBehaviour
 
                     if (Physics.Raycast(ray, out hit, 100))
                     {
+						if (this.tag == "Grunt") {
+							//thisThingAudio.clip = clickingSound [Random.Range (0, clickingSound.Length)];
+							thisThingAudio.PlayOneShot(clickingSound [Random.Range (0, clickingSound.Length)]);
+						}
+						if (this.tag == "Troll") {
+							//thisThingAudio.clip = clickingSound [Random.Range (0, clickingSound.Length)];
+							thisThingAudio.PlayOneShot(clickingSound [Random.Range (0, clickingSound.Length)]);
+						}
                         if (this.tag == "Peon")
                         {
+							//thisThingAudio.clip = clickingSound [Random.Range (0, clickingSound.Length)];
+							thisThingAudio.PlayOneShot(clickingSound [Random.Range (0, clickingSound.Length)]);
                             if (hit.transform.gameObject.tag == "Gold Mine")//4 seconds
                             {
-                                carryingCapacity = 250;
+                                carryingCapacity = 2;
                                 resource = "Gold";
 
                                 inResourceLoop = true;
@@ -79,9 +95,9 @@ public class SpencersnavAgent : MonoBehaviour
                             }
                             if (hit.transform.gameObject.tag == "Tree")//34 seconds to chop down a tree
                             {
-                                carryingCapacity = 2000;
+                                carryingCapacity = 33;
                                 resource = "Wood";
-
+								sentRecently = true;
                                 Debug.Log("Going to Get trees");
                                 inResourceLoop = true;
                                 GoldLoop();
@@ -92,6 +108,7 @@ public class SpencersnavAgent : MonoBehaviour
                          //   Debug.Log("Get Away from resource");
                             inResourceLoop = false;
                             returningToResource = false;
+							resource = "Nothing";
                             agent.SetDestination(hit.point);//Move to where the player clicks, pathfinding around obstacles
                         }
                     }
@@ -120,7 +137,7 @@ public class SpencersnavAgent : MonoBehaviour
             shouldBuild.shouldBuild=true;//Starts it building
             if (!shouldBuild.canCreate&&shouldBuild.placed)//If it is being build, dont let it move
             {
-                unitRenderer.enabled = false;
+              //  unitRenderer.enabled = false;
                 canMove = false;
                 moveOverride = true;
             }
@@ -163,7 +180,7 @@ public class SpencersnavAgent : MonoBehaviour
                     this.agent.SetDestination(this.transform.position);
                 }
                 treeChopping = other.gameObject;
-                carryingCapacity = 2000;
+                carryingCapacity = 33;
                // canMove = false;
                 //  moveOverride = true;
 
@@ -172,11 +189,13 @@ public class SpencersnavAgent : MonoBehaviour
         }
         if(other.tag=="Great Hall")
         {
+			Debug.Log ("Smacking Great Hall");
             if (currentlyCarrying > 0)
             {
+				Debug.Log ("Hitting the Great Hall");
                 unitCollider.enabled = false;
                 wireframe.enabled = false;
-                unitRenderer.enabled = false;
+               //unitRenderer.enabled = false;
                 canMove = false;
                 //moveOverride = true;
     
@@ -190,9 +209,25 @@ public class SpencersnavAgent : MonoBehaviour
         {
            // UiController.Instance.uiMode = 0;
         }
+		if(other.tag=="Great Hall")
+		{
+			Debug.Log ("Smacking Great Hall");
+			if (currentlyCarrying > 0)
+			{
+				Debug.Log ("Hitting the Great Hall");
+				unitCollider.enabled = false;
+				wireframe.enabled = false;
+				//unitRenderer.enabled = false;
+				canMove = false;
+				//moveOverride = true;
+
+				StartCoroutine(DroppingResources());
+			}
+		}
     }
     public void GoldLoop()
     {
+		
         if ( hit.collider != null && hit.collider.gameObject != null)
         {
              goldMine = hit.transform.gameObject;
@@ -219,9 +254,9 @@ public class SpencersnavAgent : MonoBehaviour
             {
                 if (resource == "Wood")
                 {
-                 //   if (returningToResource)
-                   // {
-                        //  Debug.Log("Searching for trees");
+					if (!sentRecently)
+                    {
+                          Debug.Log("Searching for trees");
                         GameObject[] forest;
                         GameObject closestTree = null;
                         forest = GameObject.FindGameObjectsWithTag("Tree");
@@ -241,8 +276,13 @@ public class SpencersnavAgent : MonoBehaviour
                         }
                         treeChopping = closestTree;
                         agent.SetDestination(closestTree.transform.position);
+					Debug.Log (closestTree);
+					Debug.Log ("Going to chop tree");
                     }
-                //}
+					if (sentRecently) {
+						agent.SetDestination (hit.transform.position);
+					}
+                }
                 else
                 {
                     agent.SetDestination(goldMine.transform.position);
@@ -270,7 +310,8 @@ public class SpencersnavAgent : MonoBehaviour
         }
         inCoroutine = true;
        // returningToResource = false;
-       // Debug.Log("Getting Resources");
+		sentRecently=false;
+        Debug.Log("Getting Resources");
         for (int collectTime = 0; collectTime < carryingCapacity; collectTime++)
         {
             if (!inResourceLoop)
@@ -287,12 +328,13 @@ public class SpencersnavAgent : MonoBehaviour
             {
                 unitCollider.enabled = false;
                 moveOverride = true;
-                unitRenderer.enabled = false;
+               // unitRenderer.enabled = false;
                 wireframe.enabled = false;
             }
             if (currentlyCarrying >= carryingCapacity)
             {
-                unitCollider.enabled = false;
+               // unitCollider.enabled = false;
+				unitCollider.enabled = true;
                 unitRenderer.enabled = true;
                 inCoroutine = false;
                 moveOverride = false;
@@ -304,16 +346,18 @@ public class SpencersnavAgent : MonoBehaviour
                 yield break;
             }
             currentlyCarrying++;
-            yield return 0;
+			yield return new WaitForSecondsRealtime(1);
         }
-       
+		unitRenderer.enabled = true;
+		unitCollider.enabled = true;
         inCoroutine = false;
+
         GoldLoop();
         yield return 0;
     }
     IEnumerator DroppingResources()
     {
-       // Debug.Log("Dropping it Off");
+        Debug.Log("Dropping it Off");
         if (inCoroutine)
         {
           //  Debug.Log("BREAK");
@@ -321,13 +365,13 @@ public class SpencersnavAgent : MonoBehaviour
         }
        // Debug.Log("Dropping it Off");
         inCoroutine = true;
-        currentlyCarrying = 250;
-        carryingCapacity = 250;
-        for (int dropTime = currentlyCarrying; dropTime > 0; dropTime-=1)
+        currentlyCarrying = 2;
+        carryingCapacity = 2;
+        for (int dropTime = currentlyCarrying; dropTime > 0; dropTime--)
         {
             moveOverride = true;
             currentlyCarrying -=1;
-            yield return 0;
+			yield return new WaitForSeconds((1));
             if (currentlyCarrying == 0)
                
             {

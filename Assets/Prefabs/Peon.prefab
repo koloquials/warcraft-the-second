@@ -11,6 +11,22 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1658961943506370}
   m_IsPrefabParent: 1
+--- !u!1 &1395588433900650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4146796149562116}
+  - component: {fileID: 135896276124154022}
+  m_Layer: 2
+  m_Name: RevealMapSphere
+  m_TagString: Fog Killer
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1658961943506370
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +43,6 @@ GameObject:
   - component: {fileID: 195421690031061070}
   - component: {fileID: 114949256695891492}
   - component: {fileID: 114964170266881858}
-  - component: {fileID: 135361714064695820}
   m_Layer: 0
   m_Name: Peon
   m_TagString: Peon
@@ -53,6 +68,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4146796149562116
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1395588433900650}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4392321542597870}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4392321542597870
 Transform:
   m_ObjectHideFlags: 1
@@ -60,10 +88,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1658961943506370}
   m_LocalRotation: {x: -0.067666985, y: 0, z: 0, w: 0.99770796}
-  m_LocalPosition: {x: 20.47, y: -0.008, z: -66.404}
+  m_LocalPosition: {x: 23.52, y: -0.008, z: -70.58}
   m_LocalScale: {x: 34.60927, y: 34.36569, z: 48.47194}
   m_Children:
   - {fileID: 4495445782383712}
+  - {fileID: 4146796149562116}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -7.76, y: 0, z: 0}
@@ -167,7 +196,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.0000001
   m_Drag: 0
-  m_AngularDrag: 50
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -224,10 +253,17 @@ MonoBehaviour:
   resource: 
   inCoroutine: 0
   unitCollider: {fileID: 0}
+  sentRecently: 0
   returningToResource: 0
   treeChopping: {fileID: 0}
   goldMine: {fileID: 0}
   closestHall: {fileID: 0}
+  soundGuy: {fileID: 0}
+  clickingSound:
+  - {fileID: 8300000, guid: 7f00df0832ad69a409bffb8780f385ed, type: 3}
+  - {fileID: 8300000, guid: 31d4719b68358d54982979e19a915b67, type: 3}
+  - {fileID: 8300000, guid: bc7553ea56ef4e64a9fd349766c4270e, type: 3}
+  - {fileID: 8300000, guid: cd2db0eec9f69724dad5d94e79c58135, type: 3}
 --- !u!114 &114949256695891492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e08a2d4cae971489cbc034997ce46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAttack: 1
+  canAttack: 0
 --- !u!114 &114964170266881858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,17 +298,17 @@ MonoBehaviour:
   range: 1
   sight: 4
   speed: 10
---- !u!135 &135361714064695820
+--- !u!135 &135896276124154022
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658961943506370}
+  m_GameObject: {fileID: 1395588433900650}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.026976328
+  m_Radius: 0.14
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &195421690031061070
 NavMeshAgent:

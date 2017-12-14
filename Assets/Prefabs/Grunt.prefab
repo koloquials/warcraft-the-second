@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1064245678795688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.71626, y: -0.030474901, z: -64.623634}
+  m_LocalPosition: {x: 28.67, y: -0.1, z: -62.81}
   m_LocalScale: {x: 37.062313, y: 37.06228, z: 37.06228}
   m_Children:
   - {fileID: 4746032814074010}
@@ -254,10 +254,18 @@ MonoBehaviour:
   resource: 
   inCoroutine: 0
   unitCollider: {fileID: 0}
+  sentRecently: 0
   returningToResource: 0
   treeChopping: {fileID: 0}
   goldMine: {fileID: 0}
   closestHall: {fileID: 0}
+  soundGuy: {fileID: 0}
+  clickingSound:
+  - {fileID: 8300000, guid: bc7553ea56ef4e64a9fd349766c4270e, type: 3}
+  - {fileID: 8300000, guid: 31d4719b68358d54982979e19a915b67, type: 3}
+  - {fileID: 8300000, guid: fc862c6bc6cdba94fa8e433136c5de23, type: 3}
+  - {fileID: 8300000, guid: cd2db0eec9f69724dad5d94e79c58135, type: 3}
+  - {fileID: 8300000, guid: ed487f8a77313ae4481afe5325e763db, type: 3}
 --- !u!114 &114433089866103540
 MonoBehaviour:
   m_ObjectHideFlags: 1
