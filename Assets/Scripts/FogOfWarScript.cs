@@ -15,8 +15,8 @@ public class FogOfWarScript : MonoBehaviour {
 	}
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Kill Me");
-        Debug.Log(other.name);
+        //Debug.Log("Kill Me");
+       // Debug.Log(other.name);
         if (other.gameObject.tag == "Fog Killer")
         {
            
