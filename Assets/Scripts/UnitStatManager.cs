@@ -26,7 +26,7 @@ public class UnitStatManager : MonoBehaviour { // ALL STATS MUST BE ASSIGNED IN 
 
 	void Start() {
 
-		// storing the original color
+		// Storing the original color
 		normalColor = GetComponent<Renderer> ().material.color;
 
 	}
@@ -50,7 +50,7 @@ public class UnitStatManager : MonoBehaviour { // ALL STATS MUST BE ASSIGNED IN 
 		
 	}
 
-	//Coroutine for damage feedback
+	// Coroutine for damage feedback
 	IEnumerator HurtFeedback() {
 
 		// Don't run if already running.
