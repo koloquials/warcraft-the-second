@@ -137,7 +137,7 @@ public class SpencersnavAgent : MonoBehaviour
             shouldBuild.shouldBuild=true;//Starts it building
             if (!shouldBuild.canCreate&&shouldBuild.placed)//If it is being build, dont let it move
             {
-              //  unitRenderer.enabled = false;
+               unitRenderer.enabled = false;
                 canMove = false;
                 moveOverride = true;
             }
@@ -146,6 +146,7 @@ public class SpencersnavAgent : MonoBehaviour
                 moveOverride = false;
                 unitRenderer.enabled = true;
                 agent.ResetPath();
+				unitRenderer.enabled = true;
                 Vector2 unitPlacement2D = Random.insideUnitCircle.normalized;
                 Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 4f;
                 this.transform.position =  other.transform.position + unitPlacement3D;

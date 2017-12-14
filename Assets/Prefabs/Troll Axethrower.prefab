@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 114062523690038392}
   m_Layer: 0
   m_Name: Troll Axethrower
-  m_TagString: Grunt
+  m_TagString: Troll
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,6 +270,9 @@ MonoBehaviour:
   range: 1
   sight: 4
   speed: 10
+  gotHurt: 0
+  normalColor: {r: 0, g: 0, b: 0, a: 0}
+  hurtColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &114542708683797240
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -17,6 +17,7 @@ TagManager:
   - Great Hall
   - Fog Killer
   - Enemy
+  - Troll
   layers:
   - Default
   - TransparentFX
