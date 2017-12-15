@@ -24,6 +24,9 @@ public class UnitStatManager : MonoBehaviour { // ALL STATS MUST BE ASSIGNED IN 
 	public Color normalColor;
 	public Color hurtColor = Color.red;
 
+	public AudioSource myAudioSource; //assign in inspector
+
+
 	void Start() {
 
 		// Storing the original color
@@ -59,7 +62,9 @@ public class UnitStatManager : MonoBehaviour { // ALL STATS MUST BE ASSIGNED IN 
 		}
 
 		isHurtCoroutineRunning = true;
-		
+
+		myAudioSource.Play ();
+
 		gameObject.GetComponent<Renderer> ().material.color = hurtColor;
 		//Debug.Log (this.gameObject + " turned red!");
 

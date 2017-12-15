@@ -18,6 +18,8 @@ public class EnemyRangedAI : MonoBehaviour { // Once player units move within ra
 	public bool canAttack = false;
 	private bool isCombatCoroutineRunning = false;
 
+	public AudioSource myAudioSource; //assign in inspector
+
 	// Use this for initialization
 	void Start () {
 
@@ -39,7 +41,7 @@ public class EnemyRangedAI : MonoBehaviour { // Once player units move within ra
 	void OnTriggerStay (Collider other){ // Detect unit within radius, navigate to unit, if close enough do damage.
 
 		if (other.gameObject.tag == "Grunt" || other.gameObject.tag == "Peon") {
-			//Debug.Log("Spotted by enemy!");
+			Debug.Log("Spotted by enemy!");
 
 			UnitStatManager statManager = GetComponent<UnitStatManager> ();
 			UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();
@@ -75,6 +77,7 @@ public class EnemyRangedAI : MonoBehaviour { // Once player units move within ra
 
 					// Deal damage.
 					if (damageDealt > 0) {
+						myAudioSource.Play ();
 						otherStatManager.healthCurrent = otherStatManager.healthCurrent - damageDealt;
 						otherStatManager.gotHurt = true;
 					}

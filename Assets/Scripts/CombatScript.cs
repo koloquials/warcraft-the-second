@@ -11,6 +11,8 @@ public class CombatScript : MonoBehaviour { // Combat for player units.
 	public bool canAttack = false;
 	private bool isCombatCoroutineRunning = false;
 
+	public AudioSource myAudioSource; //assign in inspector
+
 	// Use this for initialization
 	void Start () {
 		
@@ -60,6 +62,7 @@ public class CombatScript : MonoBehaviour { // Combat for player units.
 
 					// Deal damage.
 					if (damageDealt > 0) {
+						myAudioSource.Play ();
 						otherStatManager.healthCurrent = otherStatManager.healthCurrent - damageDealt;
 						otherStatManager.gotHurt = true;
 					}
