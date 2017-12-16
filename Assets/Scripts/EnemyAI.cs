@@ -18,6 +18,8 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 	public bool canAttack = false;
 	private bool isCombatCoroutineRunning = false;
 
+	public AudioSource myAudioSource; //assign in inspector
+
 	// Use this for initialization
 	void Start () {
 		
@@ -75,6 +77,7 @@ public class EnemyAI : MonoBehaviour { // Once player units move within radius, 
 
 					// Deal damage.
 					if (damageDealt > 0) {
+						myAudioSource.Play ();
 						otherStatManager.healthCurrent = otherStatManager.healthCurrent - damageDealt;
 						otherStatManager.gotHurt = true;
 					}
