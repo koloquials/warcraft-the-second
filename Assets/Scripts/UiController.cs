@@ -17,6 +17,7 @@ public class UiController : MonoBehaviour {
     public Canvas pauseMenu;
     public Canvas pauseButton;
 	public Button trollButton;
+	public Button unitButton;
     public Text goldText, woodText, oilText;
     public Text names;
     public Text buttonText;
@@ -24,6 +25,14 @@ public class UiController : MonoBehaviour {
     public Text buildingProgress;
     public Text unitProgress;
     public Text badResources;
+	public Text displayCost;
+	 Image unitImage;
+	public Sprite peonImage;
+	public Sprite gruntImage;
+	public Sprite trollImage;
+	public Sprite barracksImage;
+	public Sprite greatHallImage;
+	public Image selectedUnitImage;
     public float uiMode; //0=none, 0.5=building being built, 1=buildings, 1.5=building unit, 2=units
                          // Use this for initialization
     void Start()
@@ -43,6 +52,7 @@ public class UiController : MonoBehaviour {
         {//It turns off basically all the uiElements
             badResources.text = "";
             names.text = "";
+			selectedUnitImage.enabled = false;
 
             if (spawnUnit.enabled == true)
             {
@@ -65,6 +75,7 @@ public class UiController : MonoBehaviour {
         if (uiMode == 0.5f)//For when a building is being built, it shows the building progress
         {
             names.text = "";
+			selectedUnitImage.enabled = false;
             if (buildStuff.enabled == false)
             {
                 buildStuff.enabled = true;
@@ -91,17 +102,22 @@ public class UiController : MonoBehaviour {
             {
                 if (ClickingUI.Instance.previousObject.tag != "Ground"){
                 names.text = "" + ClickingUI.Instance.previousObject.tag;
+					selectedUnitImage.enabled = true;
+					if(ClickingUI.Instance.previousObject.tag=="Barracks"){selectedUnitImage.sprite=barracksImage;}
+					if(ClickingUI.Instance.previousObject.tag=="Great Hall"){selectedUnitImage.sprite=greatHallImage;}
             }
             }
             if (ClickingUI.Instance.previousObject.tag =="Great Hall")
             {
                 buttonText.text = "Create Peon";
+				unitButton.GetComponent<Image> ().sprite=peonImage;
+			
 				trollButton.gameObject.SetActive (false);
             }
             if (ClickingUI.Instance.previousObject.tag == "Barracks")
             {
                 buttonText.text = "Create Grunt";
-
+				unitButton.GetComponent<Image> ().sprite=gruntImage;
 				trollButton.gameObject.SetActive (true);
             }
             
@@ -116,6 +132,7 @@ public class UiController : MonoBehaviour {
         }
         if (uiMode == 1.5f) {//Creating a unit, show the progress and hide the button to make a new one
             names.text = "";
+			selectedUnitImage.enabled = false;
             spawnUnit.enabled = false;
             creatingUnit.enabled = true;
 
@@ -129,9 +146,20 @@ public class UiController : MonoBehaviour {
                     spawnBuilding.enabled = true;
                 }
             }
+			if (ClickingUI.Instance.previousObject.tag != "Peon") {
+				if (spawnBuilding.enabled == true)
+				{
+					spawnBuilding.enabled = false;
+				}
+			}
             if (ClickingUI.Instance.previousObject != null)
             {
                 names.text = "" + ClickingUI.Instance.previousObject.tag;
+				selectedUnitImage.enabled = true;
+				if(ClickingUI.Instance.previousObject.tag=="Peon"){selectedUnitImage.sprite=peonImage;}
+				if(ClickingUI.Instance.previousObject.tag=="Grunt"){selectedUnitImage.sprite=gruntImage;}
+				if(ClickingUI.Instance.previousObject.tag=="Troll"){selectedUnitImage.sprite=trollImage;}
+		
             }
             buildStuff.enabled = false;//Allow the unit to move
             spawnUnit.enabled = false;
@@ -195,7 +223,7 @@ public class UiController : MonoBehaviour {
             }
             if (canMakeUnit)
             {
-                Instantiate(ClickingUI.Instance.building, ClickingUI.Instance.placement, Quaternion.Euler(0, -90, 0));
+			Instantiate(ClickingUI.Instance.building, ClickingUI.Instance.placement, Quaternion.identity);
             }
         
     }
