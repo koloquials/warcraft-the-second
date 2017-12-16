@@ -32,6 +32,14 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
 			UiController.Instance.displayCost.text=("Build Barracks  Cost: 800 Gold, 450 Lumber");
         }
+		if (buttonText.text == "Build Pig Farm")
+		{
+			UiController.Instance.displayCost.text=("Build Pig Farm  Cost: 500 Gold, 250 Lumber");
+		}
+		if (buttonText.text == "Build Lumber Mill")
+		{
+			UiController.Instance.displayCost.text=("Build Lumber Mill  Cost: 600 Gold, 450 Lumber");
+		}
 		if (buttonText.text == "Create Troll Axethrower")
 		{
 			UiController.Instance.displayCost.text=("Create Troll Axethrower   Cost: 500 Gold, 50 Lumber");
@@ -74,7 +82,21 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void CreateBuilding()
     {
-        UiController.Instance.CreateBuilding();
+		Transform hoveredButton = this.transform.GetChild(0);
+		Text buttonText = hoveredButton.GetComponent<Text>();
+		if (buttonText.text=="Build Barracks")
+		{
+			UiController.Instance.CreateBuilding("Barracks");
+		}
+		if (buttonText.text=="Build Pig Farm")
+		{
+			UiController.Instance.CreateBuilding("Pig Farm");
+		}
+		if (buttonText.text=="Build Lumber Mill")
+		{
+			UiController.Instance.CreateBuilding("Lumber Mill");
+		}
+        
     }
 
 

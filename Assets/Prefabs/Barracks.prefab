@@ -161,7 +161,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1892001610663430}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.22684665, y: 0.037263703, z: 0.23496671}
@@ -216,8 +216,8 @@ MonoBehaviour:
   canCreate: 0
   creating: 0
   shouldBuild: 0
-  buildColor: {fileID: 2100000, guid: dc8143f4a3c861443808bef1b355c8a9, type: 2}
   finalBuildMaterial: {fileID: 2100000, guid: 36a937283a1a1d5408d00519604b2411, type: 2}
+  inProgressColor: {fileID: 2100000, guid: dc8143f4a3c861443808bef1b355c8a9, type: 2}
   percentageBuilt: 0
   unitList:
   - {fileID: 1064245678795688, guid: 0329216ffd431a64eb622572a77981e1, type: 2}

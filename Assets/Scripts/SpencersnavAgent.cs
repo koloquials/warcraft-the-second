@@ -26,13 +26,13 @@ public class SpencersnavAgent : MonoBehaviour
 	public bool sentRecently;
     public bool returningToResource=false;
     public GameObject treeChopping,goldMine,closestHall;
-	public GameObject soundGuy;
 	 AudioSource thisThingAudio;
 	public AudioClip[] clickingSound;
     GameObject[] townHalls;
     private void Awake()
     {
-		thisThingAudio = soundGuy.GetComponent<AudioSource> ();
+		GameObject findSoundGuy = GameObject.FindGameObjectWithTag ("Sound Guy");
+		thisThingAudio = findSoundGuy.GetComponent<AudioSource> ();
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		UnitStatManager statManager = GetComponent<UnitStatManager>();
 		Transform visionCircle =this.transform.GetChild(1);
@@ -130,11 +130,11 @@ public class SpencersnavAgent : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)//When the unit enters the building, start building
     {
-        if (other.tag == "Barracks")
+		if (other.tag == "Barracks"||other.tag == "Pig Farm"||other.tag == "Lumber Mill")
         {
 
             BuildingMovement shouldBuild = other.GetComponent<BuildingMovement>();
-            shouldBuild.shouldBuild=true;//Starts it building
+          //  shouldBuild.shouldBuild=true;//Starts it building
             if (!shouldBuild.canCreate&&shouldBuild.placed)//If it is being build, dont let it move
             {
                unitRenderer.enabled = false;
@@ -188,7 +188,7 @@ public class SpencersnavAgent : MonoBehaviour
                 StartCoroutine(GetResources());
             }
         }
-        if(other.tag=="Great Hall")
+		if(other.tag=="Great Hall"||other.tag=="Lumber Mill")
         {
 			Debug.Log ("Smacking Great Hall");
             if (currentlyCarrying > 0)
@@ -249,6 +249,17 @@ public class SpencersnavAgent : MonoBehaviour
                 }
             }
         }
+		if (resource == "Wood") {
+			GameObject[] lumberMills = GameObject.FindGameObjectsWithTag ("Lumber Mill");
+			foreach (GameObject mill in lumberMills) {
+				if (mill != null) {
+
+					if ((goldMine.transform.position - mill.transform.position).magnitude < (goldMine.transform.position - closestHall.transform.position).magnitude) {
+						closestHall = mill;
+					}
+				}
+			}
+		}
         if (inResourceLoop)
         {
             if (currentlyCarrying == 0)
@@ -282,7 +293,11 @@ public class SpencersnavAgent : MonoBehaviour
                     }
 					if (sentRecently) {
 						agent.SetDestination (hit.transform.position);
+						if (hit.transform.tag == "Tree") {
+							treeChopping = hit.transform.gameObject;
+						}
 					}
+					
                 }
                 else
                 {

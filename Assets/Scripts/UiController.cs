@@ -8,7 +8,9 @@ public class UiController : MonoBehaviour {
     //please capitalise the 'i' in UI. It would make me so so happy. 
 
     public static UiController Instance = new UiController();
-
+	GameObject buildingToMake;
+	public int requiredGold;
+	public int requiredWood;
     public Canvas spawnUnit;
     public Canvas spawnBuilding;
     public Canvas buildStuff;
@@ -18,7 +20,7 @@ public class UiController : MonoBehaviour {
     public Canvas pauseButton;
 	public Button trollButton;
 	public Button unitButton;
-    public Text goldText, woodText, oilText;
+    public Text goldText, woodText, oilText, foodText;
     public Text names;
     public Text buttonText;
     public Text pauseText;
@@ -32,6 +34,8 @@ public class UiController : MonoBehaviour {
 	public Sprite trollImage;
 	public Sprite barracksImage;
 	public Sprite greatHallImage;
+	public Sprite pigFarmImage;
+	public Sprite lumberMillImage;
 	public Image selectedUnitImage;
     public float uiMode; //0=none, 0.5=building being built, 1=buildings, 1.5=building unit, 2=units
                          // Use this for initialization
@@ -44,10 +48,10 @@ public class UiController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        goldText.text = "Gold: " + ResourceManager.Instance.gold;
-        woodText.text = "Wood: " + ResourceManager.Instance.wood;
-        oilText.text = "Oil: " + ResourceManager.Instance.oil;
-
+        goldText.text = "" + ResourceManager.Instance.gold;
+        woodText.text = "" + ResourceManager.Instance.wood;
+        oilText.text = "" + ResourceManager.Instance.oil;
+		foodText.text = ResourceManager.Instance.currentFood + "/" + ResourceManager.Instance.maxFood;
         if (uiMode == 0)//uiMode 0 is the mode when you have nothing selected, or clicked on the ground/trees
         {//It turns off basically all the uiElements
             badResources.text = "";
@@ -94,6 +98,10 @@ public class UiController : MonoBehaviour {
             if (checkIfBuilt.canCreate)//If it can make units, go to the standard building ui
             {
                 uiMode = 1;
+				if (ClickingUI.Instance.previousObject.tag == "Pig Farm" || ClickingUI.Instance.previousObject.tag == "Lumber Mill") {
+					Debug.Log ("Switching Modes in UICONTROLLER");
+					uiMode = 3;
+				}
             }
         }
         if (uiMode == 1)//Standard building ui
@@ -166,11 +174,35 @@ public class UiController : MonoBehaviour {
             SpencersnavAgent unitMove = ClickingUI.Instance.previousObject.GetComponent<SpencersnavAgent>();
             unitMove.canMove = true;
             ClickingUI.Instance.builderUnit = ClickingUI.Instance.previousObject;
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                CreateBuilding();
-            }
+            
         }
+		if (uiMode == 3) {//UI Mode that just displays the icon and the name
+			badResources.text = "";
+			names.text = "" + ClickingUI.Instance.previousObject.tag;
+			if (spawnUnit.enabled == true)
+			{
+				spawnUnit.enabled = false;
+			}
+			if (spawnBuilding.enabled == true)
+			{
+				spawnBuilding.enabled = false;
+			}
+			if (buildStuff.enabled == true)
+			{
+				buildStuff.enabled = false;
+			}
+			if (creatingUnit.enabled == true)
+			{
+				creatingUnit.enabled = false;
+			}
+
+			selectedUnitImage.enabled = true;
+			if(ClickingUI.Instance.previousObject.tag=="Pig Farm"){selectedUnitImage.sprite=pigFarmImage;}
+			if(ClickingUI.Instance.previousObject.tag=="Lumber Mill"){selectedUnitImage.sprite=lumberMillImage;}
+
+
+		}
+			
     }
     public void CreateGenericUnit(GameObject currentlySelected, string unitToMake)//Creates a unit around the currently selected building
     {
@@ -190,6 +222,13 @@ public class UiController : MonoBehaviour {
                 badResources.text = "";
                 canMakeUnit = false;
             }
+			if (ResourceManager.Instance.currentFood ==ResourceManager.Instance.maxFood)
+			{
+				StartCoroutine(NotEnoughResources("Farms"));
+				badResources.text = "";
+				canMakeUnit = false;
+			}
+
             if (canMakeUnit)
             {
                 //  badResources="Not Enough Gold"
@@ -198,13 +237,27 @@ public class UiController : MonoBehaviour {
             }
         }
     }
-    public void CreateBuilding()//Creates a building
+	public void CreateBuilding(string buildingName)//Creates a building
     {
         bool canMakeUnit = true;
-        
-            if (ResourceManager.Instance.gold < 700)
+		if (buildingName == "Barracks") {
+			 requiredGold = 700;
+			 requiredWood = 450;
+			 buildingToMake = ClickingUI.Instance.barracks;
+		}
+		if (buildingName == "Pig Farm") {
+			 requiredGold = 500;
+			 requiredWood = 250;
+			buildingToMake = ClickingUI.Instance.pigFarm;
+		}
+		if (buildingName == "Lumber Mill") {
+			requiredGold = 600;
+			requiredWood = 450;
+			buildingToMake = ClickingUI.Instance.lumberMill;
+		}
+            if (ResourceManager.Instance.gold < requiredGold)
             {
-                if (ResourceManager.Instance.wood < 450)
+			if (ResourceManager.Instance.wood < requiredWood)
                 {
                     StartCoroutine(NotEnoughResources("Resources"));
                 }
@@ -215,7 +268,7 @@ public class UiController : MonoBehaviour {
                 badResources.text = "";
                 canMakeUnit = false;
             }
-            else if (ResourceManager.Instance.wood < 450)
+		else if (ResourceManager.Instance.wood < requiredWood)
             {
                 StartCoroutine(NotEnoughResources("Wood"));
                 badResources.text = "";
@@ -223,7 +276,7 @@ public class UiController : MonoBehaviour {
             }
             if (canMakeUnit)
             {
-			Instantiate(ClickingUI.Instance.building, ClickingUI.Instance.placement, Quaternion.identity);
+			Instantiate(buildingToMake, ClickingUI.Instance.placement, Quaternion.Euler(0,90,0));
             }
         
     }

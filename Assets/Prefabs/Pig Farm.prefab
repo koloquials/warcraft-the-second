@@ -40,9 +40,11 @@ GameObject:
   - component: {fileID: 33452848148206092}
   - component: {fileID: 23458900621874032}
   - component: {fileID: 95049456629202924}
+  - component: {fileID: 114830984108922094}
+  - component: {fileID: 65094009867011112}
   m_Layer: 0
   m_Name: Pig Farm
-  m_TagString: Untagged
+  m_TagString: Pig Farm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1794148969065054}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20.31535, y: -0.63, z: -69.02203}
+  m_LocalPosition: {x: 25.05772, y: -0.6, z: -67.390594}
   m_LocalScale: {x: 20.073032, y: 20.07304, z: 20.07304}
   m_Children:
   - {fileID: 4011071420907396}
@@ -152,6 +154,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1779169311093870}
   m_Mesh: {fileID: 4300000, guid: f5f6e814e53eab54fb084de920b56049, type: 3}
+--- !u!65 &65094009867011112
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1794148969065054}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.13560314, y: 0.039858334, z: 0.15090446}
+  m_Center: {x: 0, y: -0.014754105, z: 0}
 --- !u!95 &95049456629202924
 Animator:
   serializedVersion: 3
@@ -186,3 +200,26 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114830984108922094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1794148969065054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348c10cda1b397f4dac65572945ab581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placing: 0
+  placed: 0
+  canCreate: 0
+  creating: 0
+  shouldBuild: 0
+  finalBuildMaterial: {fileID: 2100000, guid: f8f89e497c9fb584aa732e9550695a1e, type: 2}
+  inProgressColor: {fileID: 2100000, guid: c024587293f5e5d4cabec7d345ca1585, type: 2}
+  percentageBuilt: 0
+  unitList: []
+  shouldMakeUnit: 0
+  makingUnit: 0
+  isStartingGreatHall: 0

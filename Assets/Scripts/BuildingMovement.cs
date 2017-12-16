@@ -11,7 +11,7 @@ public class BuildingMovement : MonoBehaviour {
     bool paidFor = false;
    public bool canCreate;//Whether it can create units
    public bool creating;
-   public bool shouldBuild;//Whether it should be getting built
+   public bool shouldBuild=false;//Whether it should be getting built
     Color transparentRed =new Color (0, 0, 0, 0.8f);//Starting opacity for the building should be 20%
     Color addRed = new Color(0, 0, 0, 0.01f);//Incrementation of opacity
 	Color fullOpacity=new Color(0,0,0,1.0f);
@@ -32,11 +32,11 @@ public class BuildingMovement : MonoBehaviour {
         buildColor = this.GetComponent<Renderer>().material;
         buildColor.color -= transparentRed;//Sets the opacity of the building
         canCreate = true;
-		if (this.tag == "Barracks") {
+		if (this.tag == "Barracks"||this.tag=="Pig Farm"||this.tag=="Lumber Mill") {
 			//inProgressColor.color.a=fullOpacity.a;
 			tempWorkingColor=inProgressColor;
 			//tempWorkingColor.color -= transparentRed;
-			this.GetComponent<Renderer> ().material = inProgressColor;
+			this.GetComponent<Renderer> ().material = tempWorkingColor;
 		}
     }
 
@@ -85,6 +85,20 @@ public class BuildingMovement : MonoBehaviour {
                     ResourceManager.Instance.wood -= 450;
                     paidFor = true;
                 }
+				if (this.tag == "Pig Farm" && !paidFor)
+				{
+					ResourceManager.Instance.gold -= 500;
+					ResourceManager.Instance.wood -= 250;
+
+					paidFor = true;
+				}
+				if (this.tag == "Lumber Mill" && !paidFor)
+				{
+					ResourceManager.Instance.gold -= 600;
+					ResourceManager.Instance.wood -= 450;
+
+					paidFor = true;
+				}
                 percentageBuilt = (buildColor.color.a - 0.2f) / 0.8f;
                 if (buildColor.color.a < 1.0)
                 {
@@ -92,8 +106,11 @@ public class BuildingMovement : MonoBehaviour {
                 }
                 else
                 {
-					if (this.tag == "Barracks") {
+					if (this.tag == "Barracks"||this.tag == "Pig Farm"||this.tag == "Lumber Mill") {
 						this.GetComponent<Renderer> ().material=finalBuildMaterial;
+						if (this.tag == "Pig Farm") {
+							ResourceManager.Instance.maxFood += 4;
+						}
 					}
                     canCreate = true;//Passes into the unit script, allowing it to move again, and allow for it to build units
                 }
@@ -121,7 +138,7 @@ public class BuildingMovement : MonoBehaviour {
         shouldMakeUnit = true;
         if (isCoroutineRunning)
         {
-            Debug.Log("Broke");
+          
             yield break;
             
         }
@@ -134,7 +151,7 @@ public class BuildingMovement : MonoBehaviour {
         }
         shouldMakeUnit = true;
         if (shouldMakeUnit)
-            Debug.Log("Made Unit");
+           
         {
             Vector2 unitPlacement2D = Random.insideUnitCircle.normalized;
             Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 5f;
