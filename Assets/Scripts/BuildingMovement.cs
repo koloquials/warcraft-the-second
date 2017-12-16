@@ -14,7 +14,11 @@ public class BuildingMovement : MonoBehaviour {
    public bool shouldBuild;//Whether it should be getting built
     Color transparentRed =new Color (0, 0, 0, 0.8f);//Starting opacity for the building should be 20%
     Color addRed = new Color(0, 0, 0, 0.01f);//Incrementation of opacity
-    Material buildColor;
+	Color fullOpacity=new Color(0,0,0,1.0f);
+	Material tempWorkingColor;
+     Material buildColor;
+	public Material finalBuildMaterial;
+	public Material inProgressColor;
     public float percentageBuilt;
     public GameObject[] unitList;
     public bool shouldMakeUnit;
@@ -28,6 +32,12 @@ public class BuildingMovement : MonoBehaviour {
         buildColor = this.GetComponent<Renderer>().material;
         buildColor.color -= transparentRed;//Sets the opacity of the building
         canCreate = true;
+		if (this.tag == "Barracks") {
+			//inProgressColor.color.a=fullOpacity.a;
+			tempWorkingColor=inProgressColor;
+			//tempWorkingColor.color -= transparentRed;
+			this.GetComponent<Renderer> ().material = inProgressColor;
+		}
     }
 
     // Update is called once per frame
@@ -59,6 +69,7 @@ public class BuildingMovement : MonoBehaviour {
                 ClickingUI.Instance.buildBuilding = this.gameObject;
                 placed = true;
 
+
             }
             if (Input.GetMouseButtonDown(1) && !placed)
             {
@@ -66,6 +77,7 @@ public class BuildingMovement : MonoBehaviour {
             }
             if (!canCreate && !placing && shouldBuild)//If it isnt being placed and should be getting built, increment the opacity
             {
+				Debug.Log ("Should Be Getting Built");
                 //setting your build percentage with colours feels really janky. Should be other way around.
                 if (this.tag == "Barracks" && !paidFor)
                 {
@@ -80,6 +92,9 @@ public class BuildingMovement : MonoBehaviour {
                 }
                 else
                 {
+					if (this.tag == "Barracks") {
+						this.GetComponent<Renderer> ().material=finalBuildMaterial;
+					}
                     canCreate = true;//Passes into the unit script, allowing it to move again, and allow for it to build units
                 }
 
@@ -132,4 +147,11 @@ public class BuildingMovement : MonoBehaviour {
         UiController.Instance.uiMode = 1f;
         makingUnit = false;
     }
+	void OnTriggerEnter(Collider collider){
+		if (collider.tag == "Peon") {
+			if (!canCreate && !placing) {
+				shouldBuild = true;
+			}
+		}
+	}
 }

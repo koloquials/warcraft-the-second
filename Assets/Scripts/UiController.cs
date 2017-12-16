@@ -223,7 +223,7 @@ public class UiController : MonoBehaviour {
             }
             if (canMakeUnit)
             {
-                Instantiate(ClickingUI.Instance.building, ClickingUI.Instance.placement, Quaternion.Euler(0, -90, 0));
+			Instantiate(ClickingUI.Instance.building, ClickingUI.Instance.placement, Quaternion.identity);
             }
         
     }
