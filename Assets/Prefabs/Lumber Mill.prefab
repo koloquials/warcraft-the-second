@@ -41,9 +41,10 @@ GameObject:
   - component: {fileID: 23116074894609290}
   - component: {fileID: 95014447769376772}
   - component: {fileID: 65111654196461542}
+  - component: {fileID: 114069288219784108}
   m_Layer: 0
   m_Name: Lumber Mill
-  m_TagString: Untagged
+  m_TagString: Lumber Mill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -199,3 +200,26 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114069288219784108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1671317748107098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348c10cda1b397f4dac65572945ab581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placing: 0
+  placed: 0
+  canCreate: 0
+  creating: 0
+  shouldBuild: 0
+  finalBuildMaterial: {fileID: 2100000, guid: 4b0a488fccfef7944a29188cf612a5bf, type: 2}
+  inProgressColor: {fileID: 2100000, guid: 4fda1f3b579465547bed97d3c09d566f, type: 2}
+  percentageBuilt: 0
+  unitList: []
+  shouldMakeUnit: 0
+  makingUnit: 0
+  isStartingGreatHall: 0

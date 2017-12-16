@@ -10,11 +10,14 @@ public class ResourceManager : MonoBehaviour {
 	public int gold;
 	public int wood;
 	public int oil;
-	public int food;
+	public int maxFood;
     public int goldPerDrop = 100;
     public int woodPerDrop = 100;
 	public int foodRate = 1;
-	public int totalMen = 5;
+	public int currentFood=0;
+	public GameObject[] currentPeons;
+	public GameObject[] currentGrunts;
+	public GameObject[] currentTrolls;
 
 //	public float timerCount = 0f;
 
@@ -24,7 +27,7 @@ public class ResourceManager : MonoBehaviour {
 		gold = 3500;
 		wood = 700;
 		oil = 0;
-		food = 5;
+		maxFood = 5;
 
 	//	InvokeRepeating ("addFood", 5, 5);
 
@@ -32,8 +35,11 @@ public class ResourceManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		currentPeons = GameObject.FindGameObjectsWithTag ("Peon");
+		currentGrunts=GameObject.FindGameObjectsWithTag ("Troll");
+		currentTrolls=GameObject.FindGameObjectsWithTag ("Grunt");
 		//timerCount += Time.deltaTime;
+		currentFood=currentPeons.Length+currentGrunts.Length+currentTrolls.Length;
 		
 	}
 
@@ -55,33 +61,18 @@ public class ResourceManager : MonoBehaviour {
 
 	}
 
-	public void AddFood (){
+	public void AddUnit (){
 
 		//if (food < totalMen) {
-			food += foodRate;
+		currentFood++;
 		//}
 	}
 
 	public void AddFarm (){
 
-		foodRate += 1;
+		maxFood += 5;
 
 	}
 
-	public void AddOrc (){
-
-		if (totalMen < food) {
-			totalMen += 1;
-		}
-
-	}
-
-	public void AddLargerOrc (){
-
-		if ((totalMen + 1) < food) {
-			totalMen += 2;
-		}
-
-	}
 
 }

@@ -11,7 +11,10 @@ public class ClickingUI : MonoBehaviour {
     public GameObject previousObject;
     public GameObject builderUnit;
     public Vector3 placement;
-    public GameObject building;
+    public GameObject barracks;
+	public GameObject pigFarm;
+	public GameObject lumberMill;
+
     public GameObject unit;
     public bool isClickingButton;
     public Vector3 buildPlace = Vector3.zero;
@@ -119,14 +122,14 @@ public class ClickingUI : MonoBehaviour {
                         if (shootRayHit.transform.GetChild(0).name == "Wireframe")
                         {
                             wireframe.enabled = true;
-                            if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall"|| shootRayHit.transform.tag == "Gold Mine")
+							if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall"|| shootRayHit.transform.tag == "Gold Mine"|| shootRayHit.transform.tag == "Pig Farm"|| shootRayHit.transform.tag == "Lumber Mill")
                             {
                                 Debug.Log("Hitting a building");
                                 if (shootRayHit.transform.tag == "Gold Mine")
                                 {
                                     UiController.Instance.uiMode = 1;
                                 }
-                                else if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall")
+								else if (shootRayHit.transform.tag == "Barracks"|| shootRayHit.transform.tag == "Great Hall"|| shootRayHit.transform.tag == "Pig Farm"|| shootRayHit.transform.tag == "Lumber Mill")
                                 {
                                     // If the barracks is being built, send the worker to build the barracks and allow it to move (chosen means it is the builder peon, so it has to move to the building while other can move other places)
                                     if (buildPlace != Vector3.zero)
@@ -135,7 +138,8 @@ public class ClickingUI : MonoBehaviour {
                                         unitMove.chosen = true;
                                     }
                                     // Checks the status of the builidng, if it is being built or creating units, it needs special UI
-                                    BuildingMovement checkIfBuilt = previousObject.GetComponent<BuildingMovement>();
+
+									BuildingMovement checkIfBuilt = previousObject.GetComponent<BuildingMovement>();
                                     if (checkIfBuilt.canCreate)
                                     {
                                         UiController.Instance.uiMode = 1; // uiMode 1 is the regular building ui mode
@@ -148,6 +152,10 @@ public class ClickingUI : MonoBehaviour {
                                     {
                                         UiController.Instance.uiMode = 1.5f; //uiMode 1.5 is the "creating unit" uiMode
                                     }
+									if (checkIfBuilt.canCreate&&previousObject.tag == "Pig Farm" ||checkIfBuilt.canCreate&& previousObject.tag == "Lumber Mill") {
+										Debug.Log ("Switching Modes in Clicking UI");
+										UiController.Instance.uiMode = 3;//uimode 3 is for just displaying the name and icon, which is all we need for the pig farm and lumber mill
+									}
                                 }
                             }
 							if (shootRayHit.transform.tag == "Peon"|| shootRayHit.transform.tag == "Grunt"||  previousObject.tag == "Troll")//If you are clicking on a peon or a grunt, go into uiMode 2

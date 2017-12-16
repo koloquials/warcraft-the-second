@@ -19,6 +19,9 @@ TagManager:
   - Enemy
   - Troll
   - Fog Of War
+  - Sound Guy
+  - Pig Farm
+  - Lumber Mill
   layers:
   - Default
   - TransparentFX
