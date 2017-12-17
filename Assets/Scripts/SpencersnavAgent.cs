@@ -93,6 +93,7 @@ public class SpencersnavAgent : MonoBehaviour
                                 //   Debug.Log("Going to Get Gold");
                                 GoldLoop();
                             }
+
                             if (hit.transform.gameObject.tag == "Tree")//34 seconds to chop down a tree
                             {
                                 carryingCapacity = 33;
@@ -102,14 +103,22 @@ public class SpencersnavAgent : MonoBehaviour
                                 inResourceLoop = true;
                                 GoldLoop();
                             }
+
                         }
-                        if(hit.transform.gameObject.tag != "Tree"&& hit.transform.gameObject.tag != "Gold Mine")
+
+						if (hit.transform.gameObject.tag == "Enemy") { 
+							agent.SetDestination (hit.transform.gameObject.transform.position); 
+							//Debug.Log ("Going to " + hit.transform.gameObject); 
+						} 
+
+						if(hit.transform.gameObject.tag != "Tree"&& hit.transform.gameObject.tag != "Gold Mine" && hit.transform.gameObject.tag != "Enemy")
                         {
                          //   Debug.Log("Get Away from resource");
                             inResourceLoop = false;
                             returningToResource = false;
 							resource = "Nothing";
                             agent.SetDestination(hit.point);//Move to where the player clicks, pathfinding around obstacles
+							//Debug.Log( "Going to" + hit.point);
                         }
                     }
                 }
