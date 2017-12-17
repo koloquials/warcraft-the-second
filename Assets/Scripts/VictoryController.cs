@@ -13,13 +13,12 @@ public class VictoryController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (gruntCount >= 5)
-        {
+        
             if (inLocation)
             {
                 UiController.Instance.AllOff();
                 UiController.Instance.winScreen.enabled = true;
             }
-        }
+        
 	}
 }

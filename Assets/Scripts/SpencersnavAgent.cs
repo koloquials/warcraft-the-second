@@ -76,7 +76,7 @@ public class SpencersnavAgent : MonoBehaviour
 							//thisThingAudio.clip = clickingSound [Random.Range (0, clickingSound.Length)];
 							thisThingAudio.PlayOneShot(clickingSound [Random.Range (0, clickingSound.Length)]);
 						}
-						if (this.tag == "Troll") {
+						if (this.tag == "Troll"||this.tag=="Zul'Jin") {
 							//thisThingAudio.clip = clickingSound [Random.Range (0, clickingSound.Length)];
 							thisThingAudio.PlayOneShot(clickingSound [Random.Range (0, clickingSound.Length)]);
 						}
@@ -156,7 +156,7 @@ public class SpencersnavAgent : MonoBehaviour
         }
         if(other.tag=="Victory Circle")
         {
-            if (this.tag == "Grunt")
+            if (this.tag == "Zul'Jin")
             {
                 VictoryController.Instance.inLocation = true;
             }
