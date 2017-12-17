@@ -41,7 +41,7 @@ public class EnemyRangedAI : MonoBehaviour { // Once player units move within ra
 	void OnTriggerStay (Collider other){ // Detect unit within radius, navigate to unit, if close enough do damage.
 
 		if (other.gameObject.tag == "Grunt" || other.gameObject.tag == "Peon") {
-			Debug.Log("Spotted by enemy!");
+			//Debug.Log("Spotted by enemy!");
 
 			UnitStatManager statManager = GetComponent<UnitStatManager> ();
 			UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();

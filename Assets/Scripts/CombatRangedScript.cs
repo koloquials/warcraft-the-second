@@ -11,6 +11,8 @@ public class CombatRangedScript : MonoBehaviour { // Combat for player units.
 	public bool canAttack = false;
 	private bool isCombatCoroutineRunning = false;
 
+
+
 	public AudioSource myAudioSource; //assign in inspector
 
 	// Use this for initialization
