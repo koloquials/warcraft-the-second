@@ -36,6 +36,7 @@ public class UiController : MonoBehaviour {
 	public Sprite greatHallImage;
 	public Sprite pigFarmImage;
 	public Sprite lumberMillImage;
+	public Sprite zuljinImage;
 	public Image selectedUnitImage;
     public float uiMode; //0=none, 0.5=building being built, 1=buildings, 1.5=building unit, 2=units
                          // Use this for initialization
@@ -167,6 +168,7 @@ public class UiController : MonoBehaviour {
 				if(ClickingUI.Instance.previousObject.tag=="Peon"){selectedUnitImage.sprite=peonImage;}
 				if(ClickingUI.Instance.previousObject.tag=="Grunt"){selectedUnitImage.sprite=gruntImage;}
 				if(ClickingUI.Instance.previousObject.tag=="Troll"){selectedUnitImage.sprite=trollImage;}
+				if(ClickingUI.Instance.previousObject.tag=="Zul'Jin"){selectedUnitImage.sprite=zuljinImage;}
 		
             }
             buildStuff.enabled = false;//Allow the unit to move

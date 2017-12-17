@@ -14,7 +14,8 @@ public class EnemyRangedAI : MonoBehaviour { // Once player units move within ra
 	UnityEngine.AI.NavMeshAgent agent;
 
 	private float damageDealt;
-
+	public bool shouldAggro;
+	public GameObject other;
 	public bool canAttack = false;
 	private bool isCombatCoroutineRunning = false;
 
@@ -31,19 +32,20 @@ public class EnemyRangedAI : MonoBehaviour { // Once player units move within ra
 	void Update () {
 
 		UnitStatManager statManager = GetComponent<UnitStatManager>();
-		SphereCollider visionRadius = GetComponent<SphereCollider>();
+		SphereCollider visionRadius = this.transform.GetChild(0).GetComponent<SphereCollider>();
 
 		// Size of detection collider based on sight stat. (Tweak based on feel?)
 		visionRadius.radius = statManager.sight * 3f;
 
-	}
+	
 
-	void OnTriggerStay (Collider other){ // Detect unit within radius, navigate to unit, if close enough do damage.
+	if(shouldAggro){ // Detect unit within radius, navigate to unit, if close enough do damage.
 
-		if (other.gameObject.tag == "Grunt" || other.gameObject.tag == "Peon") {
-			//Debug.Log("Spotted by enemy!");
 
-			UnitStatManager statManager = GetComponent<UnitStatManager> ();
+		if (other.gameObject.tag == "Grunt" || other.gameObject.tag == "Peon"|| other.gameObject.tag == "Troll"|| other.gameObject.tag == "Zul'Jin") {
+			Debug.Log("Spotted by enemy!");
+
+			
 			UnitStatManager otherStatManager = other.GetComponent<UnitStatManager> ();
 
 			// Outside of your range? Move within your range!
@@ -93,7 +95,7 @@ public class EnemyRangedAI : MonoBehaviour { // Once player units move within ra
 
 		}
 
-
+		}
 	}
 
 	// Coroutine for attack rate.
