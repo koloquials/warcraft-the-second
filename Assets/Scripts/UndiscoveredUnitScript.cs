@@ -23,6 +23,7 @@ public class UndiscoveredUnitScript : MonoBehaviour {
 		if (collider.gameObject.tag == "Grunt"||collider.gameObject.tag == "Peon") {
 			sightSphere.gameObject.SetActive (true);
 			Debug.Log ("TURN ON PLEASE");
+			this.gameObject.SetActive (false);
 		}
 	}
 }

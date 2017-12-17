@@ -172,6 +172,7 @@ public class SpencersnavAgent : MonoBehaviour
         }
         if(other.tag=="Gold Mine"&&resource=="Gold")
         {
+			Debug.Log ("In A Gold Mine");
             if (inResourceLoop)
             {
                 canMove = false;
@@ -412,7 +413,7 @@ public class SpencersnavAgent : MonoBehaviour
             }
         }
         returningToResource = true;
-        unitCollider.enabled = false;
+		unitCollider.enabled = true;
         unitRenderer.enabled = true;
         GoldLoop();
         inCoroutine = false;
