@@ -41,6 +41,7 @@ public class EnemyRangedAI : MonoBehaviour { // Once player units move within ra
 
 	if(shouldAggro){ // Detect unit within radius, navigate to unit, if close enough do damage.
 
+
 		if (other.gameObject.tag == "Grunt" || other.gameObject.tag == "Peon"|| other.gameObject.tag == "Troll"|| other.gameObject.tag == "Zul'Jin") {
 			Debug.Log("Spotted by enemy!");
 
