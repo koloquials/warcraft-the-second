@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoaderScript : MonoBehaviour {
 	public Canvas loadingBar;
+	public AudioSource speechSpeaker;
 	// Use this for initialization
 	void Start () {
-		
+		speechSpeaker = GameObject.FindGameObjectWithTag ("Sound Guy").GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -26,6 +27,7 @@ public class SceneLoaderScript : MonoBehaviour {
 		}
 		if (buttonText.text == "Join the Horde") {
 			loadingBar.enabled = true;
+			speechSpeaker.Stop ();
 			SceneManager.LoadScene ("Building_and_Unit_UI");
 
 		}
