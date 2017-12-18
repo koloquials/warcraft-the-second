@@ -107,13 +107,23 @@ public class UiController : MonoBehaviour {
         }
         if (uiMode == 1)//Standard building ui
         {
+			
+				
             if (ClickingUI.Instance.previousObject != null)
             {
                 if (ClickingUI.Instance.previousObject.tag != "Ground"){
                 names.text = "" + ClickingUI.Instance.previousObject.tag;
-					selectedUnitImage.enabled = true;
-					if(ClickingUI.Instance.previousObject.tag=="Barracks"){selectedUnitImage.sprite=barracksImage;}
-					if(ClickingUI.Instance.previousObject.tag=="Great Hall"){selectedUnitImage.sprite=greatHallImage;}
+					if (ClickingUI.Instance.previousObject.tag == "Gold Mine") {
+						selectedUnitImage.enabled = false;
+					} else {
+						selectedUnitImage.enabled = true;
+						if (ClickingUI.Instance.previousObject.tag == "Barracks") {
+							selectedUnitImage.sprite = barracksImage;
+						}
+						if (ClickingUI.Instance.previousObject.tag == "Great Hall") {
+							selectedUnitImage.sprite = greatHallImage;
+						}
+					}
             }
             }
             if (ClickingUI.Instance.previousObject.tag =="Great Hall")

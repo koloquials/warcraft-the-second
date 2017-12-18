@@ -6,8 +6,10 @@ public class UndiscoveredUnitScript : MonoBehaviour {
 	public Transform sightSphere;
 	public Transform gOparent;
 	GameObject gOSightSphere;
+
 	// Use this for initialization
 	void Start () {
+		
 		gOparent = this.transform.parent;
 		sightSphere = gOparent.transform.GetChild (1);
 		//sightSphere.gameObject.SetActive(false);
@@ -22,7 +24,10 @@ public class UndiscoveredUnitScript : MonoBehaviour {
 	void OnTriggerEnter(Collider collider){
 		if (collider.gameObject.tag == "Grunt"||collider.gameObject.tag == "Peon") {
 			sightSphere.gameObject.SetActive (true);
+
 			Debug.Log ("TURN ON PLEASE");
+			this.gameObject.SetActive (false);
+
 		}
 	}
 }
