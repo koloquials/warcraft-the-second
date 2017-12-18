@@ -14,7 +14,7 @@ public class VictoryController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         
-            if (inLocation)
+            if (inLocation)//Gets turned on in the SpencersNavAgent Script
             {
                 UiController.Instance.AllOff();
                 UiController.Instance.winScreen.enabled = true;

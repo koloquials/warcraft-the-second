@@ -4,27 +4,9 @@ using UnityEngine;
 
 public class FogOfWarScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Kill Me");
-       // Debug.Log(other.name);
-        if (other.gameObject.tag == "Fog Killer")
-        {
-           
-            Destroy(this.gameObject);
-        }
+        if (other.gameObject.tag == "Fog Killer"){Destroy(this.gameObject);}//If is hits a units sight sphere, kill this fog
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-     //   Debug.Log("Kill Me");
-    }
+
 }

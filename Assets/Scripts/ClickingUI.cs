@@ -29,21 +29,12 @@ public class ClickingUI : MonoBehaviour {
     void Update()
     {
 
-        // Debug.Log(uiMode);
-	    
-	    // TODO: write comments!!! what is this doing?
-
-        Ray placementRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
+        Ray placementRay = Camera.main.ScreenPointToRay(Input.mousePosition);//Settings for the ray
         float rayDist = 10000f;
-
         Debug.DrawRay(placementRay.origin, placementRay.direction, Color.yellow);
-
-
         RaycastHit placementRayHit = new RaycastHit();
 
-	    // TODO: where is "isClickingButton" assigned? your group members don't know!!! TELL US MORE ABOUT IT
-        if (!isClickingButton)
+        if (!isClickingButton)//This is assigned is the button script. It is true when the player is hovering over a button
         {
             if (Physics.Raycast(placementRay, out placementRayHit, rayDist))
             {
@@ -53,12 +44,8 @@ public class ClickingUI : MonoBehaviour {
                 }
 
             }
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))//When you click, shoot the ray
             {
-               // for(int i=0; i < previousObject.Length; i++)
-               // {
-              //      previousObject[i] = null;
-               // }
                 
                 Ray shootRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 

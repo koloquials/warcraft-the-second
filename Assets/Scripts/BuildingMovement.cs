@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class BuildingMovement : MonoBehaviour {
 
-    public bool placing;//Whether it is still being placed
-    public bool placed;//Whether it has been placed
-
-
-    bool paidFor = false;
-   public bool canCreate;//Whether it can create units
-   public bool creating;
-   public bool shouldBuild=false;//Whether it should be getting built
+   
     Color transparentRed =new Color (0, 0, 0, 0.8f);//Starting opacity for the building should be 20%
     Color addRed = new Color(0, 0, 0, 0.01f);//Incrementation of opacity
-	Color fullOpacity=new Color(0,0,0,1.0f);
 	Material tempWorkingColor;
-     Material buildColor;
-	public Material finalBuildMaterial;
+    Material buildColor;
+	public Material finalBuildMaterial;//These are all colors that change how the building looks before and after it is built
 	public Material inProgressColor;
     public float percentageBuilt;
-    public GameObject[] unitList;
+
+    public GameObject[] unitList;//List of units buildings can make
+
+	bool paidFor = false;
+	bool isCoroutineRunning = false;
+	public bool placing;//Whether it is still being placed
+	public bool placed;//Whether it has been placed
     public bool shouldMakeUnit;
-    bool isCoroutineRunning = false;
+	public bool canCreate;//Whether it can create units
+	public bool creating;
+	public bool shouldBuild=false;//Whether it should be getting built
     public bool makingUnit = false;
-    public bool isStartingGreatHall = false;
+    public bool isStartingGreatHall = false;//Dont put it in build mode if its the starting great hall
     // Use this for initialization
     void Start () {
         
@@ -33,9 +33,7 @@ public class BuildingMovement : MonoBehaviour {
         buildColor.color -= transparentRed;//Sets the opacity of the building
         canCreate = true;
 		if (this.tag == "Barracks"||this.tag=="Pig Farm"||this.tag=="Lumber Mill") {
-			//inProgressColor.color.a=fullOpacity.a;
-			tempWorkingColor=inProgressColor;
-			//tempWorkingColor.color -= transparentRed;
+			tempWorkingColor=inProgressColor;//Sets the in progress material
 			this.GetComponent<Renderer> ().material = tempWorkingColor;
 		}
     }
@@ -61,15 +59,12 @@ public class BuildingMovement : MonoBehaviour {
 
             //shouldn't this be Input.GetMouseButtonDown(0) && placing?
             if (Input.GetMouseButtonDown(0) && !placed)//When the player clicks, place the building where the mouse is
-            {
-
+			{
                 placing = false;
                 UiController.Instance.spawnBuilding.enabled = true;
                 ClickingUI.Instance.buildPlace = this.transform.position;//Set the build place for teh worker to move to so he can build the building
                 ClickingUI.Instance.buildBuilding = this.gameObject;
                 placed = true;
-
-
             }
             if (Input.GetMouseButtonDown(1) && !placed)
             {
@@ -77,9 +72,8 @@ public class BuildingMovement : MonoBehaviour {
             }
             if (!canCreate && !placing && shouldBuild)//If it isnt being placed and should be getting built, increment the opacity
             {
-				Debug.Log ("Should Be Getting Built");
-                //setting your build percentage with colours feels really janky. Should be other way around.
-                if (this.tag == "Barracks" && !paidFor)
+				
+                if (this.tag == "Barracks" && !paidFor)//Pays the cost of the buildings
                 {
                     ResourceManager.Instance.gold -= 700;
                     ResourceManager.Instance.wood -= 450;
@@ -107,7 +101,7 @@ public class BuildingMovement : MonoBehaviour {
                 else
                 {
 					if (this.tag == "Barracks"||this.tag == "Pig Farm"||this.tag == "Lumber Mill") {
-						this.GetComponent<Renderer> ().material=finalBuildMaterial;
+						this.GetComponent<Renderer> ().material=finalBuildMaterial;//Sets the real material
 						if (this.tag == "Pig Farm") {
 							ResourceManager.Instance.maxFood += 4;
 						}
@@ -119,7 +113,7 @@ public class BuildingMovement : MonoBehaviour {
 
         }
 	}
-	public void CreateUnit (int goldCost, int lumberCost, int unitToMake)
+	public void CreateUnit (int goldCost, int lumberCost, int unitToMake)//Takes the cost of teh unit and where it lies on the array and creates the unit
     {
         makingUnit = true;
         ResourceManager.Instance.gold -= goldCost;
@@ -154,7 +148,7 @@ public class BuildingMovement : MonoBehaviour {
            
         {
             Vector2 unitPlacement2D = Random.insideUnitCircle.normalized;
-            Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 5f;
+			Vector3 unitPlacement3D = new Vector3(unitPlacement2D.x, 0.0f, unitPlacement2D.y) * 5f;//Places the unit outside of the building
             VictoryController.Instance.gruntCount++;
             GameObject madeUnit = (GameObject)Instantiate(unitList[unitToMake], this.transform.position + unitPlacement3D, Quaternion.identity);
 
