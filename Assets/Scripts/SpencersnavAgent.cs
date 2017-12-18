@@ -11,25 +11,31 @@ public class SpencersnavAgent : MonoBehaviour
     public bool chosen=false;//If they are chosen to build a building
     public bool canMove;//If they can move
     public bool moveOverride;//Overrides thier ability to move, because the clickingUI script can get a unit to move when it shouldnt be able to
+	public bool inCoroutine;
+	public bool sentRecently;//If it was sent sent to chop trees, don't go to the nearest one
+	public bool returningToResource=false;
+	public bool inResourceLoop;
+	bool placedOutside = false;
+
     Rigidbody unitRigidbody;
     Renderer unitRenderer;
     MeshRenderer wireframe;
-    bool placedOutside = false;
+	AudioSource thisThingAudio;
+	public Collider unitCollider;
+
     public Vector3 moveToSpot;
     public int currentlyCarrying=0;
     public int carryingCapacity;
-    public bool inResourceLoop;
+   
     public string resource;
-    public bool inCoroutine;
+    
     public RaycastHit hit;
-    public Collider unitCollider;
-	public bool sentRecently;
-    public bool returningToResource=false;
+    
+	GameObject[] townHalls;
     public GameObject treeChopping,goldMine,closestHall;
-	 AudioSource thisThingAudio;
 	public AudioClip[] clickingSound;
-    GameObject[] townHalls;
-    private void Awake()
+    
+    private void Awake()//Set all the variables
     {
 		GameObject findSoundGuy = GameObject.FindGameObjectWithTag ("Sound Guy");
 		thisThingAudio = findSoundGuy.GetComponent<AudioSource> ();
@@ -50,15 +56,11 @@ public class SpencersnavAgent : MonoBehaviour
 
 		canMove = false;
     }
-    void Start ()
-	{
-       
-	}
+
 
 	void Update () 
 	{
-       // Debug.Log(carryingCapacity);
-        unitRigidbody.velocity = Vector3.zero;
+        unitRigidbody.velocity = Vector3.zero;//Backup, in case the unit gets pushed
         unitRigidbody.angularVelocity = Vector3.zero;
 
         if (ClickingUI.Instance.buildPlace == Vector3.zero||!chosen)//If there is not a building for them to build, they can move normally
@@ -72,29 +74,25 @@ public class SpencersnavAgent : MonoBehaviour
 
                     if (Physics.Raycast(ray, out hit, 100))
                     {
-						if (this.tag == "Grunt") {
-							//thisThingAudio.clip = clickingSound [Random.Range (0, clickingSound.Length)];
+						if (this.tag == "Grunt") {//Play thier respective sounds
 							thisThingAudio.PlayOneShot(clickingSound [Random.Range (0, clickingSound.Length)]);
 						}
 						if (this.tag == "Troll"||this.tag=="Zul'Jin") {
-							//thisThingAudio.clip = clickingSound [Random.Range (0, clickingSound.Length)];
 							thisThingAudio.PlayOneShot(clickingSound [Random.Range (0, clickingSound.Length)]);
 						}
-                        if (this.tag == "Peon")
+                        if (this.tag == "Peon")//Peons can collect resources
                         {
-							//thisThingAudio.clip = clickingSound [Random.Range (0, clickingSound.Length)];
+
 							thisThingAudio.PlayOneShot(clickingSound [Random.Range (0, clickingSound.Length)]);
-                            if (hit.transform.gameObject.tag == "Gold Mine")//4 seconds
+                            if (hit.transform.gameObject.tag == "Gold Mine")//Collecting Gold takes 2 seconds
                             {
                                 carryingCapacity = 2;
                                 resource = "Gold";
-
                                 inResourceLoop = true;
-                                //   Debug.Log("Going to Get Gold");
                                 GoldLoop();
                             }
 
-                            if (hit.transform.gameObject.tag == "Tree")//34 seconds to chop down a tree
+                            if (hit.transform.gameObject.tag == "Tree")//33 seconds to chop down a tree
                             {
                                 carryingCapacity = 33;
                                 resource = "Wood";
@@ -108,17 +106,15 @@ public class SpencersnavAgent : MonoBehaviour
 
 						if (hit.transform.gameObject.tag == "Enemy") { 
 							agent.SetDestination (hit.transform.gameObject.transform.position); 
-							//Debug.Log ("Going to " + hit.transform.gameObject); 
 						} 
 
 						if(hit.transform.gameObject.tag != "Tree"&& hit.transform.gameObject.tag != "Gold Mine" && hit.transform.gameObject.tag != "Enemy")
                         {
-                         //   Debug.Log("Get Away from resource");
+							//If its not a resource, move there
                             inResourceLoop = false;
                             returningToResource = false;
 							resource = "Nothing";
                             agent.SetDestination(hit.point);//Move to where the player clicks, pathfinding around obstacles
-							//Debug.Log( "Going to" + hit.point);
                         }
                     }
                 }
@@ -143,7 +139,7 @@ public class SpencersnavAgent : MonoBehaviour
         {
 
             BuildingMovement shouldBuild = other.GetComponent<BuildingMovement>();
-          //  shouldBuild.shouldBuild=true;//Starts it building
+			//Starts it building
             if (!shouldBuild.canCreate&&shouldBuild.placed)//If it is being build, dont let it move
             {
                unitRenderer.enabled = false;
@@ -170,7 +166,7 @@ public class SpencersnavAgent : MonoBehaviour
                 VictoryController.Instance.inLocation = true;
             }
         }
-        if(other.tag=="Gold Mine"&&resource=="Gold")
+        if(other.tag=="Gold Mine"&&resource=="Gold")//When the peon hits a gold mine, collect gold
         {
 			Debug.Log ("In A Gold Mine");
             if (inResourceLoop)
@@ -181,24 +177,21 @@ public class SpencersnavAgent : MonoBehaviour
                 StartCoroutine(GetResources());
             }
         }
-        if (other.tag == "Tree" && resource == "Wood")
+        if (other.tag == "Tree" && resource == "Wood")//When the peon hit a tree, chop wood
         {
             if (inResourceLoop)
             {
-                // Debug.Log("In Resource Loop");
                 if (currentlyCarrying == 0)
                 {
                     this.agent.SetDestination(this.transform.position);
                 }
                 treeChopping = other.gameObject;
                 carryingCapacity = 33;
-               // canMove = false;
-                //  moveOverride = true;
 
                 StartCoroutine(GetResources());
             }
         }
-		if(other.tag=="Great Hall"||other.tag=="Lumber Mill")
+		if(other.tag=="Great Hall"||other.tag=="Lumber Mill")//If you hit a great hall of lumber mill, drop off resources
         {
 			Debug.Log ("Smacking Great Hall");
             if (currentlyCarrying > 0)
@@ -206,9 +199,7 @@ public class SpencersnavAgent : MonoBehaviour
 				Debug.Log ("Hitting the Great Hall");
                 unitCollider.enabled = false;
                 wireframe.enabled = false;
-               //unitRenderer.enabled = false;
                 canMove = false;
-                //moveOverride = true;
     
                 StartCoroutine(DroppingResources());
             }
@@ -216,11 +207,7 @@ public class SpencersnavAgent : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag=="Gold Mine")
-        {
-           // UiController.Instance.uiMode = 0;
-        }
-		if(other.tag=="Great Hall")
+		if(other.tag=="Great Hall")//Backup function to enter a great hall
 		{
 			Debug.Log ("Smacking Great Hall");
 			if (currentlyCarrying > 0)
@@ -228,18 +215,16 @@ public class SpencersnavAgent : MonoBehaviour
 				Debug.Log ("Hitting the Great Hall");
 				unitCollider.enabled = false;
 				wireframe.enabled = false;
-				//unitRenderer.enabled = false;
 				canMove = false;
-				//moveOverride = true;
 
 				StartCoroutine(DroppingResources());
 			}
 		}
     }
-    public void GoldLoop()
+	public void GoldLoop()//This function sends the peon to either go collect resources or drop off resources
     {
 		
-        if ( hit.collider != null && hit.collider.gameObject != null)
+        if ( hit.collider != null && hit.collider.gameObject != null)//Find the closest great hall for the peon to drop off resources
         {
              goldMine = hit.transform.gameObject;
              closestHall = null;
@@ -260,8 +245,8 @@ public class SpencersnavAgent : MonoBehaviour
             }
         }
 		if (resource == "Wood") {
-			GameObject[] lumberMills = GameObject.FindGameObjectsWithTag ("Lumber Mill");
-			foreach (GameObject mill in lumberMills) {
+			GameObject[] lumberMills = GameObject.FindGameObjectsWithTag ("Lumber Mill");//If you are collecting wood, you can also drop off wood at the lumber mill
+			foreach (GameObject mill in lumberMills) {									//If there is a closer lumber mill
 				if (mill != null) {
 
 					if ((goldMine.transform.position - mill.transform.position).magnitude < (goldMine.transform.position - closestHall.transform.position).magnitude) {
@@ -272,7 +257,7 @@ public class SpencersnavAgent : MonoBehaviour
 		}
         if (inResourceLoop)
         {
-            if (currentlyCarrying == 0)
+            if (currentlyCarrying == 0)//Searches to find the closest tree to chop down
             {
                 if (resource == "Wood")
                 {
@@ -309,7 +294,7 @@ public class SpencersnavAgent : MonoBehaviour
 					}
 					
                 }
-                else
+                else//If the peon was assigned to chop down this tree, go chop it down
                 {
                     agent.SetDestination(goldMine.transform.position);
                 }
@@ -328,7 +313,7 @@ public class SpencersnavAgent : MonoBehaviour
 
 
     }
-     IEnumerator GetResources()
+     IEnumerator GetResources()//Collects resources, time depending on the resource to collect
     {
         if (inCoroutine)
         {
@@ -381,7 +366,7 @@ public class SpencersnavAgent : MonoBehaviour
         GoldLoop();
         yield return 0;
     }
-    IEnumerator DroppingResources()
+    IEnumerator DroppingResources()//Dropping off resources
     {
         Debug.Log("Dropping it Off");
         if (inCoroutine)

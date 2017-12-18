@@ -8,9 +8,11 @@ public class UiController : MonoBehaviour {
     //please capitalise the 'i' in UI. It would make me so so happy. 
 
     public static UiController Instance = new UiController();
+
 	GameObject buildingToMake;
 	public int requiredGold;
 	public int requiredWood;
+
     public Canvas spawnUnit;
     public Canvas spawnBuilding;
     public Canvas buildStuff;
@@ -18,8 +20,10 @@ public class UiController : MonoBehaviour {
     public Canvas winScreen;
     public Canvas pauseMenu;
     public Canvas pauseButton;
+
 	public Button trollButton;
 	public Button unitButton;
+
     public Text goldText, woodText, oilText, foodText;
     public Text names;
     public Text buttonText;
@@ -28,7 +32,7 @@ public class UiController : MonoBehaviour {
     public Text unitProgress;
     public Text badResources;
 	public Text displayCost;
-	 Image unitImage;
+
 	public Sprite peonImage;
 	public Sprite gruntImage;
 	public Sprite trollImage;
@@ -37,8 +41,10 @@ public class UiController : MonoBehaviour {
 	public Sprite pigFarmImage;
 	public Sprite lumberMillImage;
 	public Sprite zuljinImage;
+
 	public Image selectedUnitImage;
-    public float uiMode; //0=none, 0.5=building being built, 1=buildings, 1.5=building unit, 2=units
+
+    public float uiMode; //0=none, 0.5=building being built, 1=buildings, 1.5=building unit, 2=units, 3= image and name only
                          // Use this for initialization
     void Start()
     {

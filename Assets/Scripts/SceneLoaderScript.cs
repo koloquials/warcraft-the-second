@@ -11,15 +11,9 @@ public class SceneLoaderScript : MonoBehaviour {
 	void Start () {
 		speechSpeaker = GameObject.FindGameObjectWithTag ("Sound Guy").GetComponent<AudioSource>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
 	public void SwitchScene(){
-
-
 		Transform hoveredButton = this.transform.GetChild(0);
 		Text buttonText = hoveredButton.GetComponent<Text>();
 		if (buttonText.text == "Begin") {
@@ -29,13 +23,6 @@ public class SceneLoaderScript : MonoBehaviour {
 			loadingBar.enabled = true;
 			speechSpeaker.Stop ();
 			SceneManager.LoadScene ("Building_and_Unit_UI");
-
 		}
-
-
-
-
 	}
-
-
 }

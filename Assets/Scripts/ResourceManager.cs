@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour {
     public static ResourceManager Instance = new ResourceManager();
-	//it might make sense to make this class static. If the player needs to regularly access its functions/values
-	//otherwise looks good
 	
 	public int gold;
 	public int wood;
@@ -13,13 +11,12 @@ public class ResourceManager : MonoBehaviour {
 	public int maxFood;
     public int goldPerDrop = 100;
     public int woodPerDrop = 100;
-	public int foodRate = 1;
 	public int currentFood=0;
 	public GameObject[] currentPeons;
 	public GameObject[] currentGrunts;
 	public GameObject[] currentTrolls;
 
-//	public float timerCount = 0f;
+
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +26,6 @@ public class ResourceManager : MonoBehaviour {
 		oil = 0;
 		maxFood = 5;
 
-	//	InvokeRepeating ("addFood", 5, 5);
 
 	}
 	
@@ -39,7 +35,7 @@ public class ResourceManager : MonoBehaviour {
 		currentGrunts=GameObject.FindGameObjectsWithTag ("Troll");
 		currentTrolls=GameObject.FindGameObjectsWithTag ("Grunt");
 		//timerCount += Time.deltaTime;
-		currentFood=currentPeons.Length+currentGrunts.Length+currentTrolls.Length;
+		currentFood=currentPeons.Length+currentGrunts.Length+currentTrolls.Length;//The current food is equal to all the units
 		
 	}
 
@@ -54,25 +50,4 @@ public class ResourceManager : MonoBehaviour {
 		wood += woodPerDrop;
 
 	}
-
-	public void AddOil (){
-
-		oil += 25;
-
-	}
-
-	public void AddUnit (){
-
-		//if (food < totalMen) {
-		currentFood++;
-		//}
-	}
-
-	public void AddFarm (){
-
-		maxFood += 5;
-
-	}
-
-
 }

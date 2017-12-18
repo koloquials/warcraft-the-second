@@ -6,7 +6,7 @@ public class EnemySightScript : MonoBehaviour {
 	public Transform actualEnemy;
 	public EnemyAI parentAI;
 	// Use this for initialization
-	void Start () {
+	void Start () {//This script is for enemies to spot the player units. It doesnt block the movement raycasts but still detects units
 		actualEnemy=this.transform.parent;
 		parentAI=actualEnemy.GetComponent<EnemyAI>();
 	}
@@ -16,10 +16,8 @@ public class EnemySightScript : MonoBehaviour {
 		
 	}
 	void OnTriggerEnter(Collider other){
-		
 		if (other.tag != "Tree") {
-			Debug.Log ("OMG IM HITTING SOMETHING");
-			parentAI.shouldAggro = true;
+			parentAI.shouldAggro = true;//
 			parentAI.other = other.gameObject;
 		}
 
